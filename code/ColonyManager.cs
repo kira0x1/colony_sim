@@ -2,16 +2,22 @@
 
 public class ColonyManager : Component
 {
-    private static HashSet<VillagerData> Villagers = new HashSet<VillagerData>();
+    public HashSet<VillagerData> Villagers { get; private set; } = new HashSet<VillagerData>();
     public static ColonyManager Instance { get; set; }
 
     protected override void OnAwake()
     {
         base.OnAwake();
+        Villagers = new HashSet<VillagerData>();
         Instance = this;
+
+        for (int i = 0; i < 9; i++)
+        {
+            CreateVillagerData();
+        }
     }
 
-    public static VillagerData CreateVillagerData()
+    public VillagerData CreateVillagerData()
     {
         VillagerData villager = new VillagerData();
         Villagers.Add(villager);

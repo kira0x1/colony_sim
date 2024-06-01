@@ -1,12 +1,29 @@
+@using Kira
 @using Sandbox;
 @using Sandbox.UI;
 @inherits PanelComponent
 
 <root>
+    <div class="units">
+        @foreach (VillagerData pawn in ColonyManager.Instance.Villagers)
+        {
+            <div class="villager">
+                @pawn.FullName
+            </div>
+        }
+    </div>
 </root>
 
 @code
 {
+    private ColonyManager Colony { get; set; }
+
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+        Colony = Scene.Components.GetAll<ColonyManager>().First();
+    }
+
     // [Property, TextArea] public string MyStringValue { get; set; } = "Hello World!";
     // protected override int BuildHash() => System.HashCode.Combine(MyStringValue);
 }

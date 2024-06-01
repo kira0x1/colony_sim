@@ -32,6 +32,8 @@ public class VillagerData
         // Log.Info(this);
     }
 
+    public string FullName => $"{FirstName} {LastName}";
+
     public override string ToString()
     {
         return $"Name: {FirstName} {LastName}, Age: {Age}, Height: {Height}cm, Weight: {Weight}kg";

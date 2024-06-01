@@ -20,7 +20,7 @@ public sealed class VillagerPawn : Component
         agent.Acceleration = 90f;
         agent.MaxSpeed = 80f;
         pawnController = new PawnController(agent, roamRadius: 150f);
-        villagerData = ColonyManager.CreateVillagerData();
+        villagerData = ColonyManager.Instance.CreateVillagerData();
     }
 
     protected override void OnUpdate()
