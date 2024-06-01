@@ -1,0 +1,19 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+
+<root>
+    <div class="slot-panel">
+        <div class="slot-container">
+            @for (var i = 0; i < 22; i++)
+            {
+                <Slot class="slot" SlotId=@(i + 1)/>
+            }
+        </div>
+    </div>
+</root >
+
+@code
+{
+    // protected override int BuildHash() => System.HashCode.Combine(MyStringValue);
+}
