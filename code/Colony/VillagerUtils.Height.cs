@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Kira.Utils;
+﻿namespace Kira.Utils;
 
 public partial class VillagerUtils
 {
@@ -11,7 +9,26 @@ public partial class VillagerUtils
         Child
     }
 
-    private static readonly List<(int Min, int Max, int Weight)> AdultHeightRanges = new List<(int Min, int Max, int Weight)>
+    private static WeightedData ChildHeightRanges = new WeightedData(new[]
+    {
+        (110, 120, 1350),
+        (120, 140, 8100),
+        (140, 160, 13500),
+        (160, 180, 3200),
+        (180, 190, 28),
+        (190, 190, 0)
+    });
+
+    private static WeightedData TeenHeightRanges = new WeightedData(new[]
+    {
+        (110, 120, 800),
+        (120, 140, 5100),
+        (140, 160, 13500),
+        (160, 180, 9200),
+        (180, 190, 5000),
+        (190, 190, 0)
+    });
+    private static WeightedData AdultHeightRanges = new WeightedData(new[]
     {
         (140, 147, 3200),
         (147, 155, 135000),
@@ -25,46 +42,18 @@ public partial class VillagerUtils
         (208, 216, 3200),
         (216, 224, 28),
         (224, 231, 0)
-    };
+    });
 
-    private static readonly List<(int Min, int Max, int Weight)> ChildHeightRanges = new List<(int Min, int Max, int Weight)>
+    private static Dictionary<AgeGroup, WeightedData> HeightRanges = new()
     {
-        (110, 120, 1350),
-        (120, 140, 8100),
-        (140, 160, 13500),
-        (160, 180, 3200),
-        (180, 190, 28),
-        (190, 190, 0)
-    };
-
-    private static readonly List<(int Min, int Max, int Weight)> TeenHeightRanges = new List<(int Min, int Max, int Weight)>
-    {
-        (110, 120, 800),
-        (120, 140, 5100),
-        (140, 160, 13500),
-        (160, 180, 9200),
-        (180, 190, 5000),
-        (190, 190, 0)
-    };
-
-
-    private static Dictionary<AgeGroup, List<(int Min, int Max, int Weight)>> HeightRanges = new()
-    {
-        { AgeGroup.Adult, AdultHeightRanges },
+        { AgeGroup.Child, ChildHeightRanges },
         { AgeGroup.Teen, TeenHeightRanges },
-        { AgeGroup.Child, ChildHeightRanges }
-    };
-
-    private static Dictionary<AgeGroup, int> WeightRanges = new()
-    {
-        { AgeGroup.Adult, AdultHeightRanges.Sum(x => x.Weight) },
-        { AgeGroup.Teen, TeenHeightRanges.Sum(x => x.Weight) },
-        { AgeGroup.Child, ChildHeightRanges.Sum(x => x.Weight) }
+        { AgeGroup.Adult, AdultHeightRanges }
     };
 
     private static int GenerateHeight(int age)
     {
-        var ageGroup = AgeGroup.Child;
+        AgeGroup ageGroup = AgeGroup.Child;
         if (age > 12) ageGroup = AgeGroup.Teen;
         if (age > 18) ageGroup = AgeGroup.Adult;
 
@@ -74,19 +63,6 @@ public partial class VillagerUtils
 
     private static int GenerateHeight(AgeGroup ageGroup = AgeGroup.Adult)
     {
-        var rnd = new Random();
-
-        int totalWeight = WeightRanges[ageGroup];
-        var ranges = HeightRanges[ageGroup];
-
-        var randomNum = rnd.Next(totalWeight);
-        foreach ((int min, int max, int weight) in ranges)
-        {
-            if (randomNum < weight)
-                return rnd.Next(min, max);
-            randomNum -= weight;
-        }
-
-        return 0;
+        return HeightRanges[ageGroup].GenerateRandom();
     }
 }
