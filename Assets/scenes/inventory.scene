@@ -1,5 +1,5 @@
 {
-  "__guid": "70e1f607-bebf-4101-aa9c-b783acb84678",
+  "__guid": "1748af8a-06c1-44ea-b4ff-3b54290288b4",
   "GameObjects": [
     {
       "__guid": "090d99a6-3b3a-4e23-9f16-2f1a27110553",
@@ -76,7 +76,7 @@
           "MaterialOverride": "materials/default.vmat",
           "Model": "models/dev/plane.vmdl",
           "RenderType": "On",
-          "Tint": "0.58031,0.86047,0.7484,1"
+          "Tint": "0.60465,0.60465,0.60465,1"
         },
         {
           "__type": "Sandbox.BoxCollider",
@@ -147,9 +147,13 @@
         {
           "__type": "Sandbox.Tonemapping",
           "__guid": "fde5c22d-8183-4e54-b190-26dda8a6de93",
+          "__version": 1,
+          "ExposureBias": 2,
           "ExposureCompensation": 0,
+          "ExposureMethod": "RGB",
           "MaximumExposure": 2,
           "MinimumExposure": 1,
+          "Mode": "Legacy",
           "Rate": 1
         },
         {
@@ -176,13 +180,8 @@
           "ZIndex": 100
         },
         {
-          "__type": "InventoryUI",
-          "__guid": "8c4a07f0-c03d-404d-a218-1eea2e0b20ff",
-          "__enabled": false
-        },
-        {
           "__type": "PlayerUI",
-          "__guid": "2ef8265f-b0a4-4cb8-bb23-eddc2b8cf93b"
+          "__guid": "4c5506d9-9e48-458d-8bc3-70e4af590b4e"
         }
       ]
     },
@@ -413,7 +412,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-01T20:33:11.3023157\u002B01:00",
+  "LastSaved": "2024-06-12T18:06:45.126275\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1
