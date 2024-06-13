@@ -1,32 +1,27 @@
 ﻿using System;
-using System.Text.Json.Nodes;
 
 namespace Kira;
 
 public class ColonyManager : Component
 {
-    public HashSet<VillagerData> Villagers { get; private set; } = new HashSet<VillagerData>();
+    [NonSerialized]
+    public List<VillagerData> Villagers = new List<VillagerData>();
     public static ColonyManager Instance { get; set; }
 
-    private const float WorldTickRate = 0.2f;
-    private TimeUntil TimeTillWorldTick { get; set; } = 0;
+    private const float WorldTickRate = 0.5f;
+    private TimeUntil TimeTillWorldTick { get; set; } = 1;
 
     private delegate void OnWorldTickEvent();
-    private OnWorldTickEvent OnWorldTick;
+    private event OnWorldTickEvent OnWorldTick;
 
-    public override int ComponentVersion => 1;
-
-    [JsonUpgrader(typeof(ColonyManager), 1)]
-    private static void WorldTickPropertyUpgrader(JsonObject json)
-    {
-        json.Remove("OnWorldTick", out var newNode);
-        json["OnWorldTick"] = newNode;
-    }
+    private RandomNames randomNames;
 
     protected override void OnAwake()
     {
         base.OnAwake();
-        Villagers = new HashSet<VillagerData>();
+
+        randomNames = new RandomNames();
+        Villagers = new List<VillagerData>();
         Instance = this;
 
         for (int i = 0; i < 9; i++)
@@ -49,7 +44,7 @@ public class ColonyManager : Component
 
     public VillagerData CreateVillagerData()
     {
-        VillagerData villager = new VillagerData();
+        VillagerData villager = new VillagerData(RandomNames.RandomFirstName, RandomNames.RandomLastName);
         Villagers.Add(villager);
         OnWorldTick += villager.OnWorldTick;
         return villager;

@@ -2,12 +2,28 @@
 
 using System;
 
-public record NamesData(List<string> FirstNames, List<string> LastNames);
-public record NamesDataRoot(NamesData Names);
-
-public static class RandomNames
+public class NamesData
 {
-    private static readonly NamesData Data = FileSystem.Mounted.ReadJson<NamesDataRoot>("Colony/Utils/RandomNames.json").Names;
-    public static string RandomFirstName => Random.Shared.FromList(Data.FirstNames);
-    public static string RandomLastName => Random.Shared.FromList(Data.LastNames);
+    public List<string> FirstNames { get; set; }
+    public List<string> LastNames { get; set; }
+}
+
+public class NamesDataRoot
+{
+    public NamesData Names { get; set; }
+}
+
+public class RandomNames
+{
+    private static NamesDataRoot Data { get; set; }
+    private static NamesData Names { get; set; }
+
+    public RandomNames()
+    {
+        Data = FileSystem.Mounted.ReadJson<NamesDataRoot>("Colony/Utils/RandomNames.json");
+        Names = Data.Names;
+    }
+
+    public static string RandomFirstName => Random.Shared.FromList(Names.FirstNames);
+    public static string RandomLastName => Random.Shared.FromList(Names.LastNames);
 }

@@ -6,6 +6,7 @@ using System;
 public class VillagerData
 {
     public string FirstName { get; set; }
+
     public string LastName { get; set; }
     public int Age { get; set; }
 
@@ -18,7 +19,7 @@ public class VillagerData
     /// <summary>
     /// How many world ticks it takes for hunger to decrease
     /// </summary>
-    private const int HungerTickRate = 3;
+    private const int HungerTickRate = 4;
 
     /// <summary>
     /// How many world ticks it takes for Thirst to decrease
@@ -45,10 +46,13 @@ public class VillagerData
     /// </summary>
     public int Weight { get; set; }
 
-    public VillagerData()
+    public VillagerData(string firstName, string lastName)
     {
-        FirstName = RandomNames.RandomFirstName;
-        LastName = RandomNames.RandomLastName;
+        FirstName = firstName;
+        LastName = lastName;
+
+        // FirstName = "fname";
+        // LastName = "lname";
 
         Age = Random.Shared.Int(10, 60);
         Weight = Random.Shared.Int(50, 120);
@@ -96,7 +100,7 @@ public class VillagerData
 
 
         CurHungerOrThirstDamageTicks++;
-        if (CurHungerTicks >= HungerOrThirstDamageTickRate)
+        if (CurHungerOrThirstDamageTicks >= HungerOrThirstDamageTickRate)
         {
             int damage = 0;
             if (Thirst <= 0) damage++;

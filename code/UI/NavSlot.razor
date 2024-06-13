@@ -1,0 +1,19 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel;
+
+<root>
+    <i>@Icon</i>
+</root>
+
+@code
+{
+    public string Icon { get; set; }
+    public int SlotId { get; set; }
+
+    public void OnClick()
+    {
+        Log.Info($"clicked {Icon}");
+    }
+    // protected override int BuildHash() => System.HashCode.Combine(MyStringValue);
+}

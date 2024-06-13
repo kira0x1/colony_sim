@@ -1,0 +1,72 @@
+@* ReSharper disable once RedundantUsingDirective *@
+@using Sandbox.UI;
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+    @* <div class="nav" @ref="NavContainer"> *@
+    @* <div class="navslot"> *@
+    @*     <i>home</i> *@
+    @* </div> *@
+    @* <div class="navslot"> *@
+    @*     <i>grass</i> *@
+    @* </div> *@
+    @* <div class="navslot"> *@
+    @*     <i>window</i> *@
+    @* </div> *@
+    @* <div class="navslot"> *@
+    @*     <i>chair</i> *@
+    @* </div> *@
+    @* </div> *@
+</root>
+
+@code
+{
+
+
+    private readonly List<NavSlot> Slots = new List<NavSlot>();
+    private Panel NavContainer { get; set; }
+    public int TabIndex { get; private set; }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (!firstTime) return;
+        NavContainer = new Panel(this, "nav");
+        Setup();
+    }
+
+    private void Setup()
+    {
+        CreateSlot(0, "home");
+        CreateSlot(1, "window");
+        CreateSlot(2, "chair");
+    }
+
+    public override void OnHotloaded()
+    {
+        foreach (NavSlot sl in Slots)
+        {
+            sl.Delete();
+        }
+
+        Slots.Clear();
+        Setup();
+    }
+
+    public void CreateSlot(int id, string icon)
+    {
+        var slot = new NavSlot();
+        slot.Icon = icon;
+        slot.SetClass("navslot", true);
+        slot.AddEventListener("onclick", () => OnSlotClick(id));
+        NavContainer.AddChild(slot);
+        Slots.Add(slot);
+    }
+
+    private void OnSlotClick(int i = 0)
+    {
+        Slots[i].OnClick();
+    }
+
+    // protected override int BuildHash() => System.HashCode.Combine(MyStringValue);
+}
