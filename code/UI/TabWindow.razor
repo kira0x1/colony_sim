@@ -1,0 +1,16 @@
+﻿@* ReSharper disable once RedundantUsingDirective *@
+@using Sandbox.UI;
+@inherits Panel;
+@attribute [StyleSheet]
+
+
+@if (!IsActive) return;
+<root>
+    <div class="window">meow :3</div>
+</root>
+
+@code
+{
+    public bool IsActive { get; set; }
+    protected override int BuildHash() => System.HashCode.Combine(IsActive);
+}

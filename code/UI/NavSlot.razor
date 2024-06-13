@@ -1,8 +1,22 @@
-﻿@using Sandbox;
+﻿@* ReSharper disable RedundantUsingDirective *@
+
 @using Sandbox.UI;
 @inherits Panel;
 
-<root>
+@{
+    var cname = "navslot";
+    if (SlotId == ActiveId)
+    {
+        cname += " active";
+        TabWin.IsActive = true;
+    }
+    else
+    {
+        TabWin.IsActive = false;
+    }
+}
+
+<root class="@cname">
     <i>@Icon</i>
 </root>
 
@@ -10,10 +24,26 @@
 {
     public string Icon { get; set; }
     public int SlotId { get; set; }
+    public static int ActiveId { get; set; }
+    private TabWindow TabWin { get; set; } = new TabWindow();
+    public Panel WindowContainer { get; set; }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (firstTime) WindowContainer.AddChild(TabWin);
+    }
 
     public void OnClick()
     {
-        Log.Info($"clicked {Icon}");
+        if (ActiveId == SlotId)
+        {
+            ActiveId = -1;
+        }
+        else
+        {
+            ActiveId = SlotId;
+        }
     }
-    // protected override int BuildHash() => System.HashCode.Combine(MyStringValue);
+
+    protected override int BuildHash() => System.HashCode.Combine(ActiveId, TabWin.IsActive);
 }

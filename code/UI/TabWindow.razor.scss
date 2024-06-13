@@ -1,0 +1,23 @@
+﻿TabWindow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  pointer-events: none;
+  justify-content: center;
+  align-items: center;
+
+  .window {
+    justify-content: center;
+    align-items: center;
+
+    width: 300px;
+    height: 120px;
+    color: #fff;
+    background-color: rgb(#222, 0.95);
+    font-family: "FiraCode Nerd Font";
+    font-weight: 650;
+    font-size: 32px;
+  }
+}
