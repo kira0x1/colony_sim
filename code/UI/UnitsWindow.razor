@@ -2,13 +2,30 @@
 @using Kira
 @using Sandbox.Razor
 @using Sandbox.UI;
-@inherits Panel;
 @attribute [StyleSheet]
+@inherits Kira.UI.BaseNavWindow;
 
+<style>
+    UnitsWindow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+</style>
+
+
+@if (!IsActive)
+{
+    Log.Info("inactive");
+    return;
+}
 
 <root>
     <TabWindow>
         <Header>Units</Header>
+        <Footer>test</Footer>
     </TabWindow>
 </root>
 
@@ -19,7 +36,7 @@
     public VillagerData villagerHovering { get; set; }
     private int hoverId { get; set; }
     public bool IsHoveringVillager { get; set; }
-
+    public override bool IsActive { get; set; }
 
     public void OnMouseExit(int id)
     {
@@ -40,5 +57,5 @@
         Colony = Scene.Components.GetAll<ColonyManager>().First();
     }
 
-    protected override int BuildHash() => System.HashCode.Combine(IsHoveringVillager, UnitsMenuVisible);
+    protected override int BuildHash() => System.HashCode.Combine(IsHoveringVillager, UnitsMenuVisible, IsActive);
 }

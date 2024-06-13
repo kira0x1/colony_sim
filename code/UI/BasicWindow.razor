@@ -1,7 +1,9 @@
 ﻿@* ReSharper disable once RedundantUsingDirective *@
+
 @using Sandbox.Razor
 @using Sandbox.UI;
 @inherits Kira.UI.BaseNavWindow;
+
 <style>
     BasicWindow {
         position: absolute;
@@ -14,16 +16,26 @@
     }
 </style>
 
-@if (!IsActive) return;
+
+@if (!IsActive)
+{
+    Log.Info("is active");
+    return;
+}
 <root>
-    <TabWindow>
-        <Header>Meow</Header>
-        <Body>meow</Body>
-        <Footer>x</Footer>
-    </TabWindow>
+    TEST
 </root>
 
 @code
 {
+    public override bool IsActive { get; set; } = false;
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (!firstTime) return;
+        Panel container = this.Add.Panel("window-container");
+        container.AddChild(new UnitsWindow());
+    }
+
     protected override int BuildHash() => System.HashCode.Combine(IsActive);
 }

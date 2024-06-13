@@ -28,7 +28,7 @@
     public string Icon { get; set; }
     public int SlotId { get; set; }
     public static int ActiveId { get; set; }
-    private BaseNavWindow TabWin { get; set; }
+    public BaseNavWindow TabWin { get; set; }
     public Panel WindowContainer { get; set; }
 
     protected override void OnAfterTreeRender(bool firstTime)
@@ -38,6 +38,10 @@
             if (!TabWin.IsValid())
             {
                 TabWin = new BasicWindow();
+            }
+            else
+            {
+                Log.Info("NOT INVALID");
             }
 
             WindowContainer.AddChild(TabWin);

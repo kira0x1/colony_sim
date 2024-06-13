@@ -1,5 +1,6 @@
 @* ReSharper disable RedundantUsingDirective *@
 @using System
+@using Kira.UI
 @using Sandbox.UI;
 @inherits Panel
 @attribute [StyleSheet]
@@ -37,15 +38,15 @@
         Setup();
     }
 
-    public void CreateSlot(int id, string icon, Panel win = null)
+    public void CreateSlot(int id, string icon, BaseNavWindow window = null)
     {
         var slot = new NavSlot();
         slot.WindowContainer = WindowContainer;
         slot.SlotId = id;
         slot.Icon = icon;
-
-        if (win != null)
+        if (window != null)
         {
+            slot.TabWin = window;
         }
 
         slot.AddEventListener("onclick", () => OnSlotClick(id));
