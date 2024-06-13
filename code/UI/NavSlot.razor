@@ -1,5 +1,6 @@
 ﻿@* ReSharper disable RedundantUsingDirective *@
 
+@using Kira.UI
 @using Sandbox.UI;
 @inherits Panel;
 
@@ -8,11 +9,13 @@
     if (SlotId == ActiveId)
     {
         cname += " active";
-        TabWin.IsActive = true;
+        if (TabWin.IsValid())
+            TabWin.IsActive = true;
     }
     else
     {
-        TabWin.IsActive = false;
+        if (TabWin.IsValid())
+            TabWin.IsActive = false;
     }
 }
 
@@ -25,12 +28,20 @@
     public string Icon { get; set; }
     public int SlotId { get; set; }
     public static int ActiveId { get; set; }
-    private TabWindow TabWin { get; set; } = new TabWindow();
+    private BaseNavWindow TabWin { get; set; }
     public Panel WindowContainer { get; set; }
 
     protected override void OnAfterTreeRender(bool firstTime)
     {
-        if (firstTime) WindowContainer.AddChild(TabWin);
+        if (firstTime)
+        {
+            if (!TabWin.IsValid())
+            {
+                TabWin = new BasicWindow();
+            }
+
+            WindowContainer.AddChild(TabWin);
+        }
     }
 
     public void OnClick()
@@ -45,5 +56,5 @@
         }
     }
 
-    protected override int BuildHash() => System.HashCode.Combine(ActiveId, TabWin.IsActive);
+    protected override int BuildHash() => System.HashCode.Combine(ActiveId, TabWin?.IsActive);
 }

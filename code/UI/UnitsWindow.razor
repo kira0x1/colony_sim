@@ -1,0 +1,44 @@
+﻿@* ReSharper disable once RedundantUsingDirective *@
+@using Kira
+@using Sandbox.Razor
+@using Sandbox.UI;
+@inherits Panel;
+@attribute [StyleSheet]
+
+
+<root>
+    <TabWindow>
+        <Header>Units</Header>
+    </TabWindow>
+</root>
+
+@code
+{
+    private bool UnitsMenuVisible { get; set; }
+    private ColonyManager Colony { get; set; }
+    public VillagerData villagerHovering { get; set; }
+    private int hoverId { get; set; }
+    public bool IsHoveringVillager { get; set; }
+
+
+    public void OnMouseExit(int id)
+    {
+        if (hoverId == id)
+            IsHoveringVillager = false;
+    }
+
+    private void OnMouseOver(VillagerData data, int id)
+    {
+        hoverId = id;
+        villagerHovering = data;
+        IsHoveringVillager = true;
+    }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (!firstTime) return;
+        Colony = Scene.Components.GetAll<ColonyManager>().First();
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine(IsHoveringVillager, UnitsMenuVisible);
+}

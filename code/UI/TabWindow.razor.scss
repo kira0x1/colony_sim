@@ -9,15 +9,55 @@
   align-items: center;
 
   .window {
+    width: 40%;
+    height: 70%;
+    background-color: #87b2b3;
+    padding: 30px;
+
+
     justify-content: center;
     align-items: center;
 
-    width: 300px;
-    height: 120px;
     color: #fff;
-    background-color: rgb(#222, 0.95);
     font-family: "FiraCode Nerd Font";
     font-weight: 650;
     font-size: 32px;
+
+    flex-grow: 0;
+    flex-shrink: 1;
+    border-radius: 6px;
+
+    flex-direction: column;
+    gap: 10px;
+    flex-wrap: wrap;
+    overflow: hidden;
   }
+
+  .header {
+    width: 100%;
+    flex-shrink: 1;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(#f00, 0.5);
+  }
+
+  .body {
+    width: 100%;
+    flex-shrink: 1;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(#00f, 0.5);
+  }
+
+  .footer {
+    width: 100%;
+    flex-shrink: 1;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(#5F8, 0.5);
+  }
+
 }

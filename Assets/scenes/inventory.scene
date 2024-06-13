@@ -1,5 +1,5 @@
 {
-  "__guid": "1748af8a-06c1-44ea-b4ff-3b54290288b4",
+  "__guid": "4ff35603-4bd1-4564-b67c-b0d1943661cd",
   "GameObjects": [
     {
       "__guid": "090d99a6-3b3a-4e23-9f16-2f1a27110553",
@@ -181,7 +181,7 @@
         },
         {
           "__type": "PlayerUI",
-          "__guid": "4c5506d9-9e48-458d-8bc3-70e4af590b4e"
+          "__guid": "a2e80a74-f277-439d-ab2f-37810e1aaf61"
         }
       ]
     },
@@ -412,7 +412,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-12T22:10:05.4491774\u002B01:00",
+  "LastSaved": "2024-06-13T12:49:33.0712501\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

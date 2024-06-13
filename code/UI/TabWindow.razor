@@ -1,16 +1,22 @@
 ﻿@* ReSharper disable once RedundantUsingDirective *@
+@using Sandbox.Razor
 @using Sandbox.UI;
 @inherits Panel;
 @attribute [StyleSheet]
 
 
-@if (!IsActive) return;
 <root>
-    <div class="window">meow :3</div>
+    <div class="window">
+        <div class="header">@Header</div>
+        <div class="body">@Body</div>
+        <div class="footer">@Footer</div>
+    </div>
 </root>
 
 @code
 {
-    public bool IsActive { get; set; }
-    protected override int BuildHash() => System.HashCode.Combine(IsActive);
+    public RenderFragment Header { get; set; }
+    public RenderFragment Body { get; set; }
+    public RenderFragment Footer { get; set; }
+
 }

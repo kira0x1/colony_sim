@@ -1,0 +1,29 @@
+﻿@* ReSharper disable once RedundantUsingDirective *@
+@using Sandbox.Razor
+@using Sandbox.UI;
+@inherits Kira.UI.BaseNavWindow;
+<style>
+    BasicWindow {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        width: 100%;
+    }
+</style>
+
+@if (!IsActive) return;
+<root>
+    <TabWindow>
+        <Header>Meow</Header>
+        <Body>meow</Body>
+        <Footer>x</Footer>
+    </TabWindow>
+</root>
+
+@code
+{
+    protected override int BuildHash() => System.HashCode.Combine(IsActive);
+}

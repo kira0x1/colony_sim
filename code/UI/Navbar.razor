@@ -21,7 +21,7 @@
 
     private void Setup()
     {
-        CreateSlot(0, "home");
+        CreateSlot(0, "home", new UnitsWindow());
         CreateSlot(1, "window");
         CreateSlot(2, "chair");
     }
@@ -37,12 +37,17 @@
         Setup();
     }
 
-    public void CreateSlot(int id, string icon)
+    public void CreateSlot(int id, string icon, Panel win = null)
     {
         var slot = new NavSlot();
         slot.WindowContainer = WindowContainer;
         slot.SlotId = id;
         slot.Icon = icon;
+
+        if (win != null)
+        {
+        }
+
         slot.AddEventListener("onclick", () => OnSlotClick(id));
         NavContainer.AddChild(slot);
         Slots.Add(slot);
