@@ -1,20 +1,21 @@
-@* ReSharper disable RedundantUsingDirective *@
 @using System
-@using Kira.UI
 @using Sandbox.UI;
 @inherits Panel
 @attribute [StyleSheet]
+@namespace Kira.UI
 
 @code
 {
     private readonly List<NavSlot> Slots = new List<NavSlot>();
     private Panel NavContainer { get; set; }
-    public int TabIndex { get; private set; }
     public Panel WindowContainer { get; set; }
+    public static int ActiveSlotId { get; set; } = -1;
 
     protected override void OnAfterTreeRender(bool firstTime)
     {
         if (!firstTime) return;
+        ActiveSlotId = -1;
+        Log.Info("active id");
         NavContainer = new Panel(this, "nav");
         WindowContainer = new Panel(this, "window-container");
         Setup();
@@ -27,16 +28,6 @@
         CreateSlot(2, "chair");
     }
 
-    public override void OnHotloaded()
-    {
-        foreach (NavSlot sl in Slots)
-        {
-            sl.Delete();
-        }
-
-        Slots.Clear();
-        Setup();
-    }
 
     public void CreateSlot(int id, string icon, BaseNavWindow window = null)
     {
@@ -44,6 +35,7 @@
         slot.WindowContainer = WindowContainer;
         slot.SlotId = id;
         slot.Icon = icon;
+
         if (window != null)
         {
             slot.TabWin = window;
@@ -60,4 +52,5 @@
     }
 
     protected override int BuildHash() => HashCode.Combine(Slots.Select(x => x.GetHashCode()));
+
 }

@@ -1,32 +1,14 @@
-﻿@* ReSharper disable once RedundantUsingDirective *@
-@using Kira
-@using Sandbox.Razor
-@using Sandbox.UI;
+﻿@using Sandbox.UI
 @attribute [StyleSheet]
-@inherits Kira.UI.BaseNavWindow;
+@inherits Kira.UI.BaseNavWindow
+@namespace Kira.UI
 
-<style>
-    UnitsWindow {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
-</style>
-
-
-@if (!IsActive)
-{
-    Log.Info("inactive");
-    return;
-}
-
+@if (!IsActive) return;
 <root>
-    <TabWindow>
-        <Header>Units</Header>
-        <Footer>test</Footer>
-    </TabWindow>
+    <WindowContent>
+        <Header>Meow</Header>
+        <Body>meow</Body>
+    </WindowContent>
 </root>
 
 @code
@@ -53,7 +35,11 @@
 
     protected override void OnAfterTreeRender(bool firstTime)
     {
-        if (!firstTime) return;
+        if (!firstTime)
+        {
+            return;
+        }
+
         Colony = Scene.Components.GetAll<ColonyManager>().First();
     }
 

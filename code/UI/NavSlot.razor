@@ -1,16 +1,16 @@
-﻿@* ReSharper disable RedundantUsingDirective *@
-
-@using Kira.UI
-@using Sandbox.UI;
+﻿@using Sandbox.UI;
 @inherits Panel;
+@namespace Kira.UI
 
 @{
     var cname = "navslot";
-    if (SlotId == ActiveId)
+    if (SlotId == Navbar.ActiveSlotId)
     {
         cname += " active";
         if (TabWin.IsValid())
+        {
             TabWin.IsActive = true;
+        }
     }
     else
     {
@@ -27,7 +27,6 @@
 {
     public string Icon { get; set; }
     public int SlotId { get; set; }
-    public static int ActiveId { get; set; }
     public BaseNavWindow TabWin { get; set; }
     public Panel WindowContainer { get; set; }
 
@@ -39,10 +38,6 @@
             {
                 TabWin = new BasicWindow();
             }
-            else
-            {
-                Log.Info("NOT INVALID");
-            }
 
             WindowContainer.AddChild(TabWin);
         }
@@ -50,15 +45,15 @@
 
     public void OnClick()
     {
-        if (ActiveId == SlotId)
+        if (Navbar.ActiveSlotId == SlotId)
         {
-            ActiveId = -1;
+            Navbar.ActiveSlotId = -1;
         }
         else
         {
-            ActiveId = SlotId;
+            Navbar.ActiveSlotId = SlotId;
         }
     }
 
-    protected override int BuildHash() => System.HashCode.Combine(ActiveId, TabWin?.IsActive);
+    protected override int BuildHash() => System.HashCode.Combine(Navbar.ActiveSlotId, TabWin?.IsActive, WindowContainer);
 }

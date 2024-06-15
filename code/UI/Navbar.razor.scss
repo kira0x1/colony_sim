@@ -7,21 +7,24 @@
   justify-content: center;
 
   .nav {
-    gap: 6px;
     position: absolute;
-    bottom: 0;
-    border-radius: 3px;
+    bottom: 10px;
+    gap: 6px;
 
-    //width: 20%;
+    height: 80px;
+    border-radius: 3px;
+    padding: 7px;
+    //padding: 10px 10px;
     font-size: 18px;
+
     color: #1c1c1c;
     background-color: rgb(217, 217, 217);
-    height: 80px;
+
     font-family: Poppins;
     font-weight: 800;
+
     justify-content: center;
     align-items: center;
-    padding: 10px 10px;
   }
 
   .navslot {

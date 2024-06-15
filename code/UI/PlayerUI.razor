@@ -1,12 +1,9 @@
 @using Kira
-@using Sandbox;
-@using Sandbox.UI;
+@using Sandbox
 @inherits PanelComponent
-
-@* ReSharper disable once CSharpWarnings::CS8974 *@
+@namespace Kira.UI
 
 <root>
-    <div ref="WindowContainer"></div>
     <Navbar/>
     @if (!UnitsMenuVisible) return;
     <div class="units">

@@ -178,10 +178,6 @@
           "Opacity": 1,
           "Scale": 1,
           "ZIndex": 100
-        },
-        {
-          "__type": "PlayerUI",
-          "__guid": "a2e80a74-f277-439d-ab2f-37810e1aaf61"
         }
       ]
     },
@@ -412,7 +408,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-13T13:17:53.7462875\u002B01:00",
+  "LastSaved": "2024-06-15T10:55:12.5379523\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1
