@@ -118,6 +118,7 @@
         {
           "__type": "Sandbox.Bloom",
           "__guid": "d6dfb7bd-fc2d-4f7f-8861-0efeb8c14e6d",
+          "__enabled": false,
           "BloomColor": {
             "color": [
               {
@@ -140,8 +141,8 @@
             }
           ],
           "Mode": "Additive",
-          "Strength": 2,
-          "Threshold": 0.5,
+          "Strength": 1.15,
+          "Threshold": 0.7,
           "ThresholdWidth": 0.4
         },
         {
@@ -178,6 +179,10 @@
           "Opacity": 1,
           "Scale": 1,
           "ZIndex": 100
+        },
+        {
+          "__type": "Kira.UI.PlayerUI",
+          "__guid": "bc188d3b-4063-4570-85b2-daf6ebbf1598"
         }
       ]
     },
@@ -383,6 +388,98 @@
           "__guid": "9fafbddc-c3f0-4b87-b1c2-3eda6ca5df49"
         }
       ]
+    },
+    {
+      "__guid": "52538087-49b0-45f1-9118-032cb037fd0a",
+      "Flags": 0,
+      "Name": "noise",
+      "Position": "416,672,736",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "Components": [
+        {
+          "__type": "Kira.NoiseRenderer",
+          "__guid": "a0a468c8-edce-4e87-b1a0-42c70c691110",
+          "SpriteSize": 246
+        },
+        {
+          "__type": "Kira.NoiseGenerator",
+          "__guid": "0c0f3343-1974-46b4-afbc-9bfcd1bbfa19",
+          "ClampValues": false,
+          "Intensity": 1,
+          "NoiseType": "Perlin",
+          "Octaves": 3,
+          "Scale": 1,
+          "UseRenderer": true
+        },
+        {
+          "__type": "Sandbox.SpriteRenderer",
+          "__guid": "4f73ef4d-3ff4-4f80-84fb-3e796b2fe8b0",
+          "Additive": false,
+          "CastShadows": false,
+          "Color": "1,1,1,1",
+          "DepthFeather": 0,
+          "FlipHorizontal": false,
+          "FlipVertical": false,
+          "FogStrength": 1,
+          "Opaque": false,
+          "Size": "246,246",
+          "Texture": null
+        }
+      ]
+    },
+    {
+      "__guid": "236b3756-1073-4b25-8972-c7bdd5cc6373",
+      "Flags": 0,
+      "Name": "minimap",
+      "Position": "0,0,128",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "Components": [
+        {
+          "__type": "Kira.MiniMap",
+          "__guid": "f2e813c9-d7cf-41f6-b223-d018e07f252b",
+          "BaseMultiplier": 43.44,
+          "grassColor": "0.3658,0.51628,0.32418,1",
+          "Layers": [
+            {
+              "Color": "1,1,1,1",
+              "End": 1,
+              "MinLuminance": 100,
+              "MaxLuminance": 255
+            }
+          ],
+          "MaxLuminance": 255,
+          "MinLuminance": 0,
+          "SpriteSize": 192
+        },
+        {
+          "__type": "Kira.NoiseGenerator",
+          "__guid": "103ac17a-88e5-4e24-988b-9a2c34a381a0",
+          "ClampValues": false,
+          "Intensity": 5.05,
+          "NoiseType": "Simplex",
+          "Octaves": 2,
+          "Scale": 1,
+          "UseRenderer": true
+        },
+        {
+          "__type": "Sandbox.SpriteRenderer",
+          "__guid": "3a515ba2-ac53-4352-bb99-04a8d4c691d2",
+          "Additive": false,
+          "CastShadows": false,
+          "Color": "1,1,1,1",
+          "DepthFeather": 0,
+          "FlipHorizontal": false,
+          "FlipVertical": false,
+          "FogStrength": 1,
+          "Opaque": false,
+          "Size": "192,192",
+          "Texture": null
+        }
+      ]
     }
   ],
   "SceneProperties": {
@@ -408,7 +505,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-15T10:55:12.5379523\u002B01:00",
+  "LastSaved": "2024-06-16T10:20:02.5584208\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

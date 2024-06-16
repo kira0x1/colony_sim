@@ -5,10 +5,45 @@
 
 @if (!IsActive) return;
 <root>
-    <WindowContent>
-        <Header>Meow</Header>
-        <Body>meow</Body>
-    </WindowContent>
+    <div class="units">
+        @{
+            int i = 0;
+        }
+
+        @foreach (VillagerData pawn in ColonyManager.Instance.Villagers)
+        {
+            int i1 = i;
+
+            <div class="villager" onmouseout=@(() => OnMouseExit(i1)) onmouseover=@(() => OnMouseOver(pawn, i1))>
+                <div class="pawntext">
+                    @pawn.FullName
+                </div>
+            </div>
+
+            @{
+                i++;
+            }
+        }
+    </div>
+    @if (IsHoveringVillager && villagerHovering != null)
+    {
+        <div class="tooltip">
+            <div class="tooltip-text">
+                @villagerHovering.FullName
+            </div>
+            <div class="stats">
+                <div class="tooltip-text">
+                    ❤️ @($"{villagerHovering.Health} / {villagerHovering.MaxHealth}")
+                </div>
+                <div class="tooltip-text">
+                    🍗 @($"{villagerHovering.Hunger} / 100")
+                </div>
+                <div class="tooltip-text">
+                    💧 @($"{villagerHovering.Thirst} / 100")
+                </div>
+            </div>
+        </div>
+    }
 </root>
 
 @code
@@ -35,10 +70,7 @@
 
     protected override void OnAfterTreeRender(bool firstTime)
     {
-        if (!firstTime)
-        {
-            return;
-        }
+        if (!firstTime) return;
 
         Colony = Scene.Components.GetAll<ColonyManager>().First();
     }
