@@ -6,12 +6,16 @@ namespace Kira;
 
 public sealed class NoiseGenerator : Component, Component.ExecuteInEditor
 {
-    [Property, MinMax(0, 20), Range(0f, 25f)] public float Scale { get; set; } = 10f;
-    [Property, MinMax(0, 10), Range(0, 14)] public float Intensity { get; set; } = 2f;
+    [Property, Range(0f, 3f)] public float Scale { get; set; } = 1f;
+    [Property, Range(1f, 5f)] public float ZoomIn { get; set; } = 1f;
+    [Property, Range(1f, 10f)] public float ZoomOut { get; set; } = 1f;
 
+
+    [Property, Range(0, 35)] public float Intensity { get; set; } = 2f;
     [Property] public bool ClampValues { get; set; } = false;
-    [Property, ShowIf(nameof(NoiseType), NoiseTypes.Fbm)] public int Octaves { get; set; } = 8;
     [Property] public NoiseTypes NoiseType { get; set; }
+    [Property, Range(1, 12), ShowIf(nameof(NoiseType), NoiseTypes.Fbm)] public int Octaves { get; set; } = 8;
+
     [Property] public bool UseRenderer { get; set; }
 
     public NoiseGenerator()
@@ -45,28 +49,25 @@ public sealed class NoiseGenerator : Component, Component.ExecuteInEditor
         if (UseRenderer)
         {
             Renderer = Components.Get<INoiseRenderer>();
-            if (Renderer.Enabled == false) return;
+            if (Renderer == null || Renderer.Enabled == false) return;
             CreateNoise(Renderer.SpriteSize);
             Renderer.CreateTexture(Luminance);
         }
     }
 
-    public float[,] CreateNoise(float scale, int size = 10)
+    public void CreateNoise(int pixelSize = 512)
     {
-        Scale = scale;
-        return CreateNoise(size);
-    }
+        float finalZoom = ZoomIn / ZoomOut;
+        float finalScale = Scale / finalZoom;
 
-    public float[,] CreateNoise(int pixelSize = 512)
-    {
         Luminance = new float[pixelSize, pixelSize];
 
         for (int y = 0; y < pixelSize; y++)
         {
             for (int x = 0; x < pixelSize; x++)
             {
-                float px = x * Scale;
-                float py = y * Scale;
+                float px = x * finalScale;
+                float py = y * finalScale;
 
 
                 float point = NoiseType switch
@@ -82,7 +83,5 @@ public sealed class NoiseGenerator : Component, Component.ExecuteInEditor
                 Luminance[y, x] = val;
             }
         }
-
-        return Luminance;
     }
 }

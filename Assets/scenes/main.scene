@@ -61,38 +61,10 @@
       ]
     },
     {
-      "__guid": "8e2edcf2-1012-46e0-aab4-197a8b2ab84a",
-      "Flags": 0,
-      "Name": "Plane",
-      "Scale": "5,5,5",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "Components": [
-        {
-          "__type": "Sandbox.ModelRenderer",
-          "__guid": "70b491c2-0ebe-4a2a-acfe-3b0a493d3a6d",
-          "BodyGroups": 18446744073709551615,
-          "MaterialOverride": "materials/default.vmat",
-          "Model": "models/dev/plane.vmdl",
-          "RenderType": "On",
-          "Tint": "0.60465,0.60465,0.60465,1"
-        },
-        {
-          "__type": "Sandbox.BoxCollider",
-          "__guid": "1b9a5f24-30e7-4bdf-9e3b-3a41b4bc961a",
-          "Center": "0,0,-5",
-          "IsTrigger": false,
-          "Scale": "100,100,10",
-          "Static": true
-        }
-      ]
-    },
-    {
       "__guid": "8ef48951-c659-456d-ab3c-ccd0a427eee6",
       "Flags": 0,
       "Name": "Camera",
-      "Position": "782.1684,0.00001371071,434.9642",
+      "Position": "782.1684,0.00001371071,468.3646",
       "Rotation": "-0.2456983,-0.00000001073982,0.9693463,-0.00000004237148",
       "Enabled": true,
       "NetworkMode": 2,
@@ -187,11 +159,37 @@
       ]
     },
     {
+      "__guid": "8e2edcf2-1012-46e0-aab4-197a8b2ab84a",
+      "Flags": 0,
+      "Name": "Plane",
+      "Scale": "5,5,5",
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ModelRenderer",
+          "__guid": "70b491c2-0ebe-4a2a-acfe-3b0a493d3a6d",
+          "BodyGroups": 18446744073709551615,
+          "MaterialOverride": "materials/default.vmat",
+          "Model": "models/dev/plane.vmdl",
+          "RenderType": "On",
+          "Tint": "0.60465,0.60465,0.60465,1"
+        },
+        {
+          "__type": "Sandbox.BoxCollider",
+          "__guid": "1b9a5f24-30e7-4bdf-9e3b-3a41b4bc961a",
+          "Center": "0,0,-5",
+          "IsTrigger": false,
+          "Scale": "100,100,10",
+          "Static": true
+        }
+      ]
+    },
+    {
       "__guid": "ff3cd03b-df1c-4945-9f39-32071a6b3c11",
       "Flags": 0,
       "Name": "Pawn",
       "Position": "-64,-32,0",
-      "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
       "Components": [
@@ -390,59 +388,21 @@
       ]
     },
     {
-      "__guid": "52538087-49b0-45f1-9118-032cb037fd0a",
-      "Flags": 0,
-      "Name": "noise",
-      "Position": "416,672,736",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "Components": [
-        {
-          "__type": "Kira.NoiseRenderer",
-          "__guid": "a0a468c8-edce-4e87-b1a0-42c70c691110",
-          "SpriteSize": 246
-        },
-        {
-          "__type": "Kira.NoiseGenerator",
-          "__guid": "0c0f3343-1974-46b4-afbc-9bfcd1bbfa19",
-          "ClampValues": false,
-          "Intensity": 1,
-          "NoiseType": "Perlin",
-          "Octaves": 3,
-          "Scale": 1,
-          "UseRenderer": true
-        },
-        {
-          "__type": "Sandbox.SpriteRenderer",
-          "__guid": "4f73ef4d-3ff4-4f80-84fb-3e796b2fe8b0",
-          "Additive": false,
-          "CastShadows": false,
-          "Color": "1,1,1,1",
-          "DepthFeather": 0,
-          "FlipHorizontal": false,
-          "FlipVertical": false,
-          "FogStrength": 1,
-          "Opaque": false,
-          "Size": "246,246",
-          "Texture": null
-        }
-      ]
-    },
-    {
-      "__guid": "236b3756-1073-4b25-8972-c7bdd5cc6373",
+      "__guid": "a7618d21-e506-4422-8996-f0adcc3d94f4",
       "Flags": 0,
       "Name": "minimap",
-      "Position": "0,0,128",
+      "Position": "0,-32,48.69999",
       "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
       "Components": [
         {
           "__type": "Kira.MiniMap",
-          "__guid": "f2e813c9-d7cf-41f6-b223-d018e07f252b",
-          "BaseMultiplier": 43.44,
+          "__guid": "4bbf280a-036e-4dcd-8039-fdf33f9ed9cf",
+          "Brightness": 1,
+          "ClampValues": true,
           "grassColor": "0.3658,0.51628,0.32418,1",
+          "Intensity": 1,
           "Layers": [
             {
               "Color": "1,1,1,1",
@@ -452,22 +412,17 @@
             }
           ],
           "MaxLuminance": 255,
-          "MinLuminance": 0,
-          "SpriteSize": 192
-        },
-        {
-          "__type": "Kira.NoiseGenerator",
-          "__guid": "103ac17a-88e5-4e24-988b-9a2c34a381a0",
-          "ClampValues": false,
-          "Intensity": 5.05,
-          "NoiseType": "Simplex",
-          "Octaves": 2,
+          "MinLuminance": 100,
+          "NoiseType": "Perlin",
+          "Octaves": 8,
           "Scale": 1,
-          "UseRenderer": true
+          "SpriteSize": 512,
+          "ZoomIn": 1,
+          "ZoomOut": 1
         },
         {
           "__type": "Sandbox.SpriteRenderer",
-          "__guid": "3a515ba2-ac53-4352-bb99-04a8d4c691d2",
+          "__guid": "7ff2b856-ef24-4f9a-a131-94eb632ab672",
           "Additive": false,
           "CastShadows": false,
           "Color": "1,1,1,1",
@@ -476,7 +431,7 @@
           "FlipVertical": false,
           "FogStrength": 1,
           "Opaque": false,
-          "Size": "192,192",
+          "Size": "512,512",
           "Texture": null
         }
       ]
@@ -505,7 +460,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-16T10:20:02.5584208\u002B01:00",
+  "LastSaved": "2024-06-16T12:11:28.4412112\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

@@ -1,0 +1,62 @@
+{
+  "RootObject": {
+    "__guid": "a7618d21-e506-4422-8996-f0adcc3d94f4",
+    "Flags": 0,
+    "Name": "minimap",
+    "Position": "0,0,48.69999",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "Components": [
+      {
+        "__type": "Kira.MiniMap",
+        "__guid": "4bbf280a-036e-4dcd-8039-fdf33f9ed9cf",
+        "Brightness": 10.92,
+        "grassColor": "0.3658,0.51628,0.32418,1",
+        "Layers": [
+          {
+            "Color": "1,1,1,1",
+            "End": 1,
+            "MinLuminance": 100,
+            "MaxLuminance": 255
+          }
+        ],
+        "MaxLuminance": 255,
+        "MinLuminance": 0,
+        "SpriteSize": 512
+      },
+      {
+        "__type": "Kira.NoiseGenerator",
+        "__guid": "295a4d2e-8f59-4b93-846d-807bdba69c27",
+        "ClampValues": true,
+        "Intensity": 12.62,
+        "NoiseType": "Perlin",
+        "Octaves": 5,
+        "Scale": 0.39,
+        "UseRenderer": true,
+        "ZoomIn": 1,
+        "ZoomOut": 1.38
+      },
+      {
+        "__type": "Sandbox.SpriteRenderer",
+        "__guid": "7ff2b856-ef24-4f9a-a131-94eb632ab672",
+        "Additive": false,
+        "CastShadows": false,
+        "Color": "1,1,1,1",
+        "DepthFeather": 0,
+        "FlipHorizontal": false,
+        "FlipVertical": false,
+        "FogStrength": 1,
+        "Opaque": false,
+        "Size": "512,512",
+        "Texture": null
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
