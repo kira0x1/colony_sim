@@ -1,11 +1,11 @@
 {
-  "__guid": "4ff35603-4bd1-4564-b67c-b0d1943661cd",
+  "__guid": "67b1546e-1437-4c42-bfa5-10791f96cd79",
   "GameObjects": [
     {
       "__guid": "090d99a6-3b3a-4e23-9f16-2f1a27110553",
       "Flags": 0,
       "Name": "Sun",
-      "Position": "0,0,101.1",
+      "Position": "0,0,-160",
       "Rotation": "-0.3281769,0.8639209,0.13566,0.3571231",
       "Tags": "light_directional,light",
       "Enabled": true,
@@ -399,10 +399,13 @@
         {
           "__type": "Kira.MiniMap",
           "__guid": "4bbf280a-036e-4dcd-8039-fdf33f9ed9cf",
-          "Brightness": 1,
+          "Brightness": 3.22,
           "ClampValues": true,
-          "grassColor": "0.3658,0.51628,0.32418,1",
-          "Intensity": 1,
+          "grassColor": "0.89302,0.89302,0.89302,1",
+          "GridColor": "0.38888,0.63747,0.7814,1",
+          "GridGap": 20,
+          "GridLuminance": 255,
+          "Intensity": 0.74,
           "Layers": [
             {
               "Color": "1,1,1,1",
@@ -412,13 +415,13 @@
             }
           ],
           "MaxLuminance": 255,
-          "MinLuminance": 100,
-          "NoiseType": "Perlin",
-          "Octaves": 8,
-          "Scale": 1,
-          "SpriteSize": 512,
-          "ZoomIn": 1,
-          "ZoomOut": 1
+          "MinLuminance": 0,
+          "NoiseType": "Fbm",
+          "Octaves": 2,
+          "Scale": 0.54,
+          "SpriteSize": 241,
+          "ZoomIn": 1.45,
+          "ZoomOut": 2.85
         },
         {
           "__type": "Sandbox.SpriteRenderer",
@@ -431,7 +434,7 @@
           "FlipVertical": false,
           "FogStrength": 1,
           "Opaque": false,
-          "Size": "512,512",
+          "Size": "241,241",
           "Texture": null
         }
       ]
@@ -460,7 +463,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-16T12:11:28.4412112\u002B01:00",
+  "LastSaved": "2024-06-17T07:40:03.9425809\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

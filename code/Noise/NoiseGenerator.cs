@@ -27,7 +27,7 @@ public sealed class NoiseGenerator : Component, Component.ExecuteInEditor
         UseRenderer = useRenderer;
     }
 
-    private INoiseRenderer Renderer { get; set; }
+    private NoiseRenderer Renderer { get; set; }
 
     public enum NoiseTypes
     {
@@ -48,7 +48,7 @@ public sealed class NoiseGenerator : Component, Component.ExecuteInEditor
     {
         if (UseRenderer)
         {
-            Renderer = Components.Get<INoiseRenderer>();
+            Renderer = Components.Get<NoiseRenderer>();
             if (Renderer == null || Renderer.Enabled == false) return;
             CreateNoise(Renderer.SpriteSize);
             Renderer.CreateTexture(Luminance);

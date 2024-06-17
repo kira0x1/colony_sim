@@ -33,12 +33,14 @@ public partial class MiniMap
     [Group("Generator"), Property, Range(1, 12), ShowIf(nameof(NoiseType), NoiseTypes.Fbm)]
     public int Octaves { get; set; } = 8;
 
-    public float[,] CreateNoise(int pixelSize = 512)
+    public float[,] Luminance { get; private set; }
+
+    public void CreateNoise(int pixelSize = 512)
     {
         float finalZoom = ZoomIn / ZoomOut;
         float finalScale = Scale / finalZoom;
 
-        var lum = new float[pixelSize, pixelSize];
+        Luminance = new float[pixelSize, pixelSize];
 
         for (int y = 0; y < pixelSize; y++)
         {
@@ -68,10 +70,8 @@ public partial class MiniMap
                 }
 
                 // val = ClampValues ? MathF.Floor(point * Intensity + 200) : point * 255f;
-                lum[y, x] = val;
+                Luminance[y, x] = val;
             }
         }
-
-        return lum;
     }
 }

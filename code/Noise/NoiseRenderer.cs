@@ -3,7 +3,7 @@
 namespace Kira;
 
 [Category("Kira")]
-public sealed class NoiseRenderer : Component, Component.ExecuteInEditor, INoiseRenderer
+public sealed class NoiseRenderer : Component, Component.ExecuteInEditor
 {
     private bool hasTexture { get; set; }
     private Texture tx { get; set; }
