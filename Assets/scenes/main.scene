@@ -5,7 +5,7 @@
       "__guid": "090d99a6-3b3a-4e23-9f16-2f1a27110553",
       "Flags": 0,
       "Name": "Sun",
-      "Position": "0,0,-160",
+      "Position": "0,0,-416",
       "Rotation": "-0.3281769,0.8639209,0.13566,0.3571231",
       "Tags": "light_directional,light",
       "Enabled": true,
@@ -399,29 +399,55 @@
         {
           "__type": "Kira.MiniMap",
           "__guid": "4bbf280a-036e-4dcd-8039-fdf33f9ed9cf",
-          "Brightness": 3.22,
-          "ClampValues": true,
-          "grassColor": "0.89302,0.89302,0.89302,1",
-          "GridColor": "0.38888,0.63747,0.7814,1",
-          "GridGap": 20,
+          "Brightness": 4.02,
+          "ClampValues": false,
+          "DisplayGrid": false,
+          "grassColor": "1,1,1,1",
+          "GridColor": "1,0,0,1",
+          "GridGap": 15.8,
           "GridLuminance": 255,
-          "Intensity": 0.74,
+          "Intensity": 0.66,
+          "LayerConfig": "data/noiselayer.nlayer",
           "Layers": [
             {
-              "Color": "1,1,1,1",
-              "End": 1,
-              "MinLuminance": 100,
-              "MaxLuminance": 255
+              "Color": "0.79535,0.79535,0.79535,1",
+              "End": 80
+            },
+            {
+              "Color": "0.66977,0.66977,0.66977,1",
+              "Start": 80,
+              "End": 110
+            },
+            {
+              "Color": "0.53953,0.53953,0.53953,1",
+              "Start": 110,
+              "End": 130
+            },
+            {
+              "Color": "0.32093,0.32093,0.32093,1",
+              "Start": 130,
+              "End": 180
+            },
+            {
+              "Color": "0.25581,0.25581,0.25581,1",
+              "Start": 180,
+              "End": 1000
             }
           ],
+          "LogMinMax": false,
           "MaxLuminance": 255,
           "MinLuminance": 0,
           "NoiseType": "Fbm",
           "Octaves": 2,
-          "Scale": 0.54,
-          "SpriteSize": 241,
-          "ZoomIn": 1.45,
-          "ZoomOut": 2.85
+          "Scale": 0.63,
+          "SpriteSize": 389,
+          "thickness": 5,
+          "UseLayerConfig": false,
+          "UseLayers": true,
+          "xDiv": 3.55,
+          "yDiv": 3.15,
+          "ZoomIn": 1,
+          "ZoomOut": 1
         },
         {
           "__type": "Sandbox.SpriteRenderer",
@@ -434,7 +460,7 @@
           "FlipVertical": false,
           "FogStrength": 1,
           "Opaque": false,
-          "Size": "241,241",
+          "Size": "389,389",
           "Texture": null
         }
       ]
@@ -463,7 +489,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-17T07:40:03.9425809\u002B01:00",
+  "LastSaved": "2024-06-17T11:16:19.1843662\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

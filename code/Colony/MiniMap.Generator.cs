@@ -62,11 +62,11 @@ public partial class MiniMap
 
                 if (ClampValues)
                 {
-                    val = MathF.Round(point) * Intensity * 255f;
+                    val = MathF.Round(point * Intensity) * 255f;
                 }
                 else
                 {
-                    val = point * Intensity * 255f;
+                    val = point * (Intensity * 255f);
                 }
 
                 // val = ClampValues ? MathF.Floor(point * Intensity + 200) : point * 255f;

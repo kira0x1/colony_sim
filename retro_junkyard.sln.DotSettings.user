@@ -4,4 +4,7 @@
 	
 	
 	
-	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer /&gt;</s:String></wpf:ResourceDictionary>
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="D:\packages\.nuget\packages\microsoft.netcore.app.ref\7.0.19\ref\net7.0\System.Runtime.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Program Files (x86)\Steam\steamapps\common\sbox\bin\managed\Sandbox.System.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>
