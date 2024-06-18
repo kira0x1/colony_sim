@@ -2,17 +2,17 @@
 @inherits PanelComponent
 
 <root>
-	<div class="slot-panel">
-		<div class="slot-container">
-			@for (var i = 0; i < 22; i++)
-			{
-				@* <Slot class="slot" SlotId=@(i + 1)/> *@
-			}
-		</div>
-	</div>
+    <div class="slot-panel">
+        <div class="slot-container">
+            @for (var i = 0; i < 22; i++)
+            {
+                @* <Slot class="slot" SlotId=@(i + 1)/> *@
+            }
+        </div>
+    </div>
 </root>
 
 @code
 {
-	// protected override int BuildHash() => System.HashCode.Combine(MyStringValue);
+    // protected override int BuildHash() => System.HashCode.Combine(MyStringValue);
 }

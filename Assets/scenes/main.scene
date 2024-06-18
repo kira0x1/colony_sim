@@ -90,7 +90,6 @@
         {
           "__type": "Sandbox.Bloom",
           "__guid": "d6dfb7bd-fc2d-4f7f-8861-0efeb8c14e6d",
-          "__enabled": false,
           "BloomColor": {
             "color": [
               {
@@ -155,6 +154,10 @@
         {
           "__type": "Kira.UI.PlayerUI",
           "__guid": "bc188d3b-4063-4570-85b2-daf6ebbf1598"
+        },
+        {
+          "__type": "MiniMapUI",
+          "__guid": "7e36f113-fa67-4845-ba92-2f1416855633"
         }
       ]
     },
@@ -163,6 +166,7 @@
       "Flags": 0,
       "Name": "Plane",
       "Scale": "5,5,5",
+      "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
       "Components": [
@@ -190,6 +194,7 @@
       "Flags": 0,
       "Name": "Pawn",
       "Position": "-64,-32,0",
+      "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
       "Components": [
@@ -402,10 +407,11 @@
           "Brightness": 4.02,
           "ClampValues": false,
           "DisplayGrid": false,
+          "DrawOnSprite": true,
           "grassColor": "1,1,1,1",
-          "GridColor": "1,0,0,1",
-          "GridGap": 15.8,
-          "GridLuminance": 255,
+          "GridColor": "0,0,0,1",
+          "GridGap": 60,
+          "GridLuminance": 0,
           "Intensity": 0.66,
           "LayerConfig": "data/noiselayer.nlayer",
           "Layers": [
@@ -439,19 +445,20 @@
           "MinLuminance": 0,
           "NoiseType": "Fbm",
           "Octaves": 2,
-          "Scale": 0.63,
-          "SpriteSize": 389,
+          "Scale": 1.06,
+          "SpriteSize": 500,
           "thickness": 5,
           "UseLayerConfig": false,
           "UseLayers": true,
-          "xDiv": 3.55,
-          "yDiv": 3.15,
+          "xDiv": 4.02,
+          "yDiv": 4.08,
           "ZoomIn": 1,
           "ZoomOut": 1
         },
         {
           "__type": "Sandbox.SpriteRenderer",
           "__guid": "7ff2b856-ef24-4f9a-a131-94eb632ab672",
+          "__enabled": false,
           "Additive": false,
           "CastShadows": false,
           "Color": "1,1,1,1",
@@ -460,7 +467,7 @@
           "FlipVertical": false,
           "FogStrength": 1,
           "Opaque": false,
-          "Size": "389,389",
+          "Size": "500,500",
           "Texture": null
         }
       ]
@@ -489,7 +496,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-17T11:16:19.1843662\u002B01:00",
+  "LastSaved": "2024-06-18T07:15:43.2619338\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

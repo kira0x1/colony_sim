@@ -20,6 +20,7 @@ public struct ColorInfo
 [Category("Kira")]
 public partial class MiniMap : Component, INoiseRenderer, IHotloadManaged
 {
+    [Property, Group("Base")] public bool DrawOnSprite { get; set; }
     [Property, Group("Base")] public Color grassColor { get; set; }
 
     [Property, Group("Base")] public bool UseLayerConfig { get; set; }
@@ -54,11 +55,23 @@ public partial class MiniMap : Component, INoiseRenderer, IHotloadManaged
 
     private void Refresh()
     {
+        if (!DrawOnSprite) return;
+
         if (SpriteSize > 512) SpriteSize = 512;
         logAmount = 0;
         LayersChosen = UseLayerConfig ? LayerConfig.Layers : Layers;
-        CreateNoise(SpriteSize);
-        CreateTexture();
+        var tx = CreateTexture();
+
+        var sp = GameObject.Components.GetOrCreate<SpriteRenderer>();
+        sp.Size = SpriteSize;
+
+        if (!sp.IsValid())
+        {
+            Log.Info("Could not find sprite renderer");
+            return;
+        }
+
+        sp.Texture = tx;
     }
 
     public void Created(IReadOnlyDictionary<string, object> state)
@@ -101,15 +114,14 @@ public partial class MiniMap : Component, INoiseRenderer, IHotloadManaged
         data.Add(aByte);
     }
 
-    public void CreateTexture()
+    public Texture CreateTexture()
     {
         if (SpriteSize > 512) SpriteSize = 512;
 
+        CreateNoise(SpriteSize);
+
         // Create a compute shader from a .shader file
         var computeShader = new ComputeShader("code/shaders/map_shader");
-        var sp = GameObject.Components.GetOrCreate<SpriteRenderer>();
-
-        sp.Size = SpriteSize;
 
         List<byte> data = GetColorInfo(Luminance);
 
@@ -125,14 +137,7 @@ public partial class MiniMap : Component, INoiseRenderer, IHotloadManaged
 
         // Dispatch 
         computeShader.Dispatch(texture.Width, texture.Height, 1);
-
-        if (!sp.IsValid())
-        {
-            Log.Info("Could not find sprite renderer");
-            return;
-        }
-
-        sp.Texture = texture;
+        return texture;
     }
 
     private LayerInfo GetLayerByLuminance(float lum)

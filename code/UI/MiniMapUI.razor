@@ -1,0 +1,34 @@
+@* ReSharper disable RedundantUsingDirective *@
+@using Kira
+@using Sandbox.UI
+@inherits PanelComponent
+
+<root>
+</root>
+
+@code
+{
+    Image img { get; set; } = new Image();
+    MiniMap mp { get; set; }
+    Texture tx { get; set; }
+
+    protected override void OnAwake()
+    {
+        mp = Scene.Components.GetAll<MiniMap>().First();
+
+        if (!mp.IsValid())
+        {
+            Log.Info("couldnt find minimap");
+        }
+
+        tx = mp.CreateTexture();
+        img.Texture = tx;
+    }
+
+    protected override void OnTreeFirstBuilt()
+    {
+        base.OnTreeFirstBuilt();
+        img.AddClass("map");
+        Panel.AddChild(img);
+    }
+}

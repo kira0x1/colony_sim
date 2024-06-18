@@ -1,0 +1,21 @@
+MiniMapUI {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+
+
+  .map {
+    border: 2px solid #1d2028;
+    margin: 10px;
+    width: 350px;
+    height: 350px;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}

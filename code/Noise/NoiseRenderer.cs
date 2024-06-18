@@ -23,7 +23,7 @@ public sealed class NoiseRenderer : Component, Component.ExecuteInEditor
         }
     }
 
-    public void CreateTexture(float[,] noiseValues)
+    public Texture CreateTexture(float[,] noiseValues)
     {
         if (SpriteSize > 512) SpriteSize = 512;
 
@@ -76,9 +76,11 @@ public sealed class NoiseRenderer : Component, Component.ExecuteInEditor
         if (!sp.IsValid())
         {
             Log.Info("Could not find sprite renderer");
-            return;
+            return tx;
         }
 
         sp.Texture = tx;
+
+        return tx;
     }
 }

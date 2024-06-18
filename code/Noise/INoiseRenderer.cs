@@ -4,5 +4,5 @@ public interface INoiseRenderer
 {
     public bool Enabled { get; set; }
     public int SpriteSize { get; set; }
-    public void CreateTexture();
+    public Texture CreateTexture();
 }
