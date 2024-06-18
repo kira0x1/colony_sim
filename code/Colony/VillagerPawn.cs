@@ -4,6 +4,8 @@ public sealed class VillagerPawn : Component
 {
     private NavMeshAgent agent;
     private PawnController pawnController;
+
+    // ReSharper disable once NotAccessedField.Local
     private VillagerData villagerData;
 
     protected override void OnAwake()

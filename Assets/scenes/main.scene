@@ -90,6 +90,7 @@
         {
           "__type": "Sandbox.Bloom",
           "__guid": "d6dfb7bd-fc2d-4f7f-8861-0efeb8c14e6d",
+          "__enabled": false,
           "BloomColor": {
             "color": [
               {
@@ -165,7 +166,7 @@
       "__guid": "8e2edcf2-1012-46e0-aab4-197a8b2ab84a",
       "Flags": 0,
       "Name": "Plane",
-      "Scale": "5,5,5",
+      "Scale": "7,7,7",
       "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
@@ -396,7 +397,7 @@
       "__guid": "a7618d21-e506-4422-8996-f0adcc3d94f4",
       "Flags": 0,
       "Name": "minimap",
-      "Position": "0,-32,48.69999",
+      "Position": "0,-32,100",
       "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
@@ -404,15 +405,18 @@
         {
           "__type": "Kira.MiniMap",
           "__guid": "4bbf280a-036e-4dcd-8039-fdf33f9ed9cf",
-          "Brightness": 4.02,
+          "BorderThickness": 8.89,
+          "Brightness": 5.81,
           "ClampValues": false,
-          "DisplayGrid": false,
-          "DrawOnSprite": true,
+          "DisplayGrid": true,
+          "DrawGridOnSprite": false,
+          "DrawOnSprite": false,
           "grassColor": "1,1,1,1",
-          "GridColor": "0,0,0,1",
-          "GridGap": 60,
+          "GridCellsAmount": 3,
+          "GridColor": "1,1,1,1",
           "GridLuminance": 0,
-          "Intensity": 0.66,
+          "GridThickness": 16.06,
+          "Intensity": 1.2,
           "LayerConfig": "data/noiselayer.nlayer",
           "Layers": [
             {
@@ -445,8 +449,8 @@
           "MinLuminance": 0,
           "NoiseType": "Fbm",
           "Octaves": 2,
-          "Scale": 1.06,
-          "SpriteSize": 500,
+          "Scale": 1.07,
+          "SpriteSize": 188,
           "thickness": 5,
           "UseLayerConfig": false,
           "UseLayers": true,
@@ -467,7 +471,7 @@
           "FlipVertical": false,
           "FogStrength": 1,
           "Opaque": false,
-          "Size": "500,500",
+          "Size": "188,188",
           "Texture": null
         }
       ]
@@ -496,7 +500,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-18T07:15:43.2619338\u002B01:00",
+  "LastSaved": "2024-06-18T18:02:56.783584\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

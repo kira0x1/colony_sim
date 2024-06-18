@@ -18,9 +18,10 @@ public struct ColorInfo
 }
 
 [Category("Kira")]
-public partial class MiniMap : Component, INoiseRenderer, IHotloadManaged
+public sealed partial class MiniMap : Component, IHotloadManaged
 {
     [Property, Group("Base")] public bool DrawOnSprite { get; set; }
+    [Property, Group("Base")] public bool DrawGridOnSprite { get; set; }
     [Property, Group("Base")] public Color grassColor { get; set; }
 
     [Property, Group("Base")] public bool UseLayerConfig { get; set; }
@@ -37,11 +38,6 @@ public partial class MiniMap : Component, INoiseRenderer, IHotloadManaged
     [Group("Luminance"), Property, Range(0, 255)] public int MinLuminance { get; set; } = 100;
     [Group("Luminance"), Property, Range(0, 255)] public int MaxLuminance { get; set; } = 255;
 
-    [Group("Grid"), Property] public bool DisplayGrid { get; set; } = false;
-    [Group("Grid"), Property, Range(0, 60)] public float GridGap { get; set; } = 4;
-    [Group("Grid"), Property] public Color GridColor { get; set; } = Color.White;
-    [Group("Grid"), Property, Range(0, 255)] public float GridLuminance { get; set; } = 100f;
-
     [Property, Range(0, 15)]
     public float xDiv { get; set; } = 2f;
 
@@ -53,27 +49,6 @@ public partial class MiniMap : Component, INoiseRenderer, IHotloadManaged
 
     private List<LayerInfo> LayersChosen = new List<LayerInfo>();
 
-    private void Refresh()
-    {
-        if (!DrawOnSprite) return;
-
-        if (SpriteSize > 512) SpriteSize = 512;
-        logAmount = 0;
-        LayersChosen = UseLayerConfig ? LayerConfig.Layers : Layers;
-        var tx = CreateTexture();
-
-        var sp = GameObject.Components.GetOrCreate<SpriteRenderer>();
-        sp.Size = SpriteSize;
-
-        if (!sp.IsValid())
-        {
-            Log.Info("Could not find sprite renderer");
-            return;
-        }
-
-        sp.Texture = tx;
-    }
-
     public void Created(IReadOnlyDictionary<string, object> state)
     {
         Refresh();
@@ -82,6 +57,39 @@ public partial class MiniMap : Component, INoiseRenderer, IHotloadManaged
     protected override void OnValidate()
     {
         Refresh();
+    }
+
+    private void Refresh()
+    {
+        if (SpriteSize > 512) SpriteSize = 512;
+        LayersChosen = UseLayerConfig ? LayerConfig.Layers : Layers;
+        if (!GameObject.IsValid())
+        {
+            Log.Warning("this gameobject not valid!?");
+            return;
+        }
+
+        SpriteRenderer sp = GameObject.Components.Get<SpriteRenderer>(true);
+
+        if (!sp.IsValid())
+        {
+            Log.Info("Could not find sprite renderer");
+            return;
+        }
+
+        if (!DrawOnSprite && !DrawGridOnSprite)
+        {
+            sp.Enabled = false;
+            return;
+        }
+
+        sp.Enabled = true;
+
+        curMsgLogged = 0;
+
+
+        sp.Size = SpriteSize;
+        sp.Texture = DrawOnSprite ? CreateMiniMapTexture() : CreateGridTexture();
     }
 
     private static void AddColorToData(List<byte> data, Color c, float lum, bool isGrid = false)
@@ -114,16 +122,41 @@ public partial class MiniMap : Component, INoiseRenderer, IHotloadManaged
         data.Add(aByte);
     }
 
-    public Texture CreateTexture()
+    private static byte[] ConvertColorToByte(Color c)
     {
-        if (SpriteSize > 512) SpriteSize = 512;
+        var data = new byte[4];
 
-        CreateNoise(SpriteSize);
+        int r = (c.r * 255).CeilToInt();
+        int g = (c.g * 255).CeilToInt();
+        int b = (c.b * 255).CeilToInt();
+        int a = (c.a * 255).CeilToInt();
 
+
+        data[0] = byte.Parse(r.ToString(CultureInfo.InvariantCulture));
+        data[1] = byte.Parse(g.ToString(CultureInfo.InvariantCulture));
+        data[2] = byte.Parse(b.ToString(CultureInfo.InvariantCulture));
+        data[3] = byte.Parse(a.ToString(CultureInfo.InvariantCulture));
+
+        return data;
+    }
+
+    public Texture CreateMiniMapTexture()
+    {
+        float[,] noiseData = CreateNoise();
+        List<byte> mapData = GetColorInfo(noiseData);
+        return CreateTexture(mapData);
+    }
+
+    public Texture CreateGridTexture()
+    {
+        List<byte> gridData = CreateGridData();
+        return CreateTexture(gridData);
+    }
+
+    private Texture CreateTexture(List<byte> data)
+    {
         // Create a compute shader from a .shader file
         var computeShader = new ComputeShader("code/shaders/map_shader");
-
-        List<byte> data = GetColorInfo(Luminance);
 
         // Create a texture for the compute shader to use
         var texture = Texture.Create(SpriteSize, SpriteSize)
@@ -146,17 +179,17 @@ public partial class MiniMap : Component, INoiseRenderer, IHotloadManaged
         if (layer == null)
         {
             layer = new LayerInfo();
-            if (logAmount < 2)
+            if (curMsgLogged < 2)
             {
                 Log.Info($"layer for {lum} not found");
-                logAmount++;
+                curMsgLogged++;
             }
         }
 
         return layer;
     }
 
-    int logAmount { get; set; } = 0;
+    int curMsgLogged { get; set; } = 0;
 
     private List<byte> GetColorInfo(float[,] noiseValues)
     {
@@ -173,25 +206,21 @@ public partial class MiniMap : Component, INoiseRenderer, IHotloadManaged
                 float lum = noiseValues[x, y] * finalBrightness;
                 lum = lum.CeilToInt().Clamp(MinLuminance, MaxLuminance);
                 lvals.Add(lum);
-                var baseColor = grassColor;
-                bool useGrid = DisplayGrid && (x % GridGap < 1 || y % GridGap < 1);
 
-                if (useGrid)
-                {
-                    baseColor = GridColor;
-                }
-                else if (Math.Abs(x - SpriteSize / xDiv) < thickness && Math.Abs(y - SpriteSize / yDiv) < thickness)
+                Color baseColor = grassColor;
+
+                if (Math.Abs(x - SpriteSize / xDiv) < thickness && Math.Abs(y - SpriteSize / yDiv) < thickness)
                 {
                     baseColor = Color.Cyan;
                 }
-                else if (UseLayers)
+
+                if (UseLayers)
                 {
                     var layer = GetLayerByLuminance(noiseValues[x, y] * 1.0f);
                     baseColor = layer.Color;
-                    lum = 200f;
                 }
 
-                AddColorToData(data, baseColor, useGrid ? GridLuminance : lum, useGrid);
+                AddColorToData(data, baseColor, lum, false);
             }
         }
 
@@ -213,5 +242,4 @@ public partial class MiniMap : Component, INoiseRenderer, IHotloadManaged
 
         return data;
     }
-
 }

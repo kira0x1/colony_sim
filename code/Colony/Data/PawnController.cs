@@ -16,7 +16,7 @@ public class PawnController
     private float RandomWaitTime { get; set; }
     private float RoamRadius { get; set; }
 
-    public PawnController(NavMeshAgent agent, Vector3 startPos = new Vector3(), float roamRadius = 30f)
+    public PawnController(NavMeshAgent agent, float roamRadius = 30f)
     {
         if (!agent.IsValid())
         {

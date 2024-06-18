@@ -11,11 +11,13 @@ MiniMapUI {
 
   .map {
     border: 2px solid #1d2028;
-    margin: 10px;
+    width: 500px;
+    height: 500px;
+  }
+
+  .grid {
+    //flex-shrink: 1;
     width: 350px;
     height: 350px;
-    position: absolute;
-    top: 0;
-    right: 0;
   }
 }

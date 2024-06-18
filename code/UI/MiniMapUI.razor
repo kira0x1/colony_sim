@@ -1,5 +1,5 @@
-@* ReSharper disable RedundantUsingDirective *@
 @using Kira
+@* ReSharper disable once RedundantUsingDirective *@
 @using Sandbox.UI
 @inherits PanelComponent
 
@@ -8,27 +8,38 @@
 
 @code
 {
-    Image img { get; set; } = new Image();
-    MiniMap mp { get; set; }
-    Texture tx { get; set; }
+    private Image imageElement { get; set; } = new Image();
+    private Image gridOverlay { get; set; } = new Image();
+    private MiniMap minimap { get; set; }
 
-    protected override void OnAwake()
+    private Texture tx { get; set; }
+
+    protected override void OnStart()
     {
-        mp = Scene.Components.GetAll<MiniMap>().First();
+        minimap = Scene.Components.GetAll<MiniMap>().First();
 
-        if (!mp.IsValid())
+        if (!minimap.IsValid())
         {
             Log.Info("couldnt find minimap");
         }
 
-        tx = mp.CreateTexture();
-        img.Texture = tx;
+        tx = minimap.CreateMiniMapTexture();
+        Texture gridTx = minimap.CreateGridTexture();
+
+        gridOverlay.Texture = gridTx;
+        imageElement.Texture = tx;
     }
 
     protected override void OnTreeFirstBuilt()
     {
         base.OnTreeFirstBuilt();
-        img.AddClass("map");
-        Panel.AddChild(img);
+
+        imageElement.AddClass("map");
+        Panel.AddChild(imageElement);
+
+
+        gridOverlay.Parent = imageElement;
+        gridOverlay.AddClass("grid");
+        imageElement.AddChild(gridOverlay);
     }
 }
