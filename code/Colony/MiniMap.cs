@@ -81,7 +81,19 @@ public sealed partial class MiniMap
 
 
         sp.Size = SpriteSize;
-        sp.Texture = DrawOnSprite ? CreateMiniMapTexture() : CreateGridTexture();
+
+        if (DrawOnSprite && DrawGridOnSprite)
+        {
+            sp.Texture = CreateFinalTexture();
+        }
+        else if (DrawOnSprite)
+        {
+            sp.Texture = CreateMiniMapTexture();
+        }
+        else
+        {
+            sp.Texture = CreateGridTexture();
+        }
     }
 
     private static void AddColorToData(List<byte> data, Color c, float lum, bool isGrid = false)
@@ -136,6 +148,14 @@ public sealed partial class MiniMap
     {
         float[,] noiseData = CreateNoise();
         List<byte> mapData = GetColorInfo(noiseData);
+        return CreateTexture(mapData);
+    }
+
+    public Texture CreateFinalTexture()
+    {
+        float[,] noiseData = CreateNoise();
+        List<byte> mapData = GetColorInfo(noiseData);
+        OverlayGridData(mapData);
         return CreateTexture(mapData);
     }
 

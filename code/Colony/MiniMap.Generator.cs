@@ -65,22 +65,73 @@ public sealed partial class MiniMap : Component, Component.ExecuteInEditor, IHot
         return data;
     }
 
-    public List<byte> CreateGridData()
+    public List<byte> OverlayGridData(List<byte> data)
     {
         float gridGap = SpriteSize;
         float canvasSize = SpriteSize;
 
-        float gridCellsF = GridCellsAmount;
         float halfGridThickness = GridThickness / 2f;
         float innerGridOffset = halfGridThickness * 1.5f;
-        float halfGCl = gridCellsF / 2f;
-        float halfCanvas = canvasSize / 2f;
 
         if (GridCellsAmount > 0 && SpriteSize > 0)
         {
             gridGap = canvasSize / GridCellsAmount;
         }
 
+        int i = 0;
+        for (int y = 0; y < data.Count; y++)
+        {
+            for (int x = 0; x < data.Count; x++)
+            {
+                float thicknessOffset = BorderThickness / 2f;
+                bool innerGridX = Math.Abs((x + halfGridThickness) % gridGap) < GridThickness;
+
+                // Right Side
+                if (x >= SpriteSize - innerGridOffset) innerGridX = false;
+
+                // Left Side
+                if (x <= innerGridOffset + thicknessOffset) innerGridX = false;
+
+                bool innerGridY = Math.Abs((y + halfGridThickness) % gridGap) < GridThickness;
+
+                if (y >= SpriteSize - innerGridOffset) innerGridY = false;
+                if (y < innerGridOffset) innerGridY = false;
+
+                bool isTopBorder = y < BorderThickness - BorderThickness / 2f;
+                bool isRightBorder = x + 1 > SpriteSize - BorderThickness / 2f;
+                bool isBottomBorder = y + 1 > SpriteSize - BorderThickness / 2f;
+                bool isLeftBorder = x < BorderThickness - BorderThickness / 2f;
+
+                bool isBorder = isTopBorder || isRightBorder || isBottomBorder || isLeftBorder;
+                bool isInner = innerGridX || innerGridY;
+
+                if (!isBorder && !isInner) continue;
+                var cellColor = isInner ? GridColor : BorderColor;
+
+                byte[] cellBytes = ConvertColorToByte(cellColor);
+
+                data[i] = cellBytes[0];
+                data[i + 1] = cellBytes[1];
+                data[i + 2] = cellBytes[2];
+                data[i + 3] = cellBytes[3];
+            }
+        }
+
+        return data;
+    }
+
+    public List<byte> CreateGridData()
+    {
+        float gridGap = SpriteSize;
+        float canvasSize = SpriteSize;
+
+        float halfGridThickness = GridThickness / 2f;
+        float innerGridOffset = halfGridThickness * 1.5f;
+
+        if (GridCellsAmount > 0 && SpriteSize > 0)
+        {
+            gridGap = canvasSize / GridCellsAmount;
+        }
 
         List<byte> data = new List<byte>();
 
@@ -139,9 +190,7 @@ public sealed partial class MiniMap : Component, Component.ExecuteInEditor, IHot
                     cellColor = BorderColor;
                 }
 
-
                 byte[] cellBytes = ConvertColorToByte(cellColor);
-
                 data.AddRange(cellBytes);
             }
         }
