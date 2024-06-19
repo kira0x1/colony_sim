@@ -13,12 +13,12 @@ public class NamesDataRoot
     public NamesData Names { get; set; }
 }
 
-public class RandomNames
+public static class RandomNames
 {
     private static NamesDataRoot Data { get; set; }
     private static NamesData Names { get; set; }
 
-    public RandomNames()
+    public static void Init()
     {
         Data = FileSystem.Mounted.ReadJson<NamesDataRoot>("Colony/Utils/RandomNames.json");
         Names = Data.Names;

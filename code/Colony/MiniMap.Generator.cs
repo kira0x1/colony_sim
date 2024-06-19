@@ -3,25 +3,14 @@ using Sandbox.Utility;
 
 namespace Kira;
 
-public sealed partial class MiniMap
+public sealed partial class MiniMap : Component, Component.ExecuteInEditor, IHotloadManaged
 {
-    [Group("Generator"), Property, Range(0f, 3f)]
-    public float Scale { get; set; } = 1f;
-
-    [Group("Generator"), Property, Range(1f, 5f)]
-    public float ZoomIn { get; set; } = 1f;
-
-    [Group("Generator"), Property, Range(1f, 10f)]
-    public float ZoomOut { get; set; } = 1f;
-
-    [Group("Generator"), Property, Range(0, 3)]
-    public float Intensity { get; set; } = 1f;
-
-    [Group("Generator"), Property]
-    public bool ClampValues { get; set; } = false;
-
-    [Group("Generator"), Property]
-    public NoiseTypes NoiseType { get; set; }
+    [Group("Generator"), Property, Range(0f, 3f)] public float Scale { get; set; } = 1f;
+    [Group("Generator"), Property, Range(1f, 5f)] public float ZoomIn { get; set; } = 1f;
+    [Group("Generator"), Property, Range(1f, 10f)] public float ZoomOut { get; set; } = 1f;
+    [Group("Generator"), Property, Range(0, 3)] public float Intensity { get; set; } = 1f;
+    [Group("Generator"), Property] public bool ClampValues { get; set; } = false;
+    [Group("Generator"), Property] public NoiseTypes NoiseType { get; set; }
 
     [Group("Generator"), Property, Range(1, 12), ShowIf(nameof(NoiseType), NoiseTypes.Fbm)]
     public int Octaves { get; set; } = 8;
@@ -32,6 +21,7 @@ public sealed partial class MiniMap
     [Group("Grid"), Property, Range(0, 255)] public float GridLuminance { get; set; } = 100f;
     [Group("Grid"), Property, Range(0, 60)] public float GridThickness { get; set; } = 4f;
     [Group("Grid"), Property, Range(0, 60)] public float BorderThickness { get; set; } = 4f;
+    [Group("Grid"), Property] public Color BorderColor { get; set; } = Color.White;
 
 
     public float[,] CreateNoise(int pixelSize = 512)
@@ -81,7 +71,8 @@ public sealed partial class MiniMap
         float canvasSize = SpriteSize;
 
         float gridCellsF = GridCellsAmount;
-        float halfGT = GridThickness / 2f;
+        float halfGridThickness = GridThickness / 2f;
+        float innerGridOffset = halfGridThickness * 1.5f;
         float halfGCl = gridCellsF / 2f;
         float halfCanvas = canvasSize / 2f;
 
@@ -93,44 +84,61 @@ public sealed partial class MiniMap
 
         List<byte> data = new List<byte>();
 
-
         for (int y = 0; y < SpriteSize; y++)
         {
             for (int x = 0; x < SpriteSize; x++)
             {
-                float gmx = halfGT * 1.5f;
+                float thicknessOffset = BorderThickness / 2f;
+                bool innerGridX = Math.Abs((x + halfGridThickness) % gridGap) < GridThickness;
 
-                bool gx = Math.Abs((x + halfGT) % gridGap) < GridThickness;
+                // Right Side
+                if (x >= SpriteSize - innerGridOffset) innerGridX = false;
 
-                if (x >= SpriteSize - gmx) gx = false;
-                if (x <= gmx) gx = false;
+                // Left Side
+                if (x <= innerGridOffset + thicknessOffset) innerGridX = false;
 
 
-                bool gy = Math.Abs((y + halfGT) % gridGap) < GridThickness;
-                if (y >= SpriteSize - gmx) gy = false;
-                if (y <= gmx) gy = false;
+                bool innerGridY = Math.Abs((y + halfGridThickness) % gridGap) < GridThickness;
+
+                if (y >= SpriteSize - innerGridOffset) innerGridY = false;
+                if (y < innerGridOffset) innerGridY = false;
 
                 var cellColor = Color.Transparent;
 
-
-                if (y < BorderThickness - 1 || y >= SpriteSize - BorderThickness)
-                {
-                    cellColor = GridColor;
-                }
-                else if (gx)
+                if (innerGridX)
                 {
                     cellColor = GridColor;
                 }
 
+                if (innerGridY)
+                {
+                    cellColor = GridColor;
+                }
 
-                if (x >= SpriteSize - BorderThickness || x < BorderThickness - 1)
+                // Top Border
+                if (y < BorderThickness - BorderThickness / 2f)
                 {
-                    cellColor = GridColor;
+                    cellColor = BorderColor;
                 }
-                else if (gy)
+
+                // Right Border
+                if (x + 1 > SpriteSize - BorderThickness / 2f)
                 {
-                    cellColor = GridColor;
+                    cellColor = BorderColor;
                 }
+
+                // Bottom Border
+                if (y + 1 > SpriteSize - BorderThickness / 2f)
+                {
+                    cellColor = BorderColor;
+                }
+
+                // Left Border
+                if (x < BorderThickness - BorderThickness / 2f)
+                {
+                    cellColor = BorderColor;
+                }
+
 
                 byte[] cellBytes = ConvertColorToByte(cellColor);
 

@@ -14,10 +14,12 @@ public class ColonyManager : Component
     private delegate void OnWorldTickEvent();
     private event OnWorldTickEvent OnWorldTick;
 
+
     protected override void OnAwake()
     {
         base.OnAwake();
 
+        RandomNames.Init();
         Villagers = new List<VillagerData>();
         Instance = this;
 

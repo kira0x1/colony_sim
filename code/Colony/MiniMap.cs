@@ -1,24 +1,9 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace Kira;
 
-public struct ColorInfo
-{
-    public int x;
-    public int y;
-    public Color color;
-
-    public ColorInfo(int x, int y, Color color)
-    {
-        this.x = x;
-        this.y = y;
-        this.color = color;
-    }
-}
-
 [Category("Kira")]
-public sealed partial class MiniMap : Component, IHotloadManaged
+public sealed partial class MiniMap
 {
     [Property, Group("Base")] public bool DrawOnSprite { get; set; }
     [Property, Group("Base")] public bool DrawGridOnSprite { get; set; }
@@ -33,25 +18,32 @@ public sealed partial class MiniMap : Component, IHotloadManaged
     [Property, Group("Base"), Range(1, 512)] public int SpriteSize { get; set; } = 512;
     [Property, Group("Base")] private bool LogMinMax { get; set; } = true;
 
-    // Luminance
+    // Luminance 
     [Group("Luminance"), Property, Range(0, 15)] public float Brightness { get; set; } = 255;
     [Group("Luminance"), Property, Range(0, 255)] public int MinLuminance { get; set; } = 100;
     [Group("Luminance"), Property, Range(0, 255)] public int MaxLuminance { get; set; } = 255;
-
-    [Property, Range(0, 15)]
-    public float xDiv { get; set; } = 2f;
-
-    [Property, Range(0, 15f)]
-    public float yDiv { get; set; } = 1.01f;
-
-    [Property, Range(0f, 5f)]
-    public float thickness { get; set; } = 4f;
 
     private List<LayerInfo> LayersChosen = new List<LayerInfo>();
 
     public void Created(IReadOnlyDictionary<string, object> state)
     {
+        Log.Info("created hotload");
         Refresh();
+    }
+
+    protected override void OnDirty()
+    {
+        Log.Info("dirty");
+    }
+
+    public void Failed()
+    {
+        Log.Info("failed hotload");
+    }
+
+    public void Destroyed(Dictionary<string, object> state)
+    {
+        Log.Info("destroyed hotload");
     }
 
     protected override void OnValidate()
@@ -65,7 +57,7 @@ public sealed partial class MiniMap : Component, IHotloadManaged
         LayersChosen = UseLayerConfig ? LayerConfig.Layers : Layers;
         if (!GameObject.IsValid())
         {
-            Log.Warning("this gameobject not valid!?");
+            // Log.Warning("this gameobject not valid!?");
             return;
         }
 
@@ -209,10 +201,6 @@ public sealed partial class MiniMap : Component, IHotloadManaged
 
                 Color baseColor = grassColor;
 
-                if (Math.Abs(x - SpriteSize / xDiv) < thickness && Math.Abs(y - SpriteSize / yDiv) < thickness)
-                {
-                    baseColor = Color.Cyan;
-                }
 
                 if (UseLayers)
                 {

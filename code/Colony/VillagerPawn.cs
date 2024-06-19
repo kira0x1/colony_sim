@@ -17,11 +17,13 @@ public sealed class VillagerPawn : Component
     protected override void OnStart()
     {
         base.OnStart();
+
         agent.Separation = 0.2f;
         agent.UpdateRotation = true;
         agent.Acceleration = 90f;
         agent.MaxSpeed = 80f;
         pawnController = new PawnController(agent, roamRadius: 150f);
+        
         villagerData = ColonyManager.Instance.CreateVillagerData();
     }
 

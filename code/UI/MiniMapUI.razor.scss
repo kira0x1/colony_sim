@@ -1,3 +1,7 @@
+$xpos: 10px;
+$ypos: 10px;
+
+
 MiniMapUI {
   position: absolute;
   top: 0;
@@ -10,14 +14,19 @@ MiniMapUI {
 
 
   .map {
-    border: 2px solid #1d2028;
-    width: 500px;
-    height: 500px;
-  }
-
-  .grid {
-    //flex-shrink: 1;
+    position: absolute;
+    top: $ypos;
+    right: $xpos;
     width: 350px;
     height: 350px;
   }
+
+  .grid {
+    position: absolute;
+    top: $ypos;
+    right: $xpos;
+    width: 350px;
+    height: 350px;
+  }
+
 }

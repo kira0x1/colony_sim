@@ -64,7 +64,7 @@
       "__guid": "8ef48951-c659-456d-ab3c-ccd0a427eee6",
       "Flags": 0,
       "Name": "Camera",
-      "Position": "782.1684,0.00001371071,468.3646",
+      "Position": "782.1684,0.00001371071,416",
       "Rotation": "-0.2456983,-0.00000001073982,0.9693463,-0.00000004237148",
       "Enabled": true,
       "NetworkMode": 2,
@@ -90,7 +90,6 @@
         {
           "__type": "Sandbox.Bloom",
           "__guid": "d6dfb7bd-fc2d-4f7f-8861-0efeb8c14e6d",
-          "__enabled": false,
           "BloomColor": {
             "color": [
               {
@@ -397,7 +396,7 @@
       "__guid": "a7618d21-e506-4422-8996-f0adcc3d94f4",
       "Flags": 0,
       "Name": "minimap",
-      "Position": "0,-32,100",
+      "Position": "0,-281.1402,388.4237",
       "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
@@ -405,18 +404,19 @@
         {
           "__type": "Kira.MiniMap",
           "__guid": "4bbf280a-036e-4dcd-8039-fdf33f9ed9cf",
-          "BorderThickness": 8.89,
+          "BorderColor": "0,0,0,0.68",
+          "BorderThickness": 9.69,
           "Brightness": 5.81,
           "ClampValues": false,
           "DisplayGrid": true,
-          "DrawGridOnSprite": false,
+          "DrawGridOnSprite": true,
           "DrawOnSprite": false,
           "grassColor": "1,1,1,1",
-          "GridCellsAmount": 3,
+          "GridCellsAmount": 7,
           "GridColor": "1,1,1,1",
           "GridLuminance": 0,
-          "GridThickness": 16.06,
-          "Intensity": 1.2,
+          "GridThickness": 2,
+          "Intensity": 1.21,
           "LayerConfig": "data/noiselayer.nlayer",
           "Layers": [
             {
@@ -449,20 +449,16 @@
           "MinLuminance": 0,
           "NoiseType": "Fbm",
           "Octaves": 2,
-          "Scale": 1.07,
-          "SpriteSize": 188,
-          "thickness": 5,
+          "Scale": 1.52,
+          "SpriteSize": 256,
           "UseLayerConfig": false,
           "UseLayers": true,
-          "xDiv": 4.02,
-          "yDiv": 4.08,
-          "ZoomIn": 1,
-          "ZoomOut": 1
+          "ZoomIn": 1.42,
+          "ZoomOut": 1.58
         },
         {
           "__type": "Sandbox.SpriteRenderer",
           "__guid": "7ff2b856-ef24-4f9a-a131-94eb632ab672",
-          "__enabled": false,
           "Additive": false,
           "CastShadows": false,
           "Color": "1,1,1,1",
@@ -471,7 +467,7 @@
           "FlipVertical": false,
           "FogStrength": 1,
           "Opaque": false,
-          "Size": "188,188",
+          "Size": "256,256",
           "Texture": null
         }
       ]
@@ -500,7 +496,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-18T18:02:56.783584\u002B01:00",
+  "LastSaved": "2024-06-19T10:34:47.5766494\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1
