@@ -3,7 +3,7 @@
 namespace Kira;
 
 [Category("Kira")]
-public sealed partial class MiniMap
+public sealed partial class MiniMap : Component
 {
     [Property, Group("Base")] public bool DrawOnSprite { get; set; }
     [Property, Group("Base")] public bool DrawGridOnSprite { get; set; }
@@ -25,26 +25,6 @@ public sealed partial class MiniMap
 
     private List<LayerInfo> LayersChosen = new List<LayerInfo>();
 
-    public void Created(IReadOnlyDictionary<string, object> state)
-    {
-        Log.Info("created hotload");
-        Refresh();
-    }
-
-    protected override void OnDirty()
-    {
-        Log.Info("dirty");
-    }
-
-    public void Failed()
-    {
-        Log.Info("failed hotload");
-    }
-
-    public void Destroyed(Dictionary<string, object> state)
-    {
-        Log.Info("destroyed hotload");
-    }
 
     protected override void OnValidate()
     {
@@ -55,6 +35,7 @@ public sealed partial class MiniMap
     {
         if (SpriteSize > 512) SpriteSize = 512;
         LayersChosen = UseLayerConfig ? LayerConfig.Layers : Layers;
+
         if (!GameObject.IsValid())
         {
             // Log.Warning("this gameobject not valid!?");
@@ -78,21 +59,17 @@ public sealed partial class MiniMap
         sp.Enabled = true;
 
         curMsgLogged = 0;
-
-
         sp.Size = SpriteSize;
 
-        if (DrawOnSprite && DrawGridOnSprite)
+        if (DrawOnSprite && !DrawGridOnSprite)
         {
-            sp.Texture = CreateFinalTexture();
+            var tx = CreateMiniMapTexture();
+            sp.Texture = tx;
         }
-        else if (DrawOnSprite)
+        else if (!DrawOnSprite && DrawGridOnSprite)
         {
-            sp.Texture = CreateMiniMapTexture();
-        }
-        else
-        {
-            sp.Texture = CreateGridTexture();
+            var tx = CreateGridTexture();
+            sp.Texture = tx;
         }
     }
 

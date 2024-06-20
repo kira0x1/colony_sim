@@ -404,8 +404,8 @@
         {
           "__type": "Kira.MiniMap",
           "__guid": "4bbf280a-036e-4dcd-8039-fdf33f9ed9cf",
-          "BorderColor": "0,0,0,0.68",
-          "BorderThickness": 9.69,
+          "BorderColor": "1,1,1,1",
+          "BorderThickness": 5,
           "Brightness": 5.81,
           "ClampValues": false,
           "DisplayGrid": true,
@@ -413,10 +413,10 @@
           "DrawOnSprite": false,
           "grassColor": "1,1,1,1",
           "GridCellsAmount": 7,
-          "GridColor": "1,1,1,1",
+          "GridColor": "0.11628,0.11628,0.11628,0.56",
           "GridLuminance": 0,
           "GridThickness": 2,
-          "Intensity": 1.21,
+          "Intensity": 0.8,
           "LayerConfig": "data/noiselayer.nlayer",
           "Layers": [
             {
@@ -448,13 +448,13 @@
           "MaxLuminance": 255,
           "MinLuminance": 0,
           "NoiseType": "Fbm",
-          "Octaves": 2,
-          "Scale": 1.52,
-          "SpriteSize": 256,
-          "UseLayerConfig": false,
+          "Octaves": 4,
+          "Scale": 1.64,
+          "SpriteSize": 252,
+          "UseLayerConfig": true,
           "UseLayers": true,
-          "ZoomIn": 1.42,
-          "ZoomOut": 1.58
+          "ZoomIn": 2.39,
+          "ZoomOut": 1
         },
         {
           "__type": "Sandbox.SpriteRenderer",
@@ -467,7 +467,7 @@
           "FlipVertical": false,
           "FogStrength": 1,
           "Opaque": false,
-          "Size": "256,256",
+          "Size": "252,252",
           "Texture": null
         }
       ]
@@ -496,7 +496,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-19T10:34:47.5766494\u002B01:00",
+  "LastSaved": "2024-06-20T12:29:32.6898845\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

@@ -3,7 +3,7 @@ using Sandbox.Utility;
 
 namespace Kira;
 
-public sealed partial class MiniMap : Component, Component.ExecuteInEditor, IHotloadManaged
+public sealed partial class MiniMap
 {
     [Group("Generator"), Property, Range(0f, 3f)] public float Scale { get; set; } = 1f;
     [Group("Generator"), Property, Range(1f, 5f)] public float ZoomIn { get; set; } = 1f;
