@@ -8,38 +8,38 @@
 
 @code
 {
-    private Image imageElement { get; set; } = new Image();
-    private Image gridOverlay { get; set; } = new Image();
-    private MiniMap minimap { get; set; }
+	private Image imageElement { get; set; } = new Image();
+	private Image gridOverlay { get; set; } = new Image();
+	private MiniMap minimap { get; set; }
 
-    private Texture tx { get; set; }
+	private Texture tx { get; set; }
 
-    protected override void OnStart()
-    {
-        minimap = Scene.Components.GetAll<MiniMap>().First();
+	protected override void OnStart()
+	{
+		minimap = Scene.Components.GetAll<MiniMap>().First();
 
-        if (!minimap.IsValid())
-        {
-            Log.Info("couldnt find minimap");
-        }
+		if ( !minimap.IsValid() )
+		{
+			Log.Info( "couldnt find minimap" );
+		}
 
-        tx = minimap.CreateMiniMapTexture();
-        Texture gridTx = minimap.CreateGridTexture();
+		tx = minimap.CreateMiniMapTexture();
+		Texture gridTx = minimap.CreateGridTexture();
 
-        gridOverlay.Texture = gridTx;
-        imageElement.Texture = tx;
-    }
+		gridOverlay.Texture = gridTx;
+		imageElement.Texture = tx;
+	}
 
-    protected override void OnTreeFirstBuilt()
-    {
-        base.OnTreeFirstBuilt();
+	protected override void OnTreeFirstBuilt()
+	{
+		base.OnTreeFirstBuilt();
 
-        imageElement.AddClass("map");
-        Panel.AddChild(imageElement);
+		imageElement.AddClass( "map" );
+		Panel.AddChild( imageElement );
 
 
-        gridOverlay.Parent = imageElement;
-        gridOverlay.AddClass("grid");
-        imageElement.AddChild(gridOverlay);
-    }
+		gridOverlay.Parent = imageElement;
+		gridOverlay.AddClass( "grid" );
+		imageElement.AddChild( gridOverlay );
+	}
 }

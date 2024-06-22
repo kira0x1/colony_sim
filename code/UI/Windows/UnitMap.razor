@@ -1,0 +1,49 @@
+@namespace Kira.UI
+@using Sandbox.UI
+@inherits Kira.UI.BaseNavWindow
+
+<root>
+    <div class="container">
+        <div class="map-info">
+            <div class="info-field">pos (@viewport.Position.x, @viewport.Position.y)</div>
+        </div>
+
+        <div class="map">
+            @* @foreach (var v in villagers) *@
+            @* { *@
+            @*     <div class="villager"> *@
+            @*         @v.FirstName *@
+            @*     </div> *@
+            @* } *@
+
+            @for (int i = 0; i < MapSymbols.Length; i++)
+            {
+                <div class="map-symbol"></div>
+            }
+        </div>
+
+        <div class="viewport" style="width: @viewport.ViewRect.Width; height: @viewport.ViewRect.Height"></div>
+    </div>
+</root>
+
+@code
+{
+    public Viewport viewport { get; set; } = new Viewport(width: 512, height: 512);
+    public Vector2 MapViewPos { get; set; }
+    private readonly MinimapSymbol[] MapSymbols = new MinimapSymbol[1];
+    private ColonyManager Colony { get; set; }
+
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (!firstTime) return;
+
+        var desc = Descendants.ToArray();
+        Colony = Scene.Components.GetAll<ColonyManager>().First();
+
+        foreach (Panel p in desc)
+        {
+            Log.Info(p.Class.FirstOrDefault());
+        }
+    }
+}

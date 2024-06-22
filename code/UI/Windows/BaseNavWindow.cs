@@ -4,5 +4,5 @@ namespace Kira.UI;
 
 public abstract class BaseNavWindow : Panel
 {
-    public virtual bool IsActive { get; set; }
+	public virtual bool IsActive { get; set; }
 }
