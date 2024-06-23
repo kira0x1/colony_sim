@@ -1,0 +1,33 @@
+@namespace Kira.UI
+@using Sandbox.UI
+@inherits Kira.UI.BaseNavWindow
+@attribute [StyleSheet]
+
+@if (!IsActive) return;
+<root>
+    @* <div class="viewport" style="width: @viewport.ViewRect.Width; height: @viewport.ViewRect.Height"></div> *@
+    <div class="container">
+        <div class="map">
+            <Viewport IsActive="@IsActive" Colony="@Colony"></Viewport>
+        </div>
+        <div class="map-info">
+            <div class="info-field">pos (@MapViewPos.x, @MapViewPos.y)</div>
+        </div>
+    </div>
+</root>
+
+@code
+{
+    public Vector2 MapViewPos { get; set; }
+    private readonly MinimapSymbol[] MapSymbols = { new MinimapSymbol(), new MinimapSymbol() };
+    private ColonyManager Colony { get; set; }
+    public override bool IsActive { get; set; }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (!firstTime) return;
+        Colony = Scene.Components.GetAll<ColonyManager>().First();
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine(IsActive, MapSymbols);
+}

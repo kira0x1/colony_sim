@@ -2,7 +2,8 @@
 
 namespace Kira;
 
-public class ColonyManager : Component
+[Category("Kira")]
+public sealed class ColonyManager : Component
 {
     [NonSerialized]
     public List<VillagerData> Villagers = new List<VillagerData>();
@@ -14,7 +15,6 @@ public class ColonyManager : Component
     private delegate void OnWorldTickEvent();
     private event OnWorldTickEvent OnWorldTick;
 
-
     protected override void OnAwake()
     {
         base.OnAwake();
@@ -25,7 +25,17 @@ public class ColonyManager : Component
 
         for (int i = 0; i < 9; i++)
         {
-            CreateVillagerData();
+            var v = CreateVillagerData();
+            if (i == 1)
+            {
+                v.PosX = 150;
+                v.PosY = -100;
+            }
+            else if (i == 2)
+            {
+                v.PosX = -150;
+                v.PosY = -100;
+            }
         }
     }
 
@@ -39,7 +49,6 @@ public class ColonyManager : Component
             OnWorldTick?.Invoke();
         }
     }
-
 
     public VillagerData CreateVillagerData()
     {

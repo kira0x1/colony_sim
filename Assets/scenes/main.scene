@@ -1,5 +1,5 @@
 {
-  "__guid": "67b1546e-1437-4c42-bfa5-10791f96cd79",
+  "__guid": "6975430d-fa7f-471e-ad44-68a7174a0160",
   "GameObjects": [
     {
       "__guid": "090d99a6-3b3a-4e23-9f16-2f1a27110553",
@@ -136,60 +136,6 @@
       ]
     },
     {
-      "__guid": "fbd66519-abe1-4ca2-b88b-fcd363eae0d1",
-      "Flags": 0,
-      "Name": "Screen",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "Components": [
-        {
-          "__type": "Sandbox.ScreenPanel",
-          "__guid": "57614c66-3761-45d2-b5cf-57fb25b940cb",
-          "AutoScreenScale": true,
-          "Opacity": 1,
-          "Scale": 1,
-          "ZIndex": 100
-        },
-        {
-          "__type": "Kira.UI.PlayerUI",
-          "__guid": "bc188d3b-4063-4570-85b2-daf6ebbf1598"
-        },
-        {
-          "__type": "MiniMapUI",
-          "__guid": "7e36f113-fa67-4845-ba92-2f1416855633"
-        }
-      ]
-    },
-    {
-      "__guid": "8e2edcf2-1012-46e0-aab4-197a8b2ab84a",
-      "Flags": 0,
-      "Name": "Plane",
-      "Scale": "7,7,7",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "Components": [
-        {
-          "__type": "Sandbox.ModelRenderer",
-          "__guid": "70b491c2-0ebe-4a2a-acfe-3b0a493d3a6d",
-          "BodyGroups": 18446744073709551615,
-          "MaterialOverride": "materials/default.vmat",
-          "Model": "models/dev/plane.vmdl",
-          "RenderType": "On",
-          "Tint": "0.60465,0.60465,0.60465,1"
-        },
-        {
-          "__type": "Sandbox.BoxCollider",
-          "__guid": "1b9a5f24-30e7-4bdf-9e3b-3a41b4bc961a",
-          "Center": "0,0,-5",
-          "IsTrigger": false,
-          "Scale": "100,100,10",
-          "Static": true
-        }
-      ]
-    },
-    {
       "__guid": "ff3cd03b-df1c-4945-9f39-32071a6b3c11",
       "Flags": 0,
       "Name": "Pawn",
@@ -238,143 +184,57 @@
       ]
     },
     {
-      "__guid": "40432e61-0fb2-4c90-8fde-15382b601f0f",
+      "__guid": "fbd66519-abe1-4ca2-b88b-fcd363eae0d1",
       "Flags": 0,
-      "Name": "Pawn (1)",
-      "Position": "64,-148.3884,0",
+      "Name": "Screen",
+      "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
       "Components": [
         {
-          "__type": "Sandbox.NavMeshAgent",
-          "__guid": "8e6b9714-9699-4388-b8ba-b42b5e380962",
-          "Acceleration": 150,
-          "Height": 64,
-          "MaxSpeed": 120,
-          "Radius": 22,
-          "Separation": 0.7,
-          "UpdatePosition": true,
-          "UpdateRotation": false
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "57614c66-3761-45d2-b5cf-57fb25b940cb",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ZIndex": 100
         },
         {
-          "__type": "Kira.VillagerPawn",
-          "__guid": "e960cc04-567e-41b9-9b6a-75245a29046d"
-        }
-      ],
-      "Children": [
+          "__type": "Kira.UI.PlayerUI",
+          "__guid": "bc188d3b-4063-4570-85b2-daf6ebbf1598"
+        },
         {
-          "__guid": "6aff452f-d636-4cf9-a95d-accc2b71e52b",
-          "Flags": 0,
-          "Name": "Cube",
-          "Position": "0,0,31.25",
-          "Scale": "0.5,0.5,1.25",
-          "Enabled": true,
-          "NetworkMode": 2,
-          "NetworkInterpolation": true,
-          "Components": [
-            {
-              "__type": "Sandbox.ModelRenderer",
-              "__guid": "1f0c6f1b-0dbb-4b56-9d08-7cdf2e8d2c26",
-              "BodyGroups": 18446744073709551615,
-              "Model": "models/dev/box.vmdl",
-              "RenderType": "On",
-              "Tint": "1,0,0,1"
-            }
-          ]
+          "__type": "MiniMapUI",
+          "__guid": "7e36f113-fa67-4845-ba92-2f1416855633",
+          "__enabled": false
         }
       ]
     },
     {
-      "__guid": "87b73875-c6f7-4f3b-811d-e8db3723b5ee",
+      "__guid": "8e2edcf2-1012-46e0-aab4-197a8b2ab84a",
       "Flags": 0,
-      "Name": "Pawn (2)",
-      "Position": "-64,-148.3884,0",
+      "Name": "Plane",
+      "Scale": "7,7,7",
+      "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
       "Components": [
         {
-          "__type": "Sandbox.NavMeshAgent",
-          "__guid": "4f77eea6-e4a1-47eb-9f26-a19866985b3f",
-          "Acceleration": 150,
-          "Height": 64,
-          "MaxSpeed": 120,
-          "Radius": 22,
-          "Separation": 0.7,
-          "UpdatePosition": true,
-          "UpdateRotation": false
+          "__type": "Sandbox.ModelRenderer",
+          "__guid": "70b491c2-0ebe-4a2a-acfe-3b0a493d3a6d",
+          "BodyGroups": 18446744073709551615,
+          "MaterialOverride": "materials/default.vmat",
+          "Model": "models/dev/plane.vmdl",
+          "RenderType": "On",
+          "Tint": "0.60465,0.60465,0.60465,1"
         },
         {
-          "__type": "Kira.VillagerPawn",
-          "__guid": "22d1a6fc-0b97-4961-8300-a6c12902089b"
-        }
-      ],
-      "Children": [
-        {
-          "__guid": "7a3d90c8-8d01-476e-9bae-23ded223ad4b",
-          "Flags": 0,
-          "Name": "Cube",
-          "Position": "0,0,31.25",
-          "Scale": "0.5,0.5,1.25",
-          "Enabled": true,
-          "NetworkMode": 2,
-          "NetworkInterpolation": true,
-          "Components": [
-            {
-              "__type": "Sandbox.ModelRenderer",
-              "__guid": "d7c28ba5-981e-4b47-8f69-b0c0d7bcf6bc",
-              "BodyGroups": 18446744073709551615,
-              "Model": "models/dev/box.vmdl",
-              "RenderType": "On",
-              "Tint": "1,0,0,1"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "__guid": "24f024ae-5556-4e7f-ab3b-247d37f7c179",
-      "Flags": 0,
-      "Name": "Pawn (3)",
-      "Position": "-64,-96,0",
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "Components": [
-        {
-          "__type": "Sandbox.NavMeshAgent",
-          "__guid": "791880c5-d22d-449a-8a17-29850193a170",
-          "Acceleration": 150,
-          "Height": 64,
-          "MaxSpeed": 120,
-          "Radius": 22,
-          "Separation": 0.7,
-          "UpdatePosition": true,
-          "UpdateRotation": false
-        },
-        {
-          "__type": "Kira.VillagerPawn",
-          "__guid": "d72a1c9e-d72c-4962-82bb-cdda31f84c08"
-        }
-      ],
-      "Children": [
-        {
-          "__guid": "6845e859-1f03-427d-bac4-24e0bd653785",
-          "Flags": 0,
-          "Name": "Cube",
-          "Position": "0,0,31.25",
-          "Scale": "0.5,0.5,1.25",
-          "Enabled": true,
-          "NetworkMode": 2,
-          "NetworkInterpolation": true,
-          "Components": [
-            {
-              "__type": "Sandbox.ModelRenderer",
-              "__guid": "a5d448d3-3321-4624-a2c0-d86365ff1fe5",
-              "BodyGroups": 18446744073709551615,
-              "Model": "models/dev/box.vmdl",
-              "RenderType": "On",
-              "Tint": "1,0,0,1"
-            }
-          ]
+          "__type": "Sandbox.BoxCollider",
+          "__guid": "1b9a5f24-30e7-4bdf-9e3b-3a41b4bc961a",
+          "Center": "0,0,-5",
+          "IsTrigger": false,
+          "Scale": "100,100,10",
+          "Static": true
         }
       ]
     },
@@ -404,12 +264,13 @@
         {
           "__type": "Kira.MiniMap",
           "__guid": "4bbf280a-036e-4dcd-8039-fdf33f9ed9cf",
-          "BorderColor": "1,1,1,1",
+          "__enabled": false,
+          "BorderColor": "0.13488,0.13488,0.13488,1",
           "BorderThickness": 5,
           "Brightness": 5.81,
           "ClampValues": false,
           "DisplayGrid": true,
-          "DrawGridOnSprite": true,
+          "DrawGridOnSprite": false,
           "DrawOnSprite": false,
           "grassColor": "1,1,1,1",
           "GridCellsAmount": 7,
@@ -444,7 +305,6 @@
               "End": 1000
             }
           ],
-          "LogMinMax": false,
           "MaxLuminance": 255,
           "MinLuminance": 0,
           "NoiseType": "Fbm",
@@ -459,6 +319,7 @@
         {
           "__type": "Sandbox.SpriteRenderer",
           "__guid": "7ff2b856-ef24-4f9a-a131-94eb632ab672",
+          "__enabled": false,
           "Additive": false,
           "CastShadows": false,
           "Color": "1,1,1,1",
@@ -496,7 +357,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-20T12:29:32.6898845\u002B01:00",
+  "LastSaved": "2024-06-23T22:45:28.3523148\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

@@ -16,6 +16,20 @@ public class VillagerData
     public int Health { get; set; }
     public int MaxHealth { get; set; }
 
+    public Vector2 Pos { get; set; }
+
+    public float PosX
+    {
+        get => Pos.x;
+        set => Pos = Pos.WithX(value);
+    }
+
+    public float PosY
+    {
+        get => Pos.y;
+        set => Pos = Pos.WithY(value);
+    }
+
     /// <summary>
     /// How many world ticks it takes for hunger to decrease
     /// </summary>
@@ -126,5 +140,4 @@ public class VillagerData
     }
 
     public int BuildHash() => System.HashCode.Combine(Hunger, Thirst, Health);
-
 }

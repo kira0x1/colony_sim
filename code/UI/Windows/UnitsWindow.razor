@@ -6,24 +6,24 @@
 @if (!IsActive) return;
 <root>
     <div class="units">
-        @{
-            int i = 0;
-        }
-
-        @foreach (VillagerData pawn in ColonyManager.Instance.Villagers)
-        {
-            int i1 = i;
-
-            <div class="villager" onmouseout=@(() => OnMouseExit(i1)) onmouseover=@(() => OnMouseOver(pawn, i1))>
-                <div class="pawntext">
-                    @pawn.FullName
-                </div>
-            </div>
-
+        <div class="units-list">
             @{
-                i++;
+                int i = 0;
             }
-        }
+
+            @foreach (VillagerData pawn in ColonyManager.Instance.Villagers)
+            {
+                int i1 = i;
+                <div class="villager" onmouseout=@(() => OnMouseExit(i1)) onmouseover=@(() => OnMouseOver(pawn, i1))>
+                    <div class="pawntext">
+                        @pawn.FullName
+                    </div>
+                </div>
+                @{
+                    i++;
+                }
+            }
+        </div>
     </div>
     @if (IsHoveringVillager && villagerHovering != null)
     {
