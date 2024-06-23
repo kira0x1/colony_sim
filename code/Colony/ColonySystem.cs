@@ -9,13 +9,11 @@ public class ColonySystem : GameObjectSystem
         Listen(Stage.FinishUpdate, 10, UpdatePawns, "UpdatingPawns");
     }
 
-    private bool MapInitalized { get; set; }
     private bool ColonyInitalized { get; set; }
 
     private void UpdatePawns()
     {
         ColonyManager cm = ColonyManager.Instance;
-        UnitMap umap = Scene.Components.GetAll<UnitMap>().FirstOrDefault();
 
         if (!cm.IsValid())
         {
@@ -29,18 +27,5 @@ public class ColonySystem : GameObjectSystem
         }
 
         ColonyInitalized = false;
-
-        if (!umap.IsValid())
-        {
-            if (!MapInitalized)
-            {
-                Log.Warning("UnitMap is not valid");
-                MapInitalized = true;
-            }
-
-            return;
-        }
-
-        MapInitalized = false;
     }
 }
