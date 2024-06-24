@@ -12,24 +12,29 @@
 {
     public VillagerData Villager { get; set; }
     public Viewport ViewPort { get; set; }
-    private Vector2 ViewPos { get; set; } = Vector2.Zero;
 
     public override void OnLayout(ref Rect layoutRect)
     {
         base.OnLayout(ref layoutRect);
-        var cpos = ViewPort.CalculatePosition(Villager.Pos, Box.Rect);
-        Box.Rect.Position = cpos;
-        ViewPos = cpos;
-
-        // var parentRect = Parent.Box.Rect;
-        // var ViewSize = new Vector2(parentRect.Width / 2f, parentRect.Height / 2f);
-        // var rect = this.Box.Rect;
-        // Log.Info(rect.Position);
-
-        // rect.Position += new Vector2(ViewSize.x / 2f, ViewSize.y / 2f);
-
-        // rect.Width = ViewSize.x / 2f;
-        // rect.Height = ViewSize.y / 2f;
-        // this.Box.Rect = rect;
+        RefreshLayout();
     }
+
+    public override void OnHotloaded()
+    {
+        base.OnHotloaded();
+        RefreshLayout();
+    }
+
+    public void RefreshLayout()
+    {
+        var cpos = ViewPort.CalculatePosition(Villager.Pos, Box);
+        Box.Rect = cpos;
+
+        foreach (Panel d in Descendants)
+        {
+            d.Style.Margin = Length.Auto;
+        }
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine(this.Box);
 }

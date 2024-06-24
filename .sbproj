@@ -21,7 +21,7 @@
     "PerMapRanking": false,
     "LeaderboardType": "None",
     "CsProjName": "",
-    "StartupScene": "scenes/minimal.scene",
+    "StartupScene": "scenes/main.scene",
     "ControlModes": {
       "Keyboard": true
     },
@@ -215,6 +215,7 @@
         }
       ],
       "__guid": "ec83bd2e-60b8-4068-9ee4-f7c18c67eb28"
-    }
+    },
+    "LaunchMode": "Normal"
   }
 }

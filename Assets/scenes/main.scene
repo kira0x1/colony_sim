@@ -139,7 +139,8 @@
       "__guid": "ff3cd03b-df1c-4945-9f39-32071a6b3c11",
       "Flags": 0,
       "Name": "Pawn",
-      "Position": "-64,-32,0",
+      "Position": "35.05291,31.55908,0.5",
+      "Rotation": "0,0,-0.3774576,0.9260264",
       "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
@@ -147,13 +148,13 @@
         {
           "__type": "Sandbox.NavMeshAgent",
           "__guid": "c8cce140-7c82-4eee-860b-6d3fe1336cb0",
-          "Acceleration": 150,
+          "Acceleration": 90,
           "Height": 64,
-          "MaxSpeed": 120,
+          "MaxSpeed": 80,
           "Radius": 22,
-          "Separation": 0.1,
+          "Separation": 0.2,
           "UpdatePosition": true,
-          "UpdateRotation": false
+          "UpdateRotation": true
         },
         {
           "__type": "Kira.VillagerPawn",
@@ -202,11 +203,6 @@
         {
           "__type": "Kira.UI.PlayerUI",
           "__guid": "bc188d3b-4063-4570-85b2-daf6ebbf1598"
-        },
-        {
-          "__type": "MiniMapUI",
-          "__guid": "7e36f113-fa67-4845-ba92-2f1416855633",
-          "__enabled": false
         }
       ]
     },
@@ -357,7 +353,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-23T22:45:28.3523148\u002B01:00",
+  "LastSaved": "2024-06-24T10:05:43.6275042\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

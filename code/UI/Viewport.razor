@@ -1,23 +1,28 @@
 ﻿@namespace Kira.UI
 @attribute [StyleSheet]
 @inherits Panel
+@using Sandbox.Razor
 @using Sandbox.UI
 
-@if (!IsActive) return;
+
+@* @if (!IsActive) return; *@
 <root>
-    @for (var i = 0; i < Colony.Villagers.Count; i++)
-    {
-        if (i > 2) break;
-        VillagerData c = Colony.Villagers[i];
-        <MinimapSymbol ViewPort="@(this)" Villager="@c"></MinimapSymbol>
+    @if (!Colony.IsValid()) return;
+    @{
+        for (var i = 0; i < MapSymbols.Length; i++)
+        {
+            VillagerData c = Colony.Villagers[i];
+            <MinimapSymbol @ref="MapSymbols[i]" ViewPort="@(this)" Villager="@c"></MinimapSymbol>
+        }
     }
 </root>
 
 @code {
     public bool IsActive { get; set; }
     public ColonyManager Colony { get; set; }
+    public Vector2 ViewSize { get; set; }
     public Rect ViewRect { get; set; }
-    public Vector2 ViewSize = new Vector2(512, 512);
+    public MinimapSymbol[] MapSymbols { get; set; } = new MinimapSymbol[3];
     public Vector2 Position { get; set; } = Vector2.Zero;
     private Vector2 BoxPosition { get; set; }
 
@@ -30,25 +35,41 @@
         base.OnLayout(ref layoutRect);
         BoxPosition = this.Box.Rect.Position;
         ScreenOffset = layoutRect.Center;
-
-        var parentRect = Parent.Box.Rect;
+        ViewSize = Box.Rect.Size;
 
         var rect = this.Box.Rect;
-        rect.Width = parentRect.Width;
-        rect.Height = parentRect.Height;
-        ViewSize = rect.Size;
         this.Box.Rect = rect;
+
+        for (var i = 0; i < MapSymbols.Length; i++)
+        {
+            MinimapSymbol ms = MapSymbols[i];
+            ms.RefreshLayout();
+        }
     }
 
-    public Vector2 CalculatePosition(Vector2 position, Rect box)
+    public override void OnHotloaded()
     {
-        Vector2 pos = Vector2.Zero;
-        pos += ScreenOffset;
-        // pos.x -= box.Width / 2;
-        // pos.y += box.Height / 2;
-        pos += position;
-        return pos;
+        base.OnHotloaded();
+        foreach (MinimapSymbol minimapSymbol in MapSymbols)
+        {
+            if (minimapSymbol.IsValid())
+                minimapSymbol.RefreshLayout();
+        }
     }
 
-    protected override int BuildHash() => System.HashCode.Combine(IsActive);
+    public Rect CalculatePosition(Vector2 position, Box mbox)
+    {
+        Rect finalRect = mbox.Rect;
+        finalRect.Width = Box.Rect.Width / 4f;
+        finalRect.Height = Box.Rect.Height / 4f;
+
+        Vector2 pos = Box.Rect.Center;
+        pos.x -= finalRect.Width * position.x;
+        pos.y -= finalRect.Height * position.y;
+
+        finalRect.Position = pos;
+        return finalRect;
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine(IsActive, MapSymbols.Select(x => x.GetHashCode()));
 }
