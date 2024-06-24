@@ -28,12 +28,12 @@ public sealed class ColonyManager : Component
             var v = CreateVillagerData();
             if (i == 1)
             {
-                v.PosX = -1.5f;
-                v.PosY = -1;
+                v.PosX = -2.4f;
+                v.PosY = -0.5f;
             }
             else if (i == 2)
             {
-                v.PosX = 1.1f;
+                v.PosX = 2.4f;
                 v.PosY = 0.5f;
             }
         }

@@ -13,6 +13,16 @@
     public VillagerData Villager { get; set; }
     public Viewport ViewPort { get; set; }
 
+    public MinimapSymbol()
+    {
+    }
+
+    public MinimapSymbol(VillagerData villager, Viewport viewport)
+    {
+        this.Villager = villager;
+        this.ViewPort = viewport;
+    }
+
     public override void OnLayout(ref Rect layoutRect)
     {
         base.OnLayout(ref layoutRect);

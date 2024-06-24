@@ -58,7 +58,7 @@ public sealed class NoiseRenderer : Component, Component.ExecuteInEditor
 
         // Create a texture for the compute shader to use
         var texture = Texture.Create(SpriteSize, SpriteSize)
-            .WithUAVBinding()                 // Needs to have this if we're using it in a compute shader
+            .WithUAVBinding() // Needs to have this if we're using it in a compute shader
             .WithFormat(ImageFormat.RGBA8888) // Use whatever you need
             .WithData(data.ToArray())
             .Finish();

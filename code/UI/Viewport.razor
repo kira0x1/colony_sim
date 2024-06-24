@@ -5,56 +5,31 @@
 @using Sandbox.UI
 
 
-@if (!IsActive) return;
 <root>
-    @if (!Colony.IsValid()) return;
-    @{
-        for (var i = 0; i < MapSymbols.Length; i++)
-        {
-            VillagerData c = Colony.Villagers[i];
-            <MinimapSymbol @ref="MapSymbols[i]" ViewPort="@(this)" Villager="@c"></MinimapSymbol>
-        }
-    }
 </root>
 
 @code {
-    public bool IsActive { get; set; }
     public ColonyManager Colony { get; set; }
-    public Vector2 ViewSize { get; set; }
-    public Rect ViewRect { get; set; }
     public MinimapSymbol[] MapSymbols { get; set; } = new MinimapSymbol[3];
-    public Vector2 Position { get; set; } = Vector2.Zero;
-    private Vector2 BoxPosition { get; set; }
 
-    public float Width => ViewRect.Width;
-    public float Height => ViewRect.Height;
-    public Vector2 ScreenOffset { get; set; }
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (!firstTime) return;
+        for (int i = 0; i < 3; i++)
+        {
+            VillagerData c = Colony.Villagers[i];
+            MinimapSymbol ms = new MinimapSymbol(c, this);
+            MapSymbols[i] = ms;
+            AddChild(ms);
+        }
+    }
 
     public override void OnLayout(ref Rect layoutRect)
     {
         base.OnLayout(ref layoutRect);
-        BoxPosition = this.Box.Rect.Position;
-        ScreenOffset = layoutRect.Center;
-        ViewSize = Box.Rect.Size;
 
         var rect = this.Box.Rect;
         this.Box.Rect = rect;
-
-        for (var i = 0; i < MapSymbols.Length; i++)
-        {
-            MinimapSymbol ms = MapSymbols[i];
-            ms.RefreshLayout();
-        }
-    }
-
-    public override void OnHotloaded()
-    {
-        base.OnHotloaded();
-        foreach (MinimapSymbol minimapSymbol in MapSymbols)
-        {
-            if (minimapSymbol.IsValid())
-                minimapSymbol.RefreshLayout();
-        }
     }
 
     public Rect CalculatePosition(Vector2 position, Box mbox)
@@ -64,12 +39,12 @@
         finalRect.Height = Box.Rect.Height / 6f;
 
         Vector2 pos = Box.Rect.Center;
-        pos.x -= finalRect.Width * position.x;
-        pos.y -= finalRect.Height * position.y;
+        pos.x -= finalRect.Width * position.x + finalRect.Width / 2f;
+        pos.y -= finalRect.Height * position.y + finalRect.Height / 2f;
 
         finalRect.Position = pos;
         return finalRect;
     }
 
-    protected override int BuildHash() => System.HashCode.Combine(IsActive, MapSymbols.Select(x => x.GetHashCode()));
+    protected override int BuildHash() => System.HashCode.Combine(MapSymbols.Select(x => x.GetHashCode()));
 }

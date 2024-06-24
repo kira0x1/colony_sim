@@ -1,50 +1,50 @@
 HEADER
 {
-	Description = "Template Shader for S&box";
+Description = "Template Shader for S&box";
 }
 
 FEATURES
 {
-    #include "common/features.hlsl"
+#include "common/features.hlsl"
 }
 
 COMMON
 {
-	#include "common/shared.hlsl"
+#include "common/shared.hlsl"
 }
 
 struct VertexInput
 {
-	#include "common/vertexinput.hlsl"
+#include "common/vertexinput.hlsl"
 };
 
 struct PixelInput
 {
-	#include "common/pixelinput.hlsl"
+#include "common/pixelinput.hlsl"
 };
 
 VS
-{   
-	#include "common/vertex.hlsl"
+{
+#include "common/vertex.hlsl"
 
-	PixelInput MainVs( VertexInput i )
-	{
-		PixelInput o = ProcessVertex( i );
-		// Add your vertex manipulation functions here
-		return FinalizeVertex( o );
-	} 
+PixelInput MainVs( VertexInput i )
+{
+PixelInput o = ProcessVertex( i );
+// Add your vertex manipulation functions here
+return FinalizeVertex( o );
+}
 }
 
 //=========================================================================================================================
 
 PS
 {
-    #include "common/pixel.hlsl"
+#include "common/pixel.hlsl"
 
-	float4 MainPs( PixelInput i ) : SV_Target0
-	{
-		Material m = Material::From( i );
+float4 MainPs( PixelInput i ) : SV_Target0
+{
+Material m = Material::From( i );
 //		 m.Metalness = 1.0f; // Forces the object to be metalic */
-		return ShadingModelStandard::Shade( i, m );
-	}
+return ShadingModelStandard::Shade( i, m );
+}
 }

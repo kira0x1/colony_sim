@@ -2,7 +2,7 @@
 
 public enum NoiseTypes
 {
-	Perlin,
-	Simplex,
-	Fbm
+    Perlin,
+    Simplex,
+    Fbm
 }
