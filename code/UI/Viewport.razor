@@ -5,7 +5,7 @@
 @using Sandbox.UI
 
 
-@* @if (!IsActive) return; *@
+@if (!IsActive) return;
 <root>
     @if (!Colony.IsValid()) return;
     @{
@@ -60,8 +60,8 @@
     public Rect CalculatePosition(Vector2 position, Box mbox)
     {
         Rect finalRect = mbox.Rect;
-        finalRect.Width = Box.Rect.Width / 4f;
-        finalRect.Height = Box.Rect.Height / 4f;
+        finalRect.Width = Box.Rect.Width / 6f;
+        finalRect.Height = Box.Rect.Height / 6f;
 
         Vector2 pos = Box.Rect.Center;
         pos.x -= finalRect.Width * position.x;
