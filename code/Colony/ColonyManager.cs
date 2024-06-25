@@ -15,6 +15,8 @@ public sealed class ColonyManager : Component
     private delegate void OnWorldTickEvent();
     private event OnWorldTickEvent OnWorldTick;
 
+    public ColonyData ColonyData { get; set; } = new ColonyData();
+
     protected override void OnAwake()
     {
         base.OnAwake();
@@ -37,6 +39,10 @@ public sealed class ColonyManager : Component
                 v.PosY = 0.5f;
             }
         }
+
+        ColonyData = new ColonyData();
+        ColonyData.Villagers = Villagers;
+        ColonyData.Population = Villagers.Count;
     }
 
     protected override void OnUpdate()
@@ -57,4 +63,12 @@ public sealed class ColonyManager : Component
         OnWorldTick += villager.OnWorldTick;
         return villager;
     }
+}
+
+public class ColonyData
+{
+    public string ColonyName { get; set; } = "A Colony";
+    public int Scrap { get; set; } = 50;
+    public int Population { get; set; }
+    public List<VillagerData> Villagers { get; set; }
 }

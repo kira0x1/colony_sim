@@ -1,0 +1,30 @@
+@using Kira
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+
+<root>
+    <div class="resource-box">
+        <i>people</i>
+        @ColonyData.Population
+    </div>
+
+    <div class="resource-box">
+        <i>settings</i>
+        @ColonyData.Scrap
+    </div>
+</root>
+
+@code
+{
+    // public ColonyManager Colony{ get; set; }
+    public ColonyData ColonyData { get; set; }
+
+    protected override void OnEnabled()
+    {
+        base.OnEnabled();
+        ColonyData = ColonyManager.Instance.ColonyData;
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine(ColonyData.Population, ColonyData.Scrap);
+}

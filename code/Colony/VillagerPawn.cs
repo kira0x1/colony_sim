@@ -26,9 +26,6 @@ public sealed class VillagerPawn : Component
 
         villagerData.PosX = agent.AgentPosition.x;
         villagerData.PosY = agent.AgentPosition.y;
-
-        Log.Info(villagerData.Pos);
-        Log.Info(villagerData.FirstName);
     }
 
     protected override void OnUpdate()
