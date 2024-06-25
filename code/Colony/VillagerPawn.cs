@@ -22,10 +22,13 @@ public sealed class VillagerPawn : Component
         agent.MaxSpeed = 80f;
         pawnController = new PawnController(agent, roamRadius: 150f);
 
-        villagerData = ColonyManager.Instance.CreateVillagerData();
+        villagerData = ColonyManager.Instance.Villagers[0];
 
         villagerData.PosX = agent.AgentPosition.x;
         villagerData.PosY = agent.AgentPosition.y;
+
+        Log.Info(villagerData.Pos);
+        Log.Info(villagerData.FirstName);
     }
 
     protected override void OnUpdate()

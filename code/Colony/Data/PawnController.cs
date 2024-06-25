@@ -41,7 +41,6 @@ public class PawnController
     {
         Gizmo.Draw.SolidSphere(agent.GameObject.Scene.Transform.World.PointToLocal(Destination), 6f);
 
-
         if (HasReachedDestination && SinceReachedDestination >= RandomWaitTime)
         {
             Destination = RandomPoint();

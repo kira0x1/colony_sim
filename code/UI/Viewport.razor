@@ -15,11 +15,13 @@
     protected override void OnAfterTreeRender(bool firstTime)
     {
         if (!firstTime) return;
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 1; i++)
         {
             VillagerData c = Colony.Villagers[i];
             MinimapSymbol ms = new MinimapSymbol(c, this);
+            var pawn = Scene.Components.GetAll<VillagerPawn>().First();
             MapSymbols[i] = ms;
+            ms.Pawn = pawn;
             AddChild(ms);
         }
     }
@@ -39,8 +41,9 @@
         finalRect.Height = Box.Rect.Height / 6f;
 
         Vector2 pos = Box.Rect.Center;
-        pos.x -= finalRect.Width * position.x + finalRect.Width / 2f;
-        pos.y -= finalRect.Height * position.y + finalRect.Height / 2f;
+        var transformedPos = (position / Box.Rect.Size);
+        pos.x -= finalRect.Width * transformedPos.x + finalRect.Width / 2f;
+        pos.y -= finalRect.Height * transformedPos.y + finalRect.Height / 2f;
 
         finalRect.Position = pos;
         return finalRect;

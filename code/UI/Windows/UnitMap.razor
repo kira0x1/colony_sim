@@ -18,7 +18,6 @@
 @code
 {
     public Vector2 MapViewPos { get; set; }
-    private readonly MinimapSymbol[] MapSymbols = { new MinimapSymbol(), new MinimapSymbol() };
     public ColonyManager Colony { get; set; } = ColonyManager.Instance;
     public override bool IsActive { get; set; }
 
@@ -33,5 +32,5 @@
         }
     }
 
-    protected override int BuildHash() => System.HashCode.Combine(IsActive, MapSymbols);
+    protected override int BuildHash() => System.HashCode.Combine(IsActive);
 }

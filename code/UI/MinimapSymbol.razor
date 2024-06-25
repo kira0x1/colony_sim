@@ -5,12 +5,13 @@
 
 <root>
     <div class="unit-field">@Villager.FirstName</div>
-    <div class="unit-field">@Villager.Pos</div>
+    <div class="unit-field">@($"{Villager.Pos.x:F0} {Villager.Pos.y:F0}")</div>
 </root>
 
 @code
 {
     public VillagerData Villager { get; set; }
+    public VillagerPawn Pawn { get; set; }
     public Viewport ViewPort { get; set; }
 
     public MinimapSymbol()
@@ -46,5 +47,6 @@
         }
     }
 
-    protected override int BuildHash() => System.HashCode.Combine(this.Box);
+    protected override int BuildHash() => System.HashCode.Combine(Villager, Pawn.Transform.Position);
+
 }
