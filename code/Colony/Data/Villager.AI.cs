@@ -9,7 +9,7 @@ public partial class Villager
 
     public float Distance { get; set; }
     private float RandomWaitTime { get; set; }
-    private readonly float roamRadius;
+    private const float RoamRadius = 500;
     public bool HasReachedDestination { get; set; }
     public TimeSince SinceReachedDestination = 0f;
     public Vector2 StartPoint { get; set; }
@@ -53,6 +53,6 @@ public partial class Villager
 
     private Vector2 RandomPoint()
     {
-        return StartPoint + new Vector2(Random.Shared.Float(-roamRadius, roamRadius), Random.Shared.Float(-roamRadius, roamRadius));
+        return StartPoint + new Vector2(Random.Shared.Float(-RoamRadius, RoamRadius), Random.Shared.Float(-RoamRadius, RoamRadius));
     }
 }

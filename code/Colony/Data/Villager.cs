@@ -82,9 +82,7 @@ public partial class Villager
         Health = 100;
 
         Strength = Random.Shared.Int(10, 30);
-        Speed = Random.Shared.Int(20, 100);
-        Log.Info($"Speed: {Speed}");
-        roamRadius = Random.Shared.Float(5, 15);
+        Speed = Random.Shared.Int(10, 30);
         Init();
 
         // Age = VillagerUtils.RandomAge;

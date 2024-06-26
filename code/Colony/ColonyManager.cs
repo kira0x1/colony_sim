@@ -25,17 +25,18 @@ public sealed class ColonyManager : Component
         Villagers = new List<Villager>();
         Instance = this;
 
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < 3; i++)
         {
             var v = CreateVillagerData();
+
             if (i == 1)
             {
-                v.PosX = -2.4f;
-                v.PosY = -0.5f;
+                v.PosX = -60f;
+                v.PosY = -10f;
             }
             else if (i == 2)
             {
-                v.PosX = 2.4f;
+                v.PosX = 1000f;
                 v.PosY = 0.5f;
             }
         }

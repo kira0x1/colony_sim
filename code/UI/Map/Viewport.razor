@@ -15,9 +15,12 @@
     protected override void OnAfterTreeRender(bool firstTime)
     {
         if (!firstTime) return;
-        for (int i = 0; i < 1; i++)
+
+        var villagers = Colony.Villagers;
+
+        for (int i = 0; i < villagers.Count; i++)
         {
-            Villager c = Colony.Villagers[i];
+            Villager c = villagers[i];
             MinimapSymbol ms = new MinimapSymbol(c, this);
             MapSymbols[i] = ms;
             AddChild(ms);
@@ -44,9 +47,6 @@
         pos.x -= finalRect.Width * transformedPos.x + finalRect.Width / 2f;
         pos.y -= finalRect.Height * transformedPos.y + finalRect.Height / 2f;
         finalRect.Position = pos;
-
-        StyleSelectorsChanged(false, true);
-        Log.Info("selector change");
 
         return finalRect;
     }
