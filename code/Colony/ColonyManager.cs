@@ -6,7 +6,7 @@ namespace Kira;
 public sealed class ColonyManager : Component
 {
     [NonSerialized]
-    public List<VillagerData> Villagers = new List<VillagerData>();
+    public List<Villager> Villagers = new List<Villager>();
     public static ColonyManager Instance { get; set; }
 
     private const float WorldTickRate = 0.5f;
@@ -22,7 +22,7 @@ public sealed class ColonyManager : Component
         base.OnAwake();
 
         RandomNames.Init();
-        Villagers = new List<VillagerData>();
+        Villagers = new List<Villager>();
         Instance = this;
 
         for (int i = 0; i < 9; i++)
@@ -56,9 +56,9 @@ public sealed class ColonyManager : Component
         }
     }
 
-    public VillagerData CreateVillagerData()
+    public Villager CreateVillagerData()
     {
-        VillagerData villager = new VillagerData(RandomNames.RandomFirstName, RandomNames.RandomLastName);
+        Villager villager = new Villager(RandomNames.RandomFirstName, RandomNames.RandomLastName);
         Villagers.Add(villager);
         OnWorldTick += villager.OnWorldTick;
         return villager;
@@ -70,5 +70,5 @@ public class ColonyData
     public string ColonyName { get; set; } = "A Colony";
     public int Scrap { get; set; } = 50;
     public int Population { get; set; }
-    public List<VillagerData> Villagers { get; set; }
+    public List<Villager> Villagers { get; set; }
 }

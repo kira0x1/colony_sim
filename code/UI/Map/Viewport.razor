@@ -17,11 +17,9 @@
         if (!firstTime) return;
         for (int i = 0; i < 1; i++)
         {
-            VillagerData c = Colony.Villagers[i];
+            Villager c = Colony.Villagers[i];
             MinimapSymbol ms = new MinimapSymbol(c, this);
-            var pawn = Scene.Components.GetAll<VillagerPawn>().First();
             MapSymbols[i] = ms;
-            ms.Pawn = pawn;
             AddChild(ms);
         }
     }
@@ -38,15 +36,18 @@
     public Rect CalculatePosition(Vector2 position, Box mbox)
     {
         Rect finalRect = mbox.Rect;
-        finalRect.Width = Box.Rect.Width / 6f;
+        finalRect.Width = Box.Rect.Width / 8f;
         finalRect.Height = Box.Rect.Height / 6f;
 
         Vector2 pos = Box.Rect.Center;
         var transformedPos = (position / Box.Rect.Size);
         pos.x -= finalRect.Width * transformedPos.x + finalRect.Width / 2f;
         pos.y -= finalRect.Height * transformedPos.y + finalRect.Height / 2f;
-
         finalRect.Position = pos;
+
+        StyleSelectorsChanged(false, true);
+        Log.Info("selector change");
+
         return finalRect;
     }
 

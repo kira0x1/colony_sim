@@ -2,33 +2,24 @@
 
 using System;
 
-// ReSharper disable ConvertConstructorToMemberInitializers
-public class VillagerData
+public partial class Villager
 {
     public string FirstName { get; set; }
 
     public string LastName { get; set; }
     public int Age { get; set; }
 
-    public int Hunger { get; set; }
-    public int Thirst { get; set; }
 
-    public int Health { get; set; }
-    public int MaxHealth { get; set; }
-
+    public bool IsDead { get; set; }
     public Vector2 Pos { get; set; }
 
-    public float PosX
-    {
-        get => Pos.x;
-        set => Pos = Pos.WithX(value);
-    }
-
-    public float PosY
-    {
-        get => Pos.y;
-        set => Pos = Pos.WithY(value);
-    }
+    // Stats
+    public int Hunger { get; set; }
+    public int Thirst { get; set; }
+    public int Health { get; set; }
+    public int MaxHealth { get; set; }
+    public int Speed { get; set; }
+    public int Strength { get; set; }
 
     /// <summary>
     /// How many world ticks it takes for hunger to decrease
@@ -60,13 +51,24 @@ public class VillagerData
     /// </summary>
     public int Weight { get; set; }
 
-    public VillagerData(string firstName, string lastName)
+    public string FullName => $"{FirstName} {LastName}";
+
+    public float PosX
+    {
+        get => Pos.x;
+        set => Pos = Pos.WithX(value);
+    }
+
+    public float PosY
+    {
+        get => Pos.y;
+        set => Pos = Pos.WithY(value);
+    }
+
+    public Villager(string firstName, string lastName)
     {
         FirstName = firstName;
         LastName = lastName;
-
-        // FirstName = "fname";
-        // LastName = "lname";
 
         Age = Random.Shared.Int(10, 60);
         Weight = Random.Shared.Int(50, 120);
@@ -79,12 +81,21 @@ public class VillagerData
         MaxHealth = 100;
         Health = 100;
 
+        Strength = Random.Shared.Int(10, 30);
+        Speed = Random.Shared.Int(20, 100);
+        Log.Info($"Speed: {Speed}");
+        roamRadius = Random.Shared.Float(5, 15);
+        Init();
+
         // Age = VillagerUtils.RandomAge;
-        // Log.Info(this);
     }
 
     public void OnWorldTick()
     {
+        if (IsDead) return;
+
+        UpdateMove();
+
         if (Hunger > 0 && CurHungerTicks >= HungerTickRate)
         {
             Hunger--;
@@ -128,16 +139,17 @@ public class VillagerData
     public void DealDamage(int damage, string reason = "")
     {
         Health -= damage;
-        if (Health <= 0) Health = 0;
+        if (Health <= 0)
+        {
+            Health = 0;
+            IsDead = true;
+        }
     }
-
-
-    public string FullName => $"{FirstName} {LastName}";
 
     public override string ToString()
     {
         return $"Name: {FirstName} {LastName}, Age: {Age}, Height: {Height}cm, Weight: {Weight}kg";
     }
 
-    public int BuildHash() => System.HashCode.Combine(Hunger, Thirst, Health);
+    public int BuildHash() => System.HashCode.Combine(Hunger, Thirst, Health, Pos);
 }

@@ -11,7 +11,7 @@
                 int i = 0;
             }
 
-            @foreach (VillagerData pawn in ColonyManager.Instance.Villagers)
+            @foreach (Villager pawn in ColonyManager.Instance.Villagers)
             {
                 int i1 = i;
                 <div class="villager" onmouseout=@(() => OnMouseExit(i1)) onmouseover=@(() => OnMouseOver(pawn, i1))>
@@ -50,7 +50,7 @@
 {
     private bool UnitsMenuVisible { get; set; }
     private ColonyManager Colony { get; set; }
-    public VillagerData villagerHovering { get; set; }
+    public Villager villagerHovering { get; set; }
     private int hoverId { get; set; }
     public bool IsHoveringVillager { get; set; }
     public override bool IsActive { get; set; }
@@ -61,7 +61,7 @@
             IsHoveringVillager = false;
     }
 
-    private void OnMouseOver(VillagerData data, int id)
+    private void OnMouseOver(Villager data, int id)
     {
         hoverId = id;
         villagerHovering = data;

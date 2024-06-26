@@ -6,19 +6,21 @@
 <root>
     <div class="unit-field">@Villager.FirstName</div>
     <div class="unit-field">@($"{Villager.Pos.x:F0} {Villager.Pos.y:F0}")</div>
+    <div class="unit-field">
+        <i id="dead-icon">dangerous</i>
+    </div>
 </root>
 
 @code
 {
-    public VillagerData Villager { get; set; }
-    public VillagerPawn Pawn { get; set; }
+    public Villager Villager { get; set; }
     public Viewport ViewPort { get; set; }
 
     public MinimapSymbol()
     {
     }
 
-    public MinimapSymbol(VillagerData villager, Viewport viewport)
+    public MinimapSymbol(Villager villager, Viewport viewport)
     {
         this.Villager = villager;
         this.ViewPort = viewport;
@@ -36,6 +38,12 @@
         RefreshLayout();
     }
 
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        base.OnAfterTreeRender(firstTime);
+        RefreshLayout();
+    }
+
     public void RefreshLayout()
     {
         var cpos = ViewPort.CalculatePosition(Villager.Pos, Box);
@@ -43,10 +51,9 @@
 
         foreach (Panel d in Descendants)
         {
-            d.Style.Margin = Length.Auto;
+            // d.Style.Margin = Length.Auto;
         }
     }
 
-    protected override int BuildHash() => System.HashCode.Combine(Villager, Pawn.Transform.Position);
-
+    protected override int BuildHash() => System.HashCode.Combine(Villager, Villager.Pos);
 }

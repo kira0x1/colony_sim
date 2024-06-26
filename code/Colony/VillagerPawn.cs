@@ -4,7 +4,7 @@ public sealed class VillagerPawn : Component
 {
     private NavMeshAgent agent;
     private PawnController pawnController;
-    private VillagerData villagerData;
+    private Villager villager;
 
     protected override void OnAwake()
     {
@@ -22,17 +22,17 @@ public sealed class VillagerPawn : Component
         agent.MaxSpeed = 80f;
         pawnController = new PawnController(agent, roamRadius: 150f);
 
-        villagerData = ColonyManager.Instance.Villagers[0];
+        villager = ColonyManager.Instance.Villagers[0];
 
-        villagerData.PosX = agent.AgentPosition.x;
-        villagerData.PosY = agent.AgentPosition.y;
+        villager.PosX = agent.AgentPosition.x;
+        villager.PosY = agent.AgentPosition.y;
     }
 
     protected override void OnUpdate()
     {
         pawnController.Tick();
 
-        villagerData.PosX = agent.AgentPosition.x;
-        villagerData.PosY = agent.AgentPosition.y;
+        villager.PosX = agent.AgentPosition.x;
+        villager.PosY = agent.AgentPosition.y;
     }
 }
