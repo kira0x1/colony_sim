@@ -1,0 +1,41 @@
+﻿@namespace Kira.UI
+@inherits Sandbox.UI.Panel
+
+@if (IsHovering)
+<root>
+    @if (VillagerHovering != null)
+    {
+        <div class="tooltip">
+            <div class="tooltip-text">
+                @VillagerHovering.FullName
+            </div>
+            <div class="stats">
+                <div class="tooltip-text">
+                    ❤️ @($"{@VillagerHovering.Health} / {@VillagerHovering.MaxHealth}")
+                </div>
+                <div class="tooltip-text">
+                    🍗 @($"{@VillagerHovering.Hunger} / 100")
+                </div>
+                <div class="tooltip-text">
+                    💧 @($"{@VillagerHovering.Thirst} / 100")
+                </div>
+            </div>
+        </div>
+    }
+</root>
+
+@code
+{
+    public bool IsHovering { get; set; }
+    public Villager VillagerHovering { get; set; }
+
+    protected override int BuildHash()
+    {
+        if (IsHovering && VillagerHovering != null)
+        {
+            return System.HashCode.Combine(IsHovering, VillagerHovering.Hunger, VillagerHovering.Thirst, VillagerHovering.Condition, VillagerHovering.Health);
+        }
+
+        return System.HashCode.Combine(IsHovering);
+    }
+}

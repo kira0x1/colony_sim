@@ -206,6 +206,10 @@
         {
           "__type": "ResourceBarUI",
           "__guid": "dd3177fd-dfb3-47fd-ba81-26045d919c22"
+        },
+        {
+          "__type": "Kira.UI.DevUI",
+          "__guid": "2f3aa05c-0b2d-4539-95ac-3e68628da706"
         }
       ]
     },
@@ -356,7 +360,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-26T08:00:29.6680595\u002B01:00",
+  "LastSaved": "2024-06-27T09:08:07.3354273\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

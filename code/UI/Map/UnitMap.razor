@@ -3,21 +3,21 @@
 @inherits Kira.UI.BaseNavWindow
 @attribute [StyleSheet]
 
-@* @if (!IsActive) return; *@
+@if (!IsActive) return;
 <root>
     <div class="container">
         <div class="map">
             <Viewport Colony="@Colony"></Viewport>
         </div>
         <div class="map-info">
-            <div class="info-field">pos (@MapViewPos.x, @MapViewPos.y)</div>
+            <div class="info-field">pos (@MousePos.x, @MousePos.y)</div>
         </div>
     </div>
 </root>
 
 @code
 {
-    public Vector2 MapViewPos { get; set; }
+    public Vector2 MousePos { get; set; }
     public ColonyManager Colony { get; set; } = ColonyManager.Instance;
     public override bool IsActive { get; set; }
 
@@ -32,5 +32,5 @@
         }
     }
 
-    protected override int BuildHash() => System.HashCode.Combine(IsActive);
+    protected override int BuildHash() => System.HashCode.Combine(IsActive, MousePos);
 }

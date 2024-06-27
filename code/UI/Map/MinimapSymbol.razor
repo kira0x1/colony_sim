@@ -52,11 +52,6 @@
     {
         var cpos = ViewPort.CalculatePosition(Villager.Pos, Box);
         Box.Rect = cpos;
-
-        foreach (Panel d in Descendants)
-        {
-            // d.Style.Margin = Length.Auto;
-        }
     }
 
     protected override int BuildHash() => System.HashCode.Combine(Villager, Villager.Pos);

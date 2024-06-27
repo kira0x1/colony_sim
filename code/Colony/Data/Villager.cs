@@ -10,8 +10,8 @@ public partial class Villager
     public int Age { get; set; }
 
 
-    public bool IsDead { get; set; }
     public Vector2 Pos { get; set; }
+    public bool IsDead => Condition == VillagerCondition.Dead;
 
     // Stats
     public int Hunger { get; set; }
@@ -21,15 +21,18 @@ public partial class Villager
     public int Speed { get; set; }
     public int Strength { get; set; }
 
+    public StatusEffectsFlags StatusEffects { get; set; } = StatusEffectsFlags.None;
+    public VillagerCondition Condition { get; set; } = VillagerCondition.Normal;
+
     /// <summary>
     /// How many world ticks it takes for hunger to decrease
     /// </summary>
-    private const int HungerTickRate = 4;
+    private const int HungerTickRate = 1;
 
     /// <summary>
     /// How many world ticks it takes for Thirst to decrease
     /// </summary>
-    private const int ThirstTickRate = 2;
+    private const int ThirstTickRate = 1;
 
     /// <summary>
     /// How many world ticks it takes for Health to decrease because of either hunger or thirst
@@ -140,7 +143,7 @@ public partial class Villager
         if (Health <= 0)
         {
             Health = 0;
-            IsDead = true;
+            Condition = VillagerCondition.Dead;
         }
     }
 

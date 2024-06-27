@@ -1,9 +1,8 @@
 ﻿@namespace Kira.UI
 @attribute [StyleSheet]
-@inherits Panel
-@using Sandbox.Razor
+@using System
 @using Sandbox.UI
-
+@inherits Panel
 
 <root>
 </root>
@@ -51,5 +50,5 @@
         return finalRect;
     }
 
-    protected override int BuildHash() => System.HashCode.Combine(MapSymbols.Select(x => x.GetHashCode()));
+    protected override int BuildHash() => HashCode.Combine(MapSymbols.Select(x => x.GetHashCode()));
 }

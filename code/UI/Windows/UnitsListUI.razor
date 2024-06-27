@@ -1,0 +1,65 @@
+﻿@namespace Kira.UI
+@using Sandbox.UI
+@attribute [StyleSheet]
+@inherits BaseNavWindow
+
+@if (!IsActive) return;
+<root>
+    <div class="units">
+        <div class="units-list">
+            @{
+                int i = 0;
+            }
+
+            @foreach (Villager villager in ColonyManager.Instance.Villagers)
+            {
+                int i1 = i;
+
+                <div class="villager" onmouseout=@(() => OnMouseExit(i1)) onmouseover=@(() => OnMouseOver(villager, i1)) onclick=@(() => villager.DealDamage(50))>
+                    <div class="pawntext">
+                        @villager.FullName
+                    </div>
+
+                    @if (villager.IsDead)
+                    {
+                        <div class="status">
+                            <div class="status-icon">sentiment_very_dissatisfied</div>
+                        </div>
+                    }
+                </div>
+                @{
+                    i++;
+                }
+            }
+        </div>
+    </div>
+
+    @if (IsHoveringVillager && villagerHovering != null)
+    {
+        <Tooltip IsHovering=@IsHoveringVillager VillagerHovering=@(villagerHovering)/>
+    }
+</root>
+
+@code
+{
+    private bool UnitsMenuVisible { get; set; }
+    public Villager villagerHovering { get; set; }
+    private int hoverId { get; set; }
+    public bool IsHoveringVillager { get; set; }
+    public override bool IsActive { get; set; }
+
+    public void OnMouseExit(int id)
+    {
+        if (hoverId == id)
+            IsHoveringVillager = false;
+    }
+
+    private void OnMouseOver(Villager data, int id)
+    {
+        hoverId = id;
+        villagerHovering = data;
+        IsHoveringVillager = true;
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine(IsHoveringVillager, UnitsMenuVisible, IsActive);
+}
