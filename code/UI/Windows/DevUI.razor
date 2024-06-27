@@ -3,7 +3,10 @@
 @inherits Kira.UI.BaseNavWindow
 @attribute [StyleSheet]
 
-@{ var c = IsActive ? "" : "hidden"; }
+@{
+    var c = IsActive ? "" : "hidden";
+}
+
 <root class="@c">
 </root>
 
@@ -30,8 +33,10 @@
 
         tabContainer.AddTab(new UnitsListUI() { IsActive = true }, "units", "Units", "groups");
         tabContainer.AddTab(new NavDebugUI(), "ai", "ai", "psychology");
+        tabContainer.AddTab(new UnitMap() { IsActive = true }, "map", "map", "map");
+
         tabContainer.Id = "tabs";
-        tabContainer.ActiveTab = Tabs[1].TabName;
+        tabContainer.ActiveTab = Tabs[2].TabName;
         this.AddChild(tabContainer);
     }
 
