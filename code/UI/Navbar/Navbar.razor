@@ -25,6 +25,8 @@
         CreateSlot(0, "home", new UnitsListUI());
         CreateSlot(1, "window", new UnitMap());
         CreateSlot(2, "settings", new DevUI());
+
+        Slots[2].OnClick();
     }
 
     public void CreateSlot(int id, string icon, BaseNavWindow window = null)

@@ -2,6 +2,13 @@
 
 namespace Kira;
 
+public enum NoiseTypes
+{
+    Perlin,
+    Simplex,
+    Fbm
+}
+
 [Category("Kira")]
 public sealed class NoiseRenderer : Component, Component.ExecuteInEditor
 {

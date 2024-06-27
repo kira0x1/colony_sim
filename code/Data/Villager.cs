@@ -27,12 +27,12 @@ public partial class Villager
     /// <summary>
     /// How many world ticks it takes for hunger to decrease
     /// </summary>
-    private const int HungerTickRate = 1;
+    private const int HungerTickRate = 6;
 
     /// <summary>
     /// How many world ticks it takes for Thirst to decrease
     /// </summary>
-    private const int ThirstTickRate = 1;
+    private const int ThirstTickRate = 4;
 
     /// <summary>
     /// How many world ticks it takes for Health to decrease because of either hunger or thirst
@@ -78,8 +78,10 @@ public partial class Villager
 
         Height = Utils.VillagerUtils.RandomHeight(Age);
 
-        Hunger = Random.Shared.Int(0, 10);
-        Thirst = Random.Shared.Int(1, 5);
+        // Hunger = Random.Shared.Int(0, 10);
+        // Thirst = Random.Shared.Int(1, 5);
+        Hunger = 100;
+        Thirst = 100;
 
         MaxHealth = 100;
         Health = 100;
