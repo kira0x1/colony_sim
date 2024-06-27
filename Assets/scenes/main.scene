@@ -184,7 +184,7 @@
       ]
     },
     {
-      "__guid": "fbd66519-abe1-4ca2-b88b-fcd363eae0d1",
+      "__guid": "0f56139a-50ba-4f5a-a690-267f99143945",
       "Flags": 0,
       "Name": "Screen",
       "Enabled": true,
@@ -193,7 +193,7 @@
       "Components": [
         {
           "__type": "Sandbox.ScreenPanel",
-          "__guid": "57614c66-3761-45d2-b5cf-57fb25b940cb",
+          "__guid": "1efc2393-328f-48f5-aa4f-8e536d85a3f2",
           "AutoScreenScale": true,
           "Opacity": 1,
           "Scale": 1,
@@ -201,15 +201,11 @@
         },
         {
           "__type": "Kira.UI.PlayerUI",
-          "__guid": "bc188d3b-4063-4570-85b2-daf6ebbf1598"
+          "__guid": "a418d5d8-f2fc-436a-afbb-03c58e8b706e"
         },
         {
           "__type": "ResourceBarUI",
-          "__guid": "dd3177fd-dfb3-47fd-ba81-26045d919c22"
-        },
-        {
-          "__type": "Kira.UI.DevUI",
-          "__guid": "2f3aa05c-0b2d-4539-95ac-3e68628da706"
+          "__guid": "56d17472-e94c-4580-a9bc-49264faa4928"
         }
       ]
     },
@@ -360,7 +356,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-27T09:08:07.3354273\u002B01:00",
+  "LastSaved": "2024-06-27T18:44:44.7711369\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

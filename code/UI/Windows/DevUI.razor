@@ -9,10 +9,9 @@
 
 @code
 {
-    private readonly TabContainer tabContainer = new TabContainer();
+    private TabContainer tabContainer = new TabContainer();
     private List<TabContainer.Tab> Tabs = new List<TabContainer.Tab>();
     public override bool IsActive { get; set; } = false;
-    private Panel meowPanel;
 
     protected override void OnAfterTreeRender(bool firstTime)
     {
@@ -23,23 +22,16 @@
             return;
         }
 
-        Panel container = new Panel();
-        container.SetClass("container", false);
-        this.AddChild(container);
-
-        meowPanel = new Panel();
-        meowPanel.SetClass("meow", true);
-
         Tabs = new List<TabContainer.Tab>();
-        var mp = new UnitsListUI();
-        mp.IsActive = true;
+
+        tabContainer = new TabContainer();
 
         tabContainer.Tabs = Tabs;
-        tabContainer.AddTab(meowPanel, "meow", "Meooow", "restaurants");
-        tabContainer.AddTab(mp, "units", "UN", "people");
+
+        tabContainer.AddTab(new UnitsListUI() { IsActive = true }, "units", "Units", "groups");
+        tabContainer.AddTab(new NavDebugUI(), "ai", "ai", "psychology");
         tabContainer.Id = "tabs";
         tabContainer.ActiveTab = Tabs[1].TabName;
-
         this.AddChild(tabContainer);
     }
 

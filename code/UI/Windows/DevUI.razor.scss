@@ -1,4 +1,5 @@
 @import "Styles/base.scss";
+@import "Styles/base/_tabcontainer.scss";
 
 .hidden {
   opacity: 0;
@@ -12,8 +13,6 @@ DevUI {
   bottom: 0;
   justify-content: center;
   align-items: center;
-  font-weight: bold;
-
 
   UnitsListUI {
     position: static;
@@ -33,32 +32,57 @@ DevUI {
     }
 
     .tooltip {
-      background-color: rgb(#333, 0.8);
       position: absolute;
-      left: 101%;
-      top: 74px;
+      top: 23.6vh;
+      left: 67.8vw;
+      border-radius: 3px;
+      background-color: rgb(#333, 0.9);
     }
   }
 
   #tabs {
     z-index: 100;
-    position: absolute;
+    //position: absolute;
     pointer-events: all;
     flex-grow: 0;
     flex-shrink: 1;
-    width: 70vh;
+    width: 35vw;
     height: 60vh;
     top: 15vh;
-    //left: 25%;
-    //right: 25%;
-    //bottom: 25%;
-    //top: 25%;
-    color: white;
-  }
 
-  .meow {
-    background-color: #5A738B;
-    flex-grow: 1;
+    > .tabs {
+      flex-grow: 0;
+      flex-shrink: 0;
+
+      > .button {
+        width: 150px;
+        height: 40px;
+
+        justify-content: center;
+        align-items: center;
+
+        padding: 0;
+        border-radius: 4px 4px 0px 0px;
+        opacity: 0.3;
+        font-family: Roboto;
+        font-size: 16px;
+        color: #fff;
+        background-color: #aaa;
+
+        .iconpanel {
+          font-size: 22px;
+        }
+
+        &:hover {
+          opacity: 0.5;
+        }
+
+        &.active {
+          opacity: 1;
+        }
+      }
+    }
+
   }
 
   .container {
