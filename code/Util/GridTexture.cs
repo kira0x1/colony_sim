@@ -13,26 +13,19 @@ public class GridTexture
     [Group("Grid"), Property] public Color BorderColor { get; set; } = Color.White;
 
 
-    public Texture CreateGridTexture(int width, int height, bool drawBorders = true)
+    public Texture CreateGridTexture(int width, int height, float resolution = 1f, bool drawBorders = true)
     {
-        List<byte> gridData = CreateGridData(width, height, drawBorders);
+        List<byte> gridData = CreateGridData(width, height, resolution, drawBorders);
         return CreateTexture(gridData, width, height);
     }
 
-    public List<byte> CreateGridData(float width, float height, bool withBorders = true)
+    public List<byte> CreateGridData(float width, float height, float resolution = 1f, bool withBorders = true)
     {
         float gapX = width / GridCellsAmount;
         float gapY = height / GridCellsAmount;
 
         float halfGridThickness = GridThickness / 2f;
         float innerGridOffset = halfGridThickness * 1.5f;
-
-        // if (GridCellsAmount > 0 && width > 0 && height > 0)
-        // {
-        //     gapX = width / GridCellsAmount;
-        //     gapY = height / GridCellsAmount;
-        // }
-
         List<byte> data = new List<byte>();
 
         for (int y = 0; y < height; y++)
@@ -40,57 +33,28 @@ public class GridTexture
             for (int x = 0; x < width; x++)
             {
                 float thicknessOffset = BorderThickness / 2f;
-                bool innerGridX = Math.Abs((x + halfGridThickness) % gapX) < GridThickness;
 
-                // Right Side
-                if (x >= width - innerGridOffset) innerGridX = false;
+                // Grid Checks
+                bool innerGridX = Math.Abs((x * resolution + halfGridThickness) % gapX) < GridThickness;
+                bool innerGridY = Math.Abs((y * resolution + halfGridThickness) % gapY) < GridThickness;
 
-                // Left Side
-                if (x <= innerGridOffset + thicknessOffset) innerGridX = false;
-
-
-                bool innerGridY = Math.Abs((y + halfGridThickness) % gapY) < GridThickness;
-
+                // Border Checks
+                if (x >= width - innerGridOffset) innerGridX = false; // Right Side
+                if (x <= innerGridOffset + thicknessOffset) innerGridX = false; // Left Side
                 if (y >= height - innerGridOffset) innerGridY = false;
                 if (y < innerGridOffset) innerGridY = false;
 
                 var cellColor = Color.Transparent;
 
-                if (innerGridX)
-                {
-                    cellColor = GridColor;
-                }
-
-                if (innerGridY)
-                {
-                    cellColor = GridColor;
-                }
+                if (innerGridX) cellColor = GridColor;
+                if (innerGridY) cellColor = GridColor;
 
                 if (withBorders)
                 {
-                    // Top Border
-                    if (y < BorderThickness - BorderThickness / 2f)
-                    {
-                        cellColor = BorderColor;
-                    }
-
-                    // Right Border
-                    if (x + 1 > width - BorderThickness / 2f)
-                    {
-                        cellColor = BorderColor;
-                    }
-
-                    // Bottom Border
-                    if (y + 1 > height - BorderThickness / 2f)
-                    {
-                        cellColor = BorderColor;
-                    }
-
-                    // Left Border
-                    if (x < BorderThickness - BorderThickness / 2f)
-                    {
-                        cellColor = BorderColor;
-                    }
+                    if (y < BorderThickness - BorderThickness / 2f) cellColor = BorderColor; // Top Border
+                    if (x < BorderThickness - BorderThickness / 2f) cellColor = BorderColor; // Left Border
+                    if (y + 1 > height - BorderThickness / 2f) cellColor = BorderColor; // Bottom Border
+                    if (x + 1 > width - BorderThickness / 2f) cellColor = BorderColor; // Right Border
                 }
 
                 byte[] cellBytes = ConvertColorToByte(cellColor);
@@ -120,7 +84,7 @@ public class GridTexture
         return data;
     }
 
-    private Texture CreateTexture(List<byte> data, int width, int height)
+    private static Texture CreateTexture(List<byte> data, int width, int height)
     {
         // Create a compute shader from a .shader file
         var computeShader = new ComputeShader("code/shaders/map_shader");

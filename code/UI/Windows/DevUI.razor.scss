@@ -33,10 +33,9 @@ DevUI {
 
     .tooltip {
       position: absolute;
-      top: 23.6vh;
-      left: 67.8vw;
+      top: 3.7vh;
+      left: calc(35vw + 8px);
       border-radius: 3px;
-      background-color: rgb(#333, 0.9);
     }
   }
 

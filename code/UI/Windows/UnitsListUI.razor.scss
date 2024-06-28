@@ -77,10 +77,11 @@
     font-size: 20px;
     font-family: Poppins;
     font-weight: 700;
-    left: 70.6%;
+    left: calc(70vw + 8px);
     width: 200px;
-    height: 300px;
+    height: 25vh;
 
+    top: 4vh;
     flex-wrap: wrap;
     gap: 10px;
     padding: 8px;

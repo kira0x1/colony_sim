@@ -46,6 +46,6 @@ public class NavDebugUI : BaseNavWindow
         int imgWidth = imgRect.Width.CeilToInt();
         int imgHeight = imgRect.Height.CeilToInt();
 
-        img.Texture = gridTexture.CreateGridTexture(imgWidth, imgHeight, false);
+        img.Texture = gridTexture.CreateGridTexture(imgWidth, imgHeight, 2f, false);
     }
 }
