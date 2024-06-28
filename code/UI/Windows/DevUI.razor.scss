@@ -42,13 +42,13 @@ DevUI {
 
   #tabs {
     z-index: 100;
-    //position: absolute;
+    position: absolute;
     pointer-events: all;
     flex-grow: 0;
     flex-shrink: 1;
+    top: 10vh;
     width: 35vw;
-    height: 60vh;
-    top: 15vh;
+    height: 65vh;
 
     > .tabs {
       flex-grow: 0;

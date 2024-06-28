@@ -9,9 +9,7 @@ NavDebugUI {
   }
 
   .grid {
-    flex-grow: 1;
-    flex-shrink: 1;
-    //width: 10vh;
-    //height: 10vh;
+    flex-grow: 0;
+    flex-shrink: 0;
   }
 }
