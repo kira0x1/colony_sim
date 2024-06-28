@@ -41,13 +41,8 @@ public class GridTexture
         float innerGridOffset = halfGridThickness * 1.5f;
         List<byte> data = new List<byte>();
 
-        // int logCount = 0;
         int cellX = 0;
         int cellY = 0;
-
-        // Log.Info($"Grid Cells: {GridData.Cells.Length}");
-        // Log.Info($"Cells: {BaseGridCellsAmount}");
-        // Log.Info($"actual: {ActualCellsAmount}");
 
         for (int y = 0; y < height; y++)
         {
@@ -55,11 +50,12 @@ public class GridTexture
             {
                 float thicknessOffset = BorderThickness / 2f;
 
-                float rtx = width / BaseGridCellsAmount / resolution;
-                float rty = height / BaseGridCellsAmount / resolution;
+                float mult = GridData.BaseCellCount * 2 * resolution;
+                float rtx = width / (mult / 2);
+                float rty = height / (mult / 2);
 
-                if (x > rtx * (cellX + 1)) cellX++;
-                if (y > rty * (cellY + 1)) cellY++;
+                if (x > rtx * ((cellX + 1) / resolution)) cellX++;
+                if (y > rty * ((cellY + 1) / resolution)) cellY++;
 
                 GridCell cell = GridData.Cells[cellX, cellY];
 
@@ -73,7 +69,7 @@ public class GridTexture
                 if (y >= height - innerGridOffset) innerGridY = false;
                 if (y < innerGridOffset) innerGridY = false;
 
-                var cellColor = cell.IsOccupied ? Color.Red : Color.Transparent;
+                var cellColor = cell.IsOccupied ? cell.Color : Color.Transparent;
 
                 if (innerGridX) cellColor = GridColor;
                 if (innerGridY) cellColor = GridColor;

@@ -20,6 +20,7 @@ public partial class Villager
     public int MaxHealth { get; set; }
     public int Speed { get; set; }
     public int Strength { get; set; }
+    public Color Color { get; set; } = Color.Black;
 
     public StatusEffectsFlags StatusEffects { get; set; } = StatusEffectsFlags.None;
     public VillagerCondition Condition { get; set; } = VillagerCondition.Normal;
@@ -87,7 +88,8 @@ public partial class Villager
         Health = 100;
 
         Strength = Random.Shared.Int(10, 30);
-        Speed = Random.Shared.Int(10, 30);
+        // Speed = Random.Shared.Int(10, 30);
+        Speed = 1;
         Init();
 
         // Age = VillagerUtils.RandomAge;

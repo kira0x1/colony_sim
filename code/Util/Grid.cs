@@ -6,12 +6,17 @@ public class Grid
     public GridTexture GridTexture { get; set; }
     public int Resolution { get; internal set; }
     public int BaseCellCount { get; internal set; }
+    public int CellAxis { get; set; }
     public int CellCount { get; internal set; }
 
     public Grid(int cells = 5, int resolution = 1)
     {
+        Resolution = resolution;
         BaseCellCount = cells;
         CellCount = cells * cells * resolution;
+        CellAxis = cells * resolution;
+        CellCount = CellAxis * CellAxis;
+
         Resolution = resolution;
         CreateCells();
         GridTexture = new GridTexture(cells, resolution);

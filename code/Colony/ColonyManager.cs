@@ -29,15 +29,23 @@ public sealed class ColonyManager : Component
         {
             var v = CreateVillagerData();
 
-            if (i == 1)
+            if (i == 0)
             {
-                v.PosX = -60f;
-                v.PosY = -10f;
+                v.PosX = 0;
+                v.PosY = 0;
+                v.Color = Color.Cyan;
+            }
+            else if (i == 1)
+            {
+                v.PosX = 1f;
+                v.PosY = -2f;
+                v.Color = Color.Red;
             }
             else if (i == 2)
             {
-                v.PosX = 1000f;
-                v.PosY = 0.5f;
+                v.PosX = 1;
+                v.PosY = 2;
+                v.Color = Color.Green;
             }
         }
 

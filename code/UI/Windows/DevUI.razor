@@ -32,7 +32,7 @@
         tabContainer.Tabs = Tabs;
 
         tabContainer.AddTab(new UnitsListUI() { IsActive = true }, "units", "Units", "groups");
-        tabContainer.AddTab(new NavDebugUI(), "ai", "ai", "psychology");
+        tabContainer.AddTab(new NavDebugUI() { ParentTabContainer = tabContainer }, "ai", "ai", "psychology");
         tabContainer.AddTab(new UnitMap() { IsActive = true }, "map", "map", "map");
 
         tabContainer.Id = "tabs";
