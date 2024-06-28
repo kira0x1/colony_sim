@@ -5,14 +5,25 @@ using System.Globalization;
 
 public class GridTexture
 {
-    [Group("Grid"), Property, Range(0, 10)] public int GridCellsAmount { get; set; } = 5;
-    [Group("Grid"), Property, Range(0, 255)] public float GridLuminance { get; set; } = 100f;
-    [Group("Grid"), Property, Range(0, 60)] public float GridThickness { get; set; } = 4f;
-    [Group("Grid"), Property, Range(0, 60)] public float BorderThickness { get; set; } = 4f;
-    [Group("Grid"), Property] public Color GridColor { get; set; } = Color.White;
-    [Group("Grid"), Property] public Color BorderColor { get; set; } = Color.White;
+    public int BaseGridCellsAmount { get; set; }
 
+    /// <summary>
+    /// BasedGridCellsAmount * Resolution
+    /// </summary>
+    public int ActualCellsAmount { get; internal set; }
+
+    public float GridLuminance { get; set; } = 100f;
+    public float GridThickness { get; set; } = 4f;
+    public float BorderThickness { get; set; } = 4f;
+    public Color GridColor { get; set; } = Color.White;
+    public Color BorderColor { get; set; } = Color.White;
     public Grid GridData { get; internal set; }
+
+    public GridTexture(int cells, int resolution = 1)
+    {
+        BaseGridCellsAmount = cells;
+        ActualCellsAmount = cells * resolution;
+    }
 
     public Texture CreateGridTexture(int width, int height, Grid grid, float resolution = 1f, bool drawBorders = true)
     {
@@ -23,8 +34,8 @@ public class GridTexture
 
     public List<byte> CreateGridData(float width, float height, float resolution = 1f, bool withBorders = true)
     {
-        float gapX = width / GridCellsAmount;
-        float gapY = height / GridCellsAmount;
+        float gapX = width / ActualCellsAmount;
+        float gapY = height / ActualCellsAmount;
 
         float halfGridThickness = GridThickness / 2f;
         float innerGridOffset = halfGridThickness * 1.5f;
@@ -34,14 +45,18 @@ public class GridTexture
         int cellX = 0;
         int cellY = 0;
 
+        // Log.Info($"Grid Cells: {GridData.Cells.Length}");
+        // Log.Info($"Cells: {BaseGridCellsAmount}");
+        // Log.Info($"actual: {ActualCellsAmount}");
+
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
                 float thicknessOffset = BorderThickness / 2f;
 
-                float rtx = width / GridCellsAmount;
-                float rty = height / GridCellsAmount;
+                float rtx = width / BaseGridCellsAmount / resolution;
+                float rty = height / BaseGridCellsAmount / resolution;
 
                 if (x > rtx * (cellX + 1)) cellX++;
                 if (y > rty * (cellY + 1)) cellY++;

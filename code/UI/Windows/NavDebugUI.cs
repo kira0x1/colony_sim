@@ -6,14 +6,15 @@ using Util;
 public class NavDebugUI : BaseNavWindow
 {
     public Panel MapContainer { get; protected set; }
-    private readonly GridTexture gridTexture;
     private readonly Image img;
+    private Grid grid;
 
     public NavDebugUI()
     {
         StyleSheet.Load("UI/Windows/NavDebugUI.cs.scss");
         MapContainer = Add.Panel("map");
-        gridTexture = new GridTexture();
+        grid = new Grid(5, 1);
+        grid.Cells[0, 0].IsOccupied = true;
 
         img = new Image();
         img.AddClass("grid");
@@ -44,11 +45,10 @@ public class NavDebugUI : BaseNavWindow
         int imgWidth = imgRect.Width.CeilToInt();
         int imgHeight = imgRect.Height.CeilToInt();
 
-        Grid grid = new Grid(gridTexture.GridCellsAmount, gridTexture.GridCellsAmount);
-
-        grid.Cells[1, 1].IsOccupied = true;
-        grid.Cells[3, 3].IsOccupied = true;
-
-        img.Texture = gridTexture.CreateGridTexture(imgWidth, imgHeight, grid, 1f, false);
+        grid.ResetCells();
+        grid.Cells[0, 0].IsOccupied = true;
+        grid.Cells[3, 1].IsOccupied = true;
+        grid.Cells[1, 2].IsOccupied = true;
+        img.Texture = grid.CreateGridTexture(imgWidth, imgHeight, false);
     }
 }
