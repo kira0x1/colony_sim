@@ -30,12 +30,9 @@ public class GridTexture
         float innerGridOffset = halfGridThickness * 1.5f;
         List<byte> data = new List<byte>();
 
-
         // int logCount = 0;
         int cellX = 0;
         int cellY = 0;
-
-        Log.Info("----- Starting ------");
 
         for (int y = 0; y < height; y++)
         {
