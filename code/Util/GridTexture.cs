@@ -12,9 +12,11 @@ public class GridTexture
     [Group("Grid"), Property] public Color GridColor { get; set; } = Color.White;
     [Group("Grid"), Property] public Color BorderColor { get; set; } = Color.White;
 
+    public Grid GridData { get; internal set; }
 
-    public Texture CreateGridTexture(int width, int height, float resolution = 1f, bool drawBorders = true)
+    public Texture CreateGridTexture(int width, int height, Grid grid, float resolution = 1f, bool drawBorders = true)
     {
+        GridData = grid;
         List<byte> gridData = CreateGridData(width, height, resolution, drawBorders);
         return CreateTexture(gridData, width, height);
     }
@@ -28,11 +30,26 @@ public class GridTexture
         float innerGridOffset = halfGridThickness * 1.5f;
         List<byte> data = new List<byte>();
 
+
+        // int logCount = 0;
+        int cellX = 0;
+        int cellY = 0;
+
+        Log.Info("----- Starting ------");
+
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
                 float thicknessOffset = BorderThickness / 2f;
+
+                float rtx = width / GridCellsAmount;
+                float rty = height / GridCellsAmount;
+
+                if (x > rtx * (cellX + 1)) cellX++;
+                if (y > rty * (cellY + 1)) cellY++;
+
+                GridCell cell = GridData.Cells[cellX, cellY];
 
                 // Grid Checks
                 bool innerGridX = Math.Abs((x * resolution + halfGridThickness) % gapX) < GridThickness;
@@ -44,7 +61,7 @@ public class GridTexture
                 if (y >= height - innerGridOffset) innerGridY = false;
                 if (y < innerGridOffset) innerGridY = false;
 
-                var cellColor = Color.Transparent;
+                var cellColor = cell.IsOccupied ? Color.Red : Color.Transparent;
 
                 if (innerGridX) cellColor = GridColor;
                 if (innerGridY) cellColor = GridColor;
@@ -60,6 +77,8 @@ public class GridTexture
                 byte[] cellBytes = ConvertColorToByte(cellColor);
                 data.AddRange(cellBytes);
             }
+
+            cellX = 0;
         }
 
         return data;

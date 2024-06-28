@@ -18,13 +18,11 @@ public class NavDebugUI : BaseNavWindow
         img = new Image();
         img.AddClass("grid");
         MapContainer.AddChild(out img);
-        Init();
     }
 
     public override void OnHotloaded()
     {
         base.OnHotloaded();
-        Init();
         FinalLayoutChildren(this.Box.Rect.Position);
     }
 
@@ -46,6 +44,11 @@ public class NavDebugUI : BaseNavWindow
         int imgWidth = imgRect.Width.CeilToInt();
         int imgHeight = imgRect.Height.CeilToInt();
 
-        img.Texture = gridTexture.CreateGridTexture(imgWidth, imgHeight, 2f, false);
+        Grid grid = new Grid(gridTexture.GridCellsAmount, gridTexture.GridCellsAmount);
+
+        grid.Cells[1, 1].IsOccupied = true;
+        grid.Cells[3, 3].IsOccupied = true;
+
+        img.Texture = gridTexture.CreateGridTexture(imgWidth, imgHeight, grid, 1f, false);
     }
 }
