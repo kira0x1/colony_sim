@@ -4,24 +4,26 @@ public class Grid
 {
     public GridCell[,] Cells { get; set; }
     public GridTexture GridTexture { get; set; }
-    public int Resolution { get; internal set; }
     public int BaseCellCount { get; internal set; }
     public int CellAxis { get; set; }
     public int CellCount { get; internal set; }
 
-    public Grid(int cells = 5, int resolution = 1)
+    public Grid(int cells = 5)
     {
-        Resolution = resolution;
         BaseCellCount = cells;
-        CellCount = cells * cells * resolution;
-        CellAxis = cells * resolution;
-        CellCount = CellAxis * CellAxis;
 
-        Resolution = resolution;
+        CellAxis = cells;
+        CellCount = CellAxis * CellAxis;
+        // populate cells
         CreateCells();
-        GridTexture = new GridTexture(cells, resolution);
+
+        // generate texture
+        GridTexture = new GridTexture(cells);
     }
 
+    /// <summary>
+    /// Populates grid cells
+    /// </summary>
     private void CreateCells()
     {
         Cells = new GridCell[CellCount, CellCount];
@@ -36,11 +38,21 @@ public class Grid
         }
     }
 
+    /// <summary>
+    /// Generates the texture
+    /// </summary>
+    /// <param name="imgWidth"></param>
+    /// <param name="imgHeight"></param>
+    /// <param name="hasBorders"></param>
+    /// <returns></returns>
     public Texture CreateGridTexture(int imgWidth, int imgHeight, bool hasBorders)
     {
-        return GridTexture.CreateGridTexture(imgWidth, imgHeight, this, Resolution, hasBorders);
+        return GridTexture.CreateGridTexture(imgWidth, imgHeight, this, hasBorders);
     }
 
+    /// <summary>
+    /// Sets all GridCells to Not Occupied
+    /// </summary>
     public void ResetCells()
     {
         for (var x = 0; x < Cells.GetLength(0); x++)
