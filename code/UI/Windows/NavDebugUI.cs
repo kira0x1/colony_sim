@@ -15,7 +15,7 @@ public class NavDebugUI : BaseNavWindow
     {
         StyleSheet.Load("UI/Windows/NavDebugUI.cs.scss");
         MapContainer = Add.Panel("map");
-        grid = new Grid(7, 1);
+        grid = new Grid(3, 1);
         // grid.Cells[0, 0].IsOccupied = true;
 
         img = new Image();
@@ -79,6 +79,34 @@ public class NavDebugUI : BaseNavWindow
 
 
         img.Texture = grid.CreateGridTexture(imgWidth, imgHeight, false);
+    }
+
+    private GridCell cellHovering { get; set; }
+
+    TimeSince timeDelay = 1;
+
+    protected override void OnMouseMove(MousePanelEvent e)
+    {
+        if (timeDelay < 0.2)
+        {
+            return;
+        }
+
+        GridCell cell = grid.GetCellByPos(e.LocalPosition.x, e.LocalPosition.y, false);
+
+        if (!cell.Equals(cellHovering))
+        {
+            if (cellHovering != null)
+            {
+                cellHovering.Color = Color.Transparent;
+            }
+
+            cell.Color = Color.Orange;
+            cellHovering = cell;
+            img.Texture = grid.UpdateTextureSection(cell.X, cell.Y);
+        }
+
+        timeDelay = 0;
     }
 
     protected override void OnAfterTreeRender(bool firstTime)

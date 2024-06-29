@@ -25,7 +25,7 @@ public sealed class ColonyManager : Component
         Villagers = new List<Villager>();
         Instance = this;
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 1; i++)
         {
             var v = CreateVillagerData();
 

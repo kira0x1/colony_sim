@@ -19,6 +19,10 @@ public class GridTexture
     public Color BorderColor { get; set; } = Color.White;
     public Grid GridData { get; internal set; }
 
+
+    private List<byte> cachedBytes = new List<byte>();
+    private Texture texture;
+
     public GridTexture(int cells, int resolution = 1)
     {
         BaseGridCellsAmount = cells;
@@ -28,8 +32,18 @@ public class GridTexture
     public Texture CreateGridTexture(int width, int height, Grid grid, float resolution = 1f, bool drawBorders = true)
     {
         GridData = grid;
-        List<byte> gridData = CreateGridData(width, height, resolution, drawBorders);
-        return CreateTexture(gridData, width, height);
+
+        cachedBytes = CreateGridData(width, height, resolution, drawBorders);
+        var tx = CreateTexture(cachedBytes, width, height);
+        texture = tx;
+        return tx;
+    }
+
+    public Texture UpdateTextureSection(int startX, int endX, int startY, int endY)
+    {
+        var tx = texture;
+        tx.Update(Color.Red, new Rect(startX, startY, endX, endY));
+        return tx;
     }
 
     public List<byte> CreateGridData(float width, float height, float resolution = 1f, bool withBorders = true)
@@ -41,23 +55,13 @@ public class GridTexture
         float innerGridOffset = halfGridThickness * 1.5f;
         List<byte> data = new List<byte>();
 
-        int cellX = 0;
-        int cellY = 0;
-
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
                 float thicknessOffset = BorderThickness / 2f;
 
-                float mult = GridData.BaseCellCount * 2 * resolution;
-                float rtx = width / (mult / 2);
-                float rty = height / (mult / 2);
-
-                if (x > rtx * ((cellX + 1) / resolution)) cellX++;
-                if (y > rty * ((cellY + 1) / resolution)) cellY++;
-
-                GridCell cell = GridData.Cells[cellX, cellY];
+                GridCell cell = GridData.GetCellByPos(x, y);
 
                 // Grid Checks
                 bool innerGridX = Math.Abs((x * resolution + halfGridThickness) % gapX) < GridThickness;
@@ -69,7 +73,7 @@ public class GridTexture
                 if (y >= height - innerGridOffset) innerGridY = false;
                 if (y < innerGridOffset) innerGridY = false;
 
-                var cellColor = cell.IsOccupied ? cell.Color : Color.Transparent;
+                var cellColor = cell.Color;
 
                 if (innerGridX) cellColor = GridColor;
                 if (innerGridY) cellColor = GridColor;
@@ -85,13 +89,10 @@ public class GridTexture
                 byte[] cellBytes = ConvertColorToByte(cellColor);
                 data.AddRange(cellBytes);
             }
-
-            cellX = 0;
         }
 
         return data;
     }
-
 
     private static byte[] ConvertColorToByte(Color c)
     {
@@ -126,7 +127,7 @@ public class GridTexture
         // Attach texture to OutputTexture attribute in shader
         computeShader.Attributes.Set("OutputTexture", texture);
 
-        // Dispatch 
+        // Dispatch
         computeShader.Dispatch(texture.Width, texture.Height, 1);
         return texture;
     }
