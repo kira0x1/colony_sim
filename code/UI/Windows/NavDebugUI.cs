@@ -15,7 +15,7 @@ public class NavDebugUI : BaseNavWindow
     {
         StyleSheet.Load("UI/Windows/NavDebugUI.cs.scss");
         MapContainer = Add.Panel("map");
-        grid = new Grid(7);
+        grid = new Grid(21, 2);
         // grid.Cells[0, 0].IsOccupied = true;
 
         img = new Image();

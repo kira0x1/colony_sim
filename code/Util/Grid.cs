@@ -8,7 +8,7 @@ public class Grid
     public int CellAxis { get; set; }
     public int CellCount { get; internal set; }
 
-    public Grid(int cells = 5)
+    public Grid(int cells = 5, int borderThickness = 1)
     {
         BaseCellCount = cells;
 
@@ -18,7 +18,7 @@ public class Grid
         CreateCells();
 
         // generate texture
-        GridTexture = new GridTexture(cells);
+        GridTexture = new GridTexture(cells, borderThickness);
     }
 
     /// <summary>

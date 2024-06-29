@@ -5,55 +5,58 @@ using System.Globalization;
 
 public class GridTexture
 {
-    public int GridLength { get; set; }
-    public float GridLuminance { get; set; } = 100f;
-    public float GridThickness { get; set; } = 4f;
-    public float BorderThickness { get; set; } = 4f;
-    public Color GridColor { get; set; } = Color.White;
-    public Color BorderColor { get; set; } = Color.White;
-    public Grid GridData { get; internal set; }
+    private readonly int gridLength;
+    private readonly float gridThickness = 4f;
+    private const float borderThickness = 4f;
 
-    public GridTexture(int cells)
+    private readonly Color gridColor = Color.White;
+    private readonly Color borderColor = Color.White;
+    private Grid gridData;
+
+    public GridTexture(int cells, int gridThickness = 4)
     {
-        GridLength = cells;
+        gridLength = cells;
+        this.gridThickness = gridThickness;
     }
 
     public Texture CreateGridTexture(int width, int height, Grid grid, bool drawBorders = true)
     {
-        GridData = grid;
-        List<byte> gridData = CreateGridData(width, height, drawBorders);
-        return CreateTexture(gridData, width, height);
+        this.gridData = grid;
+        Log.Info(borderThickness);
+        List<byte> gridBytes = CreateGridData(width, height, drawBorders);
+        return CreateTexture(gridBytes, width, height);
     }
 
     public List<byte> CreateGridData(float width, float height, bool withBorders = true)
     {
-        float gapX = width / GridLength;
-        float gapY = height / GridLength;
+        float gapX = width / gridLength;
+        float gapY = height / gridLength;
 
-        float halfGridThickness = GridThickness / 2f;
+        float halfGridThickness = gridThickness / 2f;
         float innerGridOffset = halfGridThickness * 1.5f;
+
         List<byte> data = new List<byte>();
 
         int cellX = 0;
         int cellY = 0;
 
+        const float thicknessOffset = borderThickness / 2f;
+
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
-                float thicknessOffset = BorderThickness / 2f;
-
-                float rtx = width / GridLength;
-                float rty = height / GridLength;
+                float rtx = width / gridLength;
+                float rty = height / gridLength;
 
                 if (x > rtx * (cellX + 1)) cellX++;
                 if (y > rty * (cellY + 1)) cellY++;
 
-                GridCell cell = GridData.Cells[cellX, cellY];
+                GridCell cell = gridData.Cells[cellX, cellY];
 
                 // Grid Checks
-                bool innerGridX = Math.Abs((x + halfGridThickness) % gapX) < GridThickness;
-                bool innerGridY = Math.Abs((y + halfGridThickness) % gapY) < GridThickness;
+                bool innerGridX = Math.Abs((x + halfGridThickness) % gapX) < gridThickness;
+                bool innerGridY = Math.Abs((y + halfGridThickness) % gapY) < gridThickness;
 
                 // Border Checks
                 if (x >= width - innerGridOffset) innerGridX = false; // Right Side
@@ -63,15 +66,15 @@ public class GridTexture
 
                 var cellColor = cell.IsOccupied ? cell.Color : Color.Transparent;
 
-                if (innerGridX) cellColor = GridColor;
-                if (innerGridY) cellColor = GridColor;
+                if (innerGridX) cellColor = gridColor;
+                if (innerGridY) cellColor = gridColor;
 
                 if (withBorders)
                 {
-                    if (y < BorderThickness - BorderThickness / 2f) cellColor = BorderColor; // Top Border
-                    if (x < BorderThickness - BorderThickness / 2f) cellColor = BorderColor; // Left Border
-                    if (y + 1 > height - BorderThickness / 2f) cellColor = BorderColor; // Bottom Border
-                    if (x + 1 > width - BorderThickness / 2f) cellColor = BorderColor; // Right Border
+                    if (y < borderThickness - borderThickness / 2f) cellColor = borderColor; // Top Border
+                    if (x < borderThickness - borderThickness / 2f) cellColor = borderColor; // Left Border
+                    if (y + 1 > height - borderThickness / 2f) cellColor = borderColor; // Bottom Border
+                    if (x + 1 > width - borderThickness / 2f) cellColor = borderColor; // Right Border
                 }
 
                 byte[] cellBytes = ConvertColorToByte(cellColor);
