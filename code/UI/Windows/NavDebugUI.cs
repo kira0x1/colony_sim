@@ -9,14 +9,13 @@ public class NavDebugUI : BaseNavWindow
     public TabContainer ParentTabContainer { get; set; }
     public Panel MapContainer { get; protected set; }
     private readonly Image img;
-    private Grid grid;
+    private readonly Grid grid;
 
     public NavDebugUI()
     {
         StyleSheet.Load("UI/Windows/NavDebugUI.cs.scss");
         MapContainer = Add.Panel("map");
         grid = new Grid(21, 2);
-        // grid.Cells[0, 0].IsOccupied = true;
 
         img = new Image();
         img.AddClass("grid");
@@ -35,6 +34,9 @@ public class NavDebugUI : BaseNavWindow
         Init();
     }
 
+    /// <summary>
+    /// Generate the grid, and map the cells to villagers
+    /// </summary>
     private void Init()
     {
         Rect imgRect = img.Box.Rect;
@@ -52,48 +54,35 @@ public class NavDebugUI : BaseNavWindow
 
         foreach (Villager cmVillager in cm.Villagers)
         {
-            int x = ((cmVillager.PosX - 1) + grid.CellAxis / 2f).CeilToInt();
-            int y = ((cmVillager.PosY - 1) + grid.CellAxis / 2f).CeilToInt();
+            int x = (cmVillager.PosX - 1 + grid.CellAxis / 2f).CeilToInt();
+            int y = (cmVillager.PosY - 1 + grid.CellAxis / 2f).CeilToInt();
 
             if (x >= 0 && x < grid.CellCount && (y >= 0 && y < grid.CellCount))
             {
                 grid.Cells[x, y].IsOccupied = true;
                 grid.Cells[x, y].Color = cmVillager.Color;
             }
-
-            // we get by viewport so 0,0 should be in the center basically gridcells / 2, gridcells / 2, and everything before that should be negative
-            // if we had 10x10 grid 0,0 would be 10/2,10/2 = (5,5)
-            // but to the array [0,0] the top left corner would be (-5,-5)
-            // so to convert [5,5] into (0,0) we  have to do viewport = (0,0), array = (viewport + 10/2) = 5,5
-            // so (1,1) would be (1 + 5 = 6) (6,6)
-            // and to reverse the conversion it would be
-            // (x - 5) so 0,0 i.e the center would be (0 - 5) = -5
-            // this doesnt factor in resolution
-
-            //TODO: factor in resolution
         }
-
-        // grid.Cells[0, 0].IsOccupied = true;
-        // grid.Cells[3, 1].IsOccupied = true;
-        // grid.Cells[1, 1].IsOccupied = true;
 
         img.Texture = grid.CreateGridTexture(imgWidth, imgHeight, false);
     }
 
-    protected override void OnAfterTreeRender(bool firstTime)
-    {
-        if (!firstTime)
-            Log.Info("is active");
-    }
+    private GridCell cellHovering { get; set; }
 
-    protected override void BuildRenderTree(RenderTreeBuilder tree)
+    protected override void OnMouseMove(MousePanelEvent e)
     {
-        base.BuildRenderTree(tree);
-        Log.Info($"isactive: {IsActive}");
-    }
+        GridCell cell = grid.GetCellByPos(e.LocalPosition.x, e.LocalPosition.y, false);
 
-    protected override int BuildHash()
-    {
-        return System.HashCode.Combine(false);
+        if (!cell.Equals(cellHovering))
+        {
+            if (cellHovering != null)
+            {
+                cellHovering.Color = Color.Transparent;
+            }
+
+            cell.Color = Color.Orange;
+            cellHovering = cell;
+            grid.GridTexture.Texture.Update(Color.Red, grid.ConvertToViewportCell(cell.X, cell.Y));
+        }
     }
 }

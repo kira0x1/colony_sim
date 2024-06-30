@@ -6,12 +6,16 @@ using System.Globalization;
 public class GridTexture
 {
     private readonly int gridLength;
-    private readonly float gridThickness = 4f;
+    private readonly float gridThickness;
     private const float borderThickness = 4f;
 
     private readonly Color gridColor = Color.White;
     private readonly Color borderColor = Color.White;
     private Grid gridData;
+
+    public Texture Texture { get; private set; }
+    public int ImageWidth { get; private set; }
+    public int ImageHeight { get; private set; }
 
     public GridTexture(int cells, int gridThickness = 4)
     {
@@ -22,9 +26,11 @@ public class GridTexture
     public Texture CreateGridTexture(int width, int height, Grid grid, bool drawBorders = true)
     {
         this.gridData = grid;
-        Log.Info(borderThickness);
+        this.ImageWidth = width;
+        this.ImageHeight = height;
         List<byte> gridBytes = CreateGridData(width, height, drawBorders);
-        return CreateTexture(gridBytes, width, height);
+        Texture = CreateTexture(gridBytes, width, height);
+        return Texture;
     }
 
     public List<byte> CreateGridData(float width, float height, bool withBorders = true)
@@ -64,7 +70,7 @@ public class GridTexture
                 if (y >= height - innerGridOffset) innerGridY = false;
                 if (y < innerGridOffset) innerGridY = false;
 
-                var cellColor = cell.IsOccupied ? cell.Color : Color.Transparent;
+                var cellColor = cell.Color;
 
                 if (innerGridX) cellColor = gridColor;
                 if (innerGridY) cellColor = gridColor;
