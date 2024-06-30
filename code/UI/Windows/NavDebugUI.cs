@@ -1,6 +1,5 @@
 ﻿namespace Kira.UI;
 
-using Sandbox.Razor;
 using Sandbox.UI;
 using Util;
 
@@ -20,6 +19,7 @@ public class NavDebugUI : BaseNavWindow
         img = new Image();
         img.AddClass("grid");
         MapContainer.AddChild(out img);
+        Init();
     }
 
     public override void OnHotloaded()
@@ -32,6 +32,20 @@ public class NavDebugUI : BaseNavWindow
     {
         base.FinalLayoutChildren(offset);
         Init();
+    }
+
+    TimeSince timeSinceLastUpdate = 0;
+    float updateTime = 0.5f;
+
+    public override void Tick()
+    {
+        base.Tick();
+
+        if (timeSinceLastUpdate < updateTime) return;
+
+        Init();
+        Log.Info(ColonyManager.Instance.Villagers.Count);
+        timeSinceLastUpdate = 0;
     }
 
     /// <summary>
@@ -68,9 +82,12 @@ public class NavDebugUI : BaseNavWindow
     }
 
     private GridCell cellHovering { get; set; }
+    private bool paintingOn = false;
 
     protected override void OnMouseMove(MousePanelEvent e)
     {
+        if (!paintingOn) return;
+
         GridCell cell = grid.GetCellByPos(e.LocalPosition.x, e.LocalPosition.y, false);
 
         if (!cell.Equals(cellHovering))

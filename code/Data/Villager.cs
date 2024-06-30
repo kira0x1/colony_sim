@@ -69,7 +69,7 @@ public partial class Villager
         set => Pos = Pos.WithY(value);
     }
 
-    public Villager(string firstName, string lastName)
+    public Villager(string firstName, string lastName, int id = 0)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -91,6 +91,7 @@ public partial class Villager
         // Speed = Random.Shared.Int(10, 30);
         Speed = 1;
         Init();
+        Id = id;
 
         // Age = VillagerUtils.RandomAge;
     }

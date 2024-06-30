@@ -70,7 +70,7 @@ public class GridTexture
                 if (y >= height - innerGridOffset) innerGridY = false;
                 if (y < innerGridOffset) innerGridY = false;
 
-                var cellColor = cell.Color;
+                var cellColor = cell.IsOccupied ? cell.Color : Color.Transparent;
 
                 if (innerGridX) cellColor = gridColor;
                 if (innerGridY) cellColor = gridColor;

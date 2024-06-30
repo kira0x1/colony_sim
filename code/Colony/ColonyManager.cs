@@ -67,7 +67,7 @@ public sealed class ColonyManager : Component
 
     public Villager CreateVillagerData()
     {
-        Villager villager = new Villager(RandomNames.RandomFirstName, RandomNames.RandomLastName);
+        Villager villager = new Villager(RandomNames.RandomFirstName, RandomNames.RandomLastName, Villagers.Count);
         Villagers.Add(villager);
         OnWorldTick += villager.OnWorldTick;
         return villager;

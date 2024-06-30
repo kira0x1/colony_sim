@@ -81,11 +81,11 @@ public class Grid
 
         int ratio = imageWidth / CellAxis;
 
-
         int xMin = ratio * x;
         int xMax = ratio * (x + 1);
         int yMin = ratio * y;
         int yMax = ratio * (y + 1);
+
 
         return new Rect(xMin, yMin, xMax - xMin, yMax - yMin);
     }

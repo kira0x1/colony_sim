@@ -90,6 +90,7 @@
         {
           "__type": "Sandbox.Bloom",
           "__guid": "d6dfb7bd-fc2d-4f7f-8861-0efeb8c14e6d",
+          "__enabled": false,
           "BloomColor": {
             "color": [
               {
@@ -206,6 +207,11 @@
         {
           "__type": "ResourceBarUI",
           "__guid": "56d17472-e94c-4580-a9bc-49264faa4928"
+        },
+        {
+          "__type": "NoiseMapUI",
+          "__guid": "4783ceac-6716-4a01-9766-34c4a8018c00",
+          "__enabled": false
         }
       ]
     },
@@ -256,7 +262,6 @@
       "Flags": 0,
       "Name": "minimap",
       "Position": "0,-281.1402,388.4237",
-      "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
       "Components": [
@@ -266,17 +271,17 @@
           "__enabled": false,
           "BorderColor": "0.13488,0.13488,0.13488,1",
           "BorderThickness": 5,
-          "Brightness": 5.81,
-          "ClampValues": false,
+          "Brightness": 6.43,
+          "ClampValues": true,
           "DisplayGrid": true,
           "DrawGridOnSprite": false,
-          "DrawOnSprite": false,
+          "DrawOnSprite": true,
           "grassColor": "1,1,1,1",
-          "GridCellsAmount": 7,
+          "GridCellsAmount": 8,
           "GridColor": "0.11628,0.11628,0.11628,0.56",
           "GridLuminance": 0,
           "GridThickness": 2,
-          "Intensity": 0.8,
+          "Intensity": 0.9,
           "LayerConfig": "data/noiselayer.nlayer",
           "Layers": [
             {
@@ -307,12 +312,12 @@
           "MaxLuminance": 255,
           "MinLuminance": 0,
           "NoiseType": "Fbm",
-          "Octaves": 4,
+          "Octaves": 1,
           "Scale": 1.64,
-          "SpriteSize": 252,
+          "SpriteSize": 413,
           "UseLayerConfig": true,
-          "UseLayers": true,
-          "ZoomIn": 2.39,
+          "UseLayers": false,
+          "ZoomIn": 1.02,
           "ZoomOut": 1
         },
         {
@@ -327,7 +332,7 @@
           "FlipVertical": false,
           "FogStrength": 1,
           "Opaque": false,
-          "Size": "252,252",
+          "Size": "413,413",
           "Texture": null
         }
       ]
@@ -356,7 +361,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-30T11:27:26.6271612\u002B01:00",
+  "LastSaved": "2024-06-30T18:56:42.6023848\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1
