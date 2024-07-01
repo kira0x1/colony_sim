@@ -5,7 +5,6 @@ public sealed class ColonyManager : Component
 {
     public List<Villager> Villagers = new List<Villager>();
 
-    public bool HasInitalized { get; set; }
     public static ColonyManager Instance { get; set; }
 
     private const float WorldTickRate = 0.5f;
@@ -23,34 +22,38 @@ public sealed class ColonyManager : Component
         RandomNames.Init();
         Instance = this;
 
-        for (int i = 0; i < 3; i++)
-        {
-            var v = CreateVillagerData();
+        CreateTestVillagers();
 
-            if (i == 0)
-            {
-                v.PosX = 0;
-                v.PosY = 0;
-                v.Color = Color.Cyan;
-            }
-            else if (i == 1)
-            {
-                v.PosX = 1f;
-                v.PosY = -2f;
-                v.Color = Color.Red;
-            }
-            else if (i == 2)
-            {
-                v.PosX = 1;
-                v.PosY = 2;
-                v.Color = Color.Green;
-            }
-        }
-
+        // Initalize villager array, and colony data
         ColonyData = new ColonyData();
         ColonyData.Villagers = Villagers;
         ColonyData.Population = Villagers.Count;
-        HasInitalized = true;
+    }
+
+    private void CreateTestVillagers()
+    {
+        var v = CreateVillagerData();
+
+        Color vColor = Color.Cyan.WithBlue(0.8f).WithGreen(0.6f);
+        Color vColor1 = vColor.WithBlue(0.7f).WithGreen(0.5f).WithRed(0.9f);
+
+        v.PosX = 0;
+        v.PosY = 0;
+        v.Color = vColor;
+
+        var v1 = CreateVillagerData();
+        v1.PosX = -1;
+        v1.PosY = 0;
+        v1.Color = vColor1;
+
+        var v2 = CreateVillagerData();
+        v2.PosX = 1;
+        v2.PosY = 0;
+        v2.Color = vColor1;
+
+        v.SetDestination(Vector2.Down * 100);
+        v1.SetDestination(v.Destination);
+        v2.SetDestination(v.Destination);
     }
 
     protected override void OnUpdate()

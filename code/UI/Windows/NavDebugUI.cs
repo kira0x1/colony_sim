@@ -53,17 +53,32 @@ public class NavDebugUI : BaseNavWindow
 
         foreach (Villager cmVillager in cm.Villagers)
         {
-            int x = (cmVillager.PosX - 1 + grid.CellAxis / 2f).CeilToInt();
-            int y = (cmVillager.PosY - 1 + grid.CellAxis / 2f).CeilToInt();
+            float x = cmVillager.PosX;
+            float y = cmVillager.PosY;
 
-            if (x >= 0 && x < grid.CellCount && (y >= 0 && y < grid.CellCount))
+            if (GetGridCell(x, y, out GridCell cl))
             {
-                grid.Cells[x, y].IsOccupied = true;
-                grid.Cells[x, y].Color = cmVillager.Color;
+                cl.IsOccupied = true;
+                cl.Color = cmVillager.Color;
             }
         }
 
         img.Texture = grid.CreateGridTexture(imgWidth, imgHeight, false);
+    }
+
+    private bool GetGridCell(float x, float y, out GridCell cell)
+    {
+        int posX = (x - 1 + grid.CellAxis / 2f).CeilToInt();
+        int posY = (y - 1 + grid.CellAxis / 2f).CeilToInt();
+
+        if (posX >= 0 && posX < grid.CellCount && (posY >= 0 && posX < grid.CellCount))
+        {
+            cell = grid.Cells[posX, posY];
+            return true;
+        }
+
+        cell = null;
+        return false;
     }
 
     // Update UI on hotload
