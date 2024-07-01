@@ -19,6 +19,7 @@ public class NavDebugUI : BaseNavWindow
         img = new Image();
         img.AddClass("grid");
         MapContainer.AddChild(out img);
+
         Init();
     }
 
@@ -28,24 +29,15 @@ public class NavDebugUI : BaseNavWindow
         FinalLayoutChildren(this.Box.Rect.Position);
     }
 
+    public void UpdatePanel()
+    {
+        Init();
+    }
+
     protected override void FinalLayoutChildren(Vector2 offset)
     {
         base.FinalLayoutChildren(offset);
         Init();
-    }
-
-    TimeSince timeSinceLastUpdate = 0;
-    float updateTime = 0.5f;
-
-    public override void Tick()
-    {
-        base.Tick();
-
-        if (timeSinceLastUpdate < updateTime) return;
-
-        Init();
-        Log.Info(ColonyManager.Instance.Villagers.Count);
-        timeSinceLastUpdate = 0;
     }
 
     /// <summary>
@@ -79,27 +71,5 @@ public class NavDebugUI : BaseNavWindow
         }
 
         img.Texture = grid.CreateGridTexture(imgWidth, imgHeight, false);
-    }
-
-    private GridCell cellHovering { get; set; }
-    private bool paintingOn = false;
-
-    protected override void OnMouseMove(MousePanelEvent e)
-    {
-        if (!paintingOn) return;
-
-        GridCell cell = grid.GetCellByPos(e.LocalPosition.x, e.LocalPosition.y, false);
-
-        if (!cell.Equals(cellHovering))
-        {
-            if (cellHovering != null)
-            {
-                cellHovering.Color = Color.Transparent;
-            }
-
-            cell.Color = Color.Orange;
-            cellHovering = cell;
-            grid.GridTexture.Texture.Update(Color.Red, grid.ConvertToViewportCell(cell.X, cell.Y));
-        }
     }
 }

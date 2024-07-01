@@ -8,6 +8,10 @@
 }
 
 <root class="@c">
+    @{
+        if (navUI.IsValid())
+            navUI.UpdatePanel();
+    }
 </root>
 
 @code
@@ -15,6 +19,7 @@
     private TabContainer tabContainer = new TabContainer();
     private List<TabContainer.Tab> Tabs = new List<TabContainer.Tab>();
     public override bool IsActive { get; set; } = false;
+    private NavDebugUI navUI;
 
     protected override void OnAfterTreeRender(bool firstTime)
     {
@@ -31,17 +36,28 @@
 
         tabContainer.Tabs = Tabs;
 
+
         tabContainer.AddTab(new UnitsListUI() { IsActive = true }, "units", "Units", "groups");
-        tabContainer.AddTab(new NavDebugUI() { ParentTabContainer = tabContainer }, "ai", "ai", "psychology");
+        navUI = new NavDebugUI() { ParentTabContainer = tabContainer };
+        tabContainer.AddTab(navUI, "ai", "ai", "psychology");
         tabContainer.AddTab(new UnitMap() { IsActive = true }, "map", "map", "map");
 
         tabContainer.Id = "tabs";
         tabContainer.ActiveTab = Tabs[1].TabName;
         this.AddChild(tabContainer);
+        ColonyManager.Instance.OnWorldTick += UpdateChildren;
+    }
+
+    private void UpdateChildren()
+    {
+        navUI.UpdatePanel();
     }
 
     /// <summary>
     /// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
     /// </summary>
-    protected override int BuildHash() => System.HashCode.Combine(IsActive, tabContainer);
+    protected override int BuildHash()
+    {
+        return System.HashCode.Combine(IsActive, ColonyManager.Instance.GetHashCode());
+    }
 }

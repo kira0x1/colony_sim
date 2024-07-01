@@ -22,7 +22,6 @@ public partial class Villager
     public Vector2 StartPoint { get; set; }
     public Vector2 Direction { get; set; }
     private Vector2 Velocity { get; set; }
-    public int Id { get; set; }
 
     public void SetDestination(Vector2 destination)
     {
@@ -37,9 +36,8 @@ public partial class Villager
 
     private void MoveToDestination()
     {
-        Direction = (Destination - Pos).Normal;
-        Velocity = Direction * Speed * 5;
-
+        Direction = Destination - Pos;
+        Velocity = (Direction * Speed).Normal;
         Pos += Velocity;
     }
 
@@ -70,7 +68,8 @@ public partial class Villager
         if (Distance < 1f && !HasReachedDestination)
         {
             HasReachedDestination = true;
-            RandomWaitTime = Random.Shared.Float(0.1f, 1);
+            // RandomWaitTime = Random.Shared.Float(0.1f, 1);
+            RandomWaitTime = 0.1f;
             SinceReachedDestination = 0f;
             return;
         }

@@ -1,19 +1,18 @@
-﻿using System;
-
-namespace Kira;
+﻿namespace Kira;
 
 [Category("Kira")]
 public sealed class ColonyManager : Component
 {
-    [NonSerialized]
     public List<Villager> Villagers = new List<Villager>();
+
+    public bool HasInitalized { get; set; }
     public static ColonyManager Instance { get; set; }
 
     private const float WorldTickRate = 0.5f;
     private TimeUntil TimeTillWorldTick { get; set; } = 1;
 
-    private delegate void OnWorldTickEvent();
-    private event OnWorldTickEvent OnWorldTick;
+    public delegate void OnWorldTickEvent();
+    public event OnWorldTickEvent OnWorldTick;
 
     public ColonyData ColonyData { get; set; } = new ColonyData();
 
@@ -22,7 +21,6 @@ public sealed class ColonyManager : Component
         base.OnAwake();
 
         RandomNames.Init();
-        Villagers = new List<Villager>();
         Instance = this;
 
         for (int i = 0; i < 3; i++)
@@ -52,6 +50,7 @@ public sealed class ColonyManager : Component
         ColonyData = new ColonyData();
         ColonyData.Villagers = Villagers;
         ColonyData.Population = Villagers.Count;
+        HasInitalized = true;
     }
 
     protected override void OnUpdate()

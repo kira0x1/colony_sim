@@ -4,8 +4,8 @@ using System;
 
 public partial class Villager
 {
+    public int Id { get; private set; }
     public string FirstName { get; set; }
-
     public string LastName { get; set; }
     public int Age { get; set; }
 
@@ -90,8 +90,8 @@ public partial class Villager
         Strength = Random.Shared.Int(10, 30);
         // Speed = Random.Shared.Int(10, 30);
         Speed = 1;
-        Init();
         Id = id;
+        Init();
 
         // Age = VillagerUtils.RandomAge;
     }
