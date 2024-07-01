@@ -57,7 +57,7 @@ public partial class Villager
         Distance = Vector2.DistanceBetween(Destination, Pos);
 
         // We reached our destination
-        if (Distance < 1f && !HasReachedDestination)
+        if (Distance < 0.5f && !HasReachedDestination)
         {
             HasReachedDestination = true;
             // RandomWaitTime = Random.Shared.Float(0.1f, 1);

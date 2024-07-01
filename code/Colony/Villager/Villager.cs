@@ -88,8 +88,9 @@ public partial class Villager
         Health = 100;
 
         Strength = Random.Shared.Int(10, 30);
-        // Speed = Random.Shared.Int(10, 30);
+
         Speed = 2;
+
         Id = id;
         Init();
 
