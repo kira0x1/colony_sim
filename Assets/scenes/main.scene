@@ -323,7 +323,6 @@
         {
           "__type": "Sandbox.SpriteRenderer",
           "__guid": "7ff2b856-ef24-4f9a-a131-94eb632ab672",
-          "__enabled": false,
           "Additive": false,
           "CastShadows": false,
           "Color": "1,1,1,1",
@@ -361,7 +360,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-06-30T18:56:42.6023848\u002B01:00",
+  "LastSaved": "2024-07-01T08:54:34.2053102\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

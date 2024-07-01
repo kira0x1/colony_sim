@@ -14,9 +14,11 @@ public class Grid
     public Grid(int cells = 5, int borderThickness = 1)
     {
         this.borderThickness = borderThickness;
+
         BaseCellCount = cells;
         CellAxis = cells;
         CellCount = CellAxis * CellAxis;
+
         // populate cells
         CreateCells();
 

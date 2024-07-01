@@ -12,38 +12,31 @@ public class NavDebugUI : BaseNavWindow
 
     public NavDebugUI()
     {
+        // Load stylesheet
         StyleSheet.Load("UI/Windows/NavDebugUI.cs.scss");
-        MapContainer = Add.Panel("map");
-        grid = new Grid(21, 2);
 
+        MapContainer = Add.Panel("map");
+
+        // Create grid overlay and add it to the mapcontainer
+        grid = new Grid(21, 2);
         img = new Image();
         img.AddClass("grid");
+
         MapContainer.AddChild(out img);
 
-        Init();
-    }
-
-    public override void OnHotloaded()
-    {
-        base.OnHotloaded();
-        FinalLayoutChildren(this.Box.Rect.Position);
+        // Finally generate the texture
+        GenerateTexture();
     }
 
     public void UpdatePanel()
     {
-        Init();
-    }
-
-    protected override void FinalLayoutChildren(Vector2 offset)
-    {
-        base.FinalLayoutChildren(offset);
-        Init();
+        GenerateTexture();
     }
 
     /// <summary>
     /// Generate the grid, and map the cells to villagers
     /// </summary>
-    private void Init()
+    private void GenerateTexture()
     {
         Rect imgRect = img.Box.Rect;
         float width = this.Box.Rect.Width;
@@ -71,5 +64,19 @@ public class NavDebugUI : BaseNavWindow
         }
 
         img.Texture = grid.CreateGridTexture(imgWidth, imgHeight, false);
+    }
+
+    // Update UI on hotload
+    public override void OnHotloaded()
+    {
+        base.OnHotloaded();
+        FinalLayoutChildren(this.Box.Rect.Position);
+    }
+
+    // Regenerate texture if layout has changed
+    protected override void FinalLayoutChildren(Vector2 offset)
+    {
+        base.FinalLayoutChildren(offset);
+        GenerateTexture();
     }
 }
