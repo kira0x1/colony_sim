@@ -36,8 +36,11 @@ public partial class Villager
 
     private void MoveToDestination()
     {
-        Direction = Destination - Pos;
-        Velocity = (Direction * Speed).Normal;
+        Direction = (Destination - Pos).Normal;
+
+        float nextSpeed = Speed.Clamp(-Distance, Distance);
+        Velocity = Direction * nextSpeed;
+
         Pos += Velocity;
     }
 

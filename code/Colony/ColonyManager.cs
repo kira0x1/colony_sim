@@ -54,7 +54,7 @@ public sealed class ColonyManager : Component
         v2.PosY = 0;
         v2.Color = vColor1;
 
-        v.SetDestination(Vector2.Down * 100);
+        v.SetDestination(Vector2.Down * 3);
         v1.SetDestination(v.Destination);
         v2.SetDestination(v.Destination);
     }

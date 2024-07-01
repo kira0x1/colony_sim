@@ -155,10 +155,6 @@
           "Separation": 0.2,
           "UpdatePosition": true,
           "UpdateRotation": true
-        },
-        {
-          "__type": "Kira.VillagerPawn",
-          "__guid": "ee298716-e53c-445c-a554-fdecc8fd5dbb"
         }
       ],
       "Children": [
@@ -360,7 +356,7 @@
   },
   "Title": "inventory",
   "Description": "",
-  "LastSaved": "2024-07-01T08:54:34.2053102\u002B01:00",
+  "LastSaved": "2024-07-01T10:09:31.3951361\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

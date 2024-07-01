@@ -18,7 +18,7 @@ public partial class Villager
     public int Thirst { get; set; }
     public int Health { get; set; }
     public int MaxHealth { get; set; }
-    public int Speed { get; set; }
+    public float Speed { get; set; }
     public int Strength { get; set; }
     public Color Color { get; set; } = Color.Black;
 
@@ -89,7 +89,7 @@ public partial class Villager
 
         Strength = Random.Shared.Int(10, 30);
         // Speed = Random.Shared.Int(10, 30);
-        Speed = 1;
+        Speed = 2;
         Id = id;
         Init();
 

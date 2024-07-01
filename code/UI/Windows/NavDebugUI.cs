@@ -53,17 +53,26 @@ public class NavDebugUI : BaseNavWindow
 
         foreach (Villager cmVillager in cm.Villagers)
         {
-            float x = cmVillager.PosX;
-            float y = cmVillager.PosY;
+            ColorInCell(cmVillager.Pos, cmVillager.Color);
 
-            if (GetGridCell(x, y, out GridCell cl))
-            {
-                cl.IsOccupied = true;
-                cl.Color = cmVillager.Color;
-            }
+            var max = grid.BaseCellCount / 2;
+            var destination = cmVillager.Destination.Clamp(-max, max);
+            ColorInCell(destination, Color.Black);
         }
 
         img.Texture = grid.CreateGridTexture(imgWidth, imgHeight, false);
+    }
+
+    private void ColorInCell(Vector2 pos, Color color)
+    {
+        float x = pos.x;
+        float y = pos.y;
+
+        if (GetGridCell(x, y, out GridCell cl))
+        {
+            cl.IsOccupied = true;
+            cl.Color = color;
+        }
     }
 
     private bool GetGridCell(float x, float y, out GridCell cell)
