@@ -41,17 +41,6 @@ public partial class Villager
         Pos += Velocity;
     }
 
-    public void LogDir()
-    {
-        Log.Info(" ");
-        Log.Info($"Position: {Pos}");
-        Log.Info($"Destination: {Destination}");
-        Log.Info($"Velocity: {Velocity}");
-        Log.Info($"Direction: {Direction}");
-        Log.Info($"Distance: {Distance}");
-        Log.Info($"HasReached: {HasReachedDestination}");
-    }
-
     public void UpdateMove()
     {
         // We're done waiting around, and time to pick a new destination and go to it 
