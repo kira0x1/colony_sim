@@ -1,5 +1,4 @@
 ﻿@namespace Kira.UI
-@using System
 @using Sandbox.UI
 @using Util
 @attribute [StyleSheet]
@@ -8,9 +7,10 @@
 @code {
     public TabContainer ParentTabContainer { get; set; }
     public Panel MapContainer { get; protected set; }
+    private NavToolbar toolbar;
+
     private readonly Image img;
     private readonly Grid grid;
-
 
     public NavDebugUI()
     {
@@ -22,6 +22,9 @@
         img.AddClass("grid");
 
         MapContainer.AddChild(out img);
+
+        toolbar = new NavToolbar();
+        MapContainer.AddChild(out toolbar);
 
         // Finally generate the texture
         UpdatePanel();
