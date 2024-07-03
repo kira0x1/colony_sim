@@ -158,5 +158,5 @@ public partial class Villager
         return $"Name: {FirstName} {LastName}, Age: {Age}, Height: {Height}cm, Weight: {Weight}kg";
     }
 
-    public int BuildHash() => System.HashCode.Combine(Hunger, Thirst, Health, Pos);
+    // public int BuildHash() => System.HashCode.Combine(Hunger, Thirst, Health, Pos.x, Pos.y);
 }

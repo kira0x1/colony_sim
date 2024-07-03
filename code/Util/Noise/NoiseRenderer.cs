@@ -10,7 +10,7 @@ public enum NoiseTypes
 }
 
 [Category("Kira")]
-public sealed class NoiseRenderer : Component, Component.ExecuteInEditor
+public sealed class NoiseRenderer : Component
 {
     private bool hasTexture { get; set; }
     private Texture tx { get; set; }

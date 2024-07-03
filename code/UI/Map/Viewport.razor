@@ -19,7 +19,7 @@
 
         for (int i = 0; i < villagers.Count; i++)
         {
-            Villager c = villagers[i];
+            Villager c = villagers.ElementAt(i);
             MinimapSymbol ms = new MinimapSymbol(c, this);
             MapSymbols[i] = ms;
             AddChild(ms);

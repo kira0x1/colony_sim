@@ -1,20 +1,19 @@
-﻿namespace Kira.UI;
+﻿@namespace Kira.UI
+@using System
+@using Sandbox.UI
+@using Util
+@attribute [StyleSheet]
+@inherits BaseNavWindow
 
-using Sandbox.UI;
-using Util;
-
-public class NavDebugUI : BaseNavWindow
-{
+@code {
     public TabContainer ParentTabContainer { get; set; }
     public Panel MapContainer { get; protected set; }
     private readonly Image img;
     private readonly Grid grid;
 
+
     public NavDebugUI()
     {
-        // Load stylesheet
-        StyleSheet.Load("UI/Windows/NavDebugUI.cs.scss");
-
         MapContainer = Add.Panel("map");
 
         // Create grid overlay and add it to the mapcontainer
@@ -25,7 +24,21 @@ public class NavDebugUI : BaseNavWindow
         MapContainer.AddChild(out img);
 
         // Finally generate the texture
-        GenerateTexture();
+        UpdatePanel();
+    }
+
+    protected override int BuildHash()
+    {
+        ColonyManager cm = ColonyManager.Instance;
+        Vector2 combinedPos = cm.Villagers.Aggregate(Vector2.Zero, (current, cmVillager) => current + cmVillager.Pos);
+        return System.HashCode.Combine(combinedPos);
+    }
+
+    // TODO: this still updates on mousehover 
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        base.OnAfterTreeRender(firstTime);
+        UpdatePanel();
     }
 
     public void UpdatePanel()
@@ -103,4 +116,5 @@ public class NavDebugUI : BaseNavWindow
         base.FinalLayoutChildren(offset);
         GenerateTexture();
     }
+
 }

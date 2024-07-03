@@ -6,7 +6,7 @@ using System;
 public sealed class ColonyManager : Component
 {
     [NonSerialized]
-    public List<Villager> Villagers = new List<Villager>();
+    public readonly List<Villager> Villagers = new List<Villager>();
 
     public static ColonyManager Instance { get; set; }
 

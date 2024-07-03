@@ -4,7 +4,7 @@ using Component = Sandbox.Component;
 
 namespace Kira;
 
-public sealed class NoiseGenerator : Component, Component.ExecuteInEditor
+public sealed class NoiseGenerator : Component
 {
     [Property, Range(0f, 3f)] public float Scale { get; set; } = 1f;
     [Property, Range(1f, 5f)] public float ZoomIn { get; set; } = 1f;
