@@ -1,0 +1,56 @@
+@using Sandbox.UI
+@namespace Kira.UI
+@using Kira.Util
+@inherits PanelComponent
+
+<root>
+    <div class="container">
+        <div class="grid"></div>
+    </div>
+</root>
+
+@code
+{
+    private readonly Graph graph = new Graph();
+    private List<GraphNodeUI> nodes = new List<GraphNodeUI>();
+    private Panel GridDiv;
+
+    protected override void OnTreeFirstBuilt()
+    {
+        base.OnTreeFirstBuilt();
+        GridDiv = Panel.Descendants.ElementAt(1);
+        Init();
+    }
+
+    protected override void OnTreeBuilt()
+    {
+        base.OnTreeBuilt();
+        Refresh();
+    }
+
+    private void Refresh()
+    {
+        GridDiv = Panel.Descendants.ElementAt(1);
+        GridDiv.DeleteChildren(true);
+        Init();
+    }
+
+
+    private void Init()
+    {
+        // var column = gridDiv.Add.Panel("column");
+
+        for (int x = 0; x < 5; x++)
+        {
+            // var row = column.Add.Panel("row");
+            @for (int y = 0; y < 5; y++)
+            {
+                var node = graph.FindNode(new Vector2Int(x, y));
+                if (node == null) continue;
+                var nodeUI = new GraphNodeUI(node);
+                nodeUI.AddClass("node");
+                GridDiv.AddChild(nodeUI);
+            }
+        }
+    }
+}
