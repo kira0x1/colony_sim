@@ -163,7 +163,7 @@
           "__guid": "f212a639-cc81-4738-81d6-e4353a655a58"
         },
         {
-          "__type": "GraphTest",
+          "__type": "Kira.UI.GraphTest",
           "__guid": "2ff02393-c415-434a-8d41-c876aa51412d"
         }
       ]
