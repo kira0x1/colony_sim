@@ -9,7 +9,7 @@ public class GridTexture
     private readonly float gridThickness;
     private const float borderThickness = 4f;
 
-    private readonly Color gridColor = Color.White;
+    private readonly Color gridColor = new Color(0.8f, 0.8f, 0.8f, 0.8f);
     private readonly Color borderColor = Color.White;
     private Grid gridData;
 

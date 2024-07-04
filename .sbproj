@@ -5,6 +5,7 @@
   "Ident": "retro_junkyard",
   "Tags": null,
   "Schema": 1,
+  "IncludeSourceFiles": false,
   "Resources": null,
   "PackageReferences": [],
   "EditorReferences": null,

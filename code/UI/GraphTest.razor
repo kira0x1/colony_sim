@@ -1,0 +1,35 @@
+@using Kira.Util
+@inherits PanelComponent
+
+<root>
+    <div class="container">
+
+        <div class="grid">
+            @foreach (GraphNode node in graph.AllNodes)
+            {
+                @* <div class="node">@($"{node.x} , {node.y}")</div> *@
+            }
+
+            <div class="column">
+                @for (int x = 0; x < 5; x++)
+                {
+                    <div class="row">
+                        @for (int y = 0; y < 5; y++)
+                        {
+                            var node = graph.FindNode(new Vector2Int(x, y));
+                            var c = node != null ? "node active" : "node";
+                            <div class=@c>
+                                @($"{x}, {y}")
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</root>
+
+@code
+{
+    private readonly Graph graph = new Graph();
+}

@@ -48,6 +48,12 @@
         RefreshLayout();
     }
 
+    protected override void FinalLayoutChildren(Vector2 offset)
+    {
+        base.FinalLayoutChildren(offset);
+        RefreshLayout();
+    }
+
     public void RefreshLayout()
     {
         var cpos = ViewPort.CalculatePosition(Villager.Pos, Box);

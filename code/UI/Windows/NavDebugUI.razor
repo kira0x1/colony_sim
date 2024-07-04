@@ -4,6 +4,8 @@
 @attribute [StyleSheet]
 @inherits BaseNavWindow
 
+@* ReSharper disable once NotAccessedField.Local *@
+
 @code {
     public TabContainer ParentTabContainer { get; set; }
     public Panel MapContainer { get; protected set; }
@@ -11,6 +13,8 @@
 
     private readonly Image img;
     private readonly Grid grid;
+
+    private bool updateVillagers = false;
 
     public NavDebugUI()
     {
@@ -41,6 +45,7 @@
     protected override void OnAfterTreeRender(bool firstTime)
     {
         base.OnAfterTreeRender(firstTime);
+        if (!firstTime && !updateVillagers) return;
         UpdatePanel();
     }
 
@@ -110,6 +115,7 @@
     public override void OnHotloaded()
     {
         base.OnHotloaded();
+        if (!IsActive) return;
         FinalLayoutChildren(this.Box.Rect.Position);
     }
 
