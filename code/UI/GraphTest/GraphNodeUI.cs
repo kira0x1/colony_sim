@@ -7,13 +7,26 @@ using Util;
 public class GraphNodeUI : Panel
 {
     private GraphNode node;
+    private List<GraphNode> neighbours;
 
-    public GraphNodeUI(GraphNode node)
+    public GraphNodeUI(GraphNode node, Graph graph)
     {
         this.node = node;
         if (node != null)
         {
-            this.Add.Label($"{node.x}, {node.y}");
+            neighbours = graph.Neighbours(node);
+
+            if (neighbours.Count == 0)
+                Add.Label(node.name);
+            else
+            {
+                foreach (GraphNode nb in neighbours)
+                {
+                    Add.Label($"{node.name} -> {nb.name}");
+                }
+            }
+
+            Add.Label($"{node.x}, {node.y}");
         }
     }
 
@@ -31,7 +44,8 @@ public class GraphNodeUI : Panel
 
     private void Refresh()
     {
-        const int gap = 15;
+        const int gap = 4;
+        const float offset = 0f;
 
         var rect = Box.Rect;
         var parent = Parent.Box;
@@ -39,13 +53,11 @@ public class GraphNodeUI : Panel
         var height = rect.Height + gap;
         var width = rect.Width + gap;
 
-        var offset = parent.Rect.Position;
-
         var posx = node.x * width;
         var posy = node.y * height;
 
-        posx += offset.x;
-        posy += offset.y;
+        posx += parent.Rect.Position.x + offset;
+        posy += parent.Rect.Position.y + offset;
 
         rect.Position = new Vector2(posx, posy);
 
