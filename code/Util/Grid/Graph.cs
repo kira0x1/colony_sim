@@ -13,17 +13,21 @@ public class Graph
 
         const int ylength = 6;
         const int xlength = 5;
-
+        int i = 0;
         for (int x = 0; x < xlength; x += 2)
         {
             for (int y = 0; y < ylength; y += 2)
             {
-                int i = x * 5 + y;
                 Vector2Int pos = new Vector2Int(x, y);
 
-                if (i > 1)
+                if (i == 1)
                 {
-                    int xRand = Random.Shared.Int(0, 2);
+                    // just making sure a -> b are always neighbours for testing purposes
+                    pos.y--;
+                }
+                else if (i > 1)
+                {
+                    int xRand = Random.Shared.Int(0, 1);
                     int yRand = Random.Shared.Int(0, 1);
 
                     pos.x += xRand;
@@ -31,6 +35,7 @@ public class Graph
                 }
 
                 AllNodes.Add(new GraphNode(pos.x, pos.y, Letters[i].ToString()));
+                i++;
             }
         }
     }

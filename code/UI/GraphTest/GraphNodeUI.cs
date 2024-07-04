@@ -7,7 +7,7 @@ using Util;
 public class GraphNodeUI : Panel
 {
     private GraphNode node;
-    private List<GraphNode> neighbours;
+    private readonly List<GraphNode> neighbours;
 
     public GraphNodeUI(GraphNode node, Graph graph)
     {
@@ -22,7 +22,7 @@ public class GraphNodeUI : Panel
             {
                 foreach (GraphNode nb in neighbours)
                 {
-                    Add.Label($"{node.name} -> {nb.name}");
+                    Add.Label($"{node.name} → {nb.name}");
                 }
             }
 

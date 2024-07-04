@@ -13,7 +13,6 @@ GraphTest {
     position: absolute;
     background-color: #444;
     border-radius: 6px;
-    //top: 1vh;
     width: 60vw;
     height: 70vh;
     gap: 5px;
@@ -33,22 +32,6 @@ GraphTest {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-
-  }
-
-  .column {
-    //gap: 30px;
-  }
-
-  .row {
-    //gap: 30px;
-    flex-direction: column;
-  }
-
-  .title {
-    font-size: 25px;
-    font-family: Poppins;
-    color: #fff;
   }
 
   .node {
@@ -58,10 +41,9 @@ GraphTest {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    //padding: 5px 10px;
     background-color: #222;
     font-size: 22px;
-    font-family: Poppins;
+    font-family: "FiraCode Nerd Font";
     color: #fff;
     flex-shrink: 0;
 
