@@ -12,12 +12,23 @@ public class GraphNodeUI : Panel
     public GraphNodeUI(GraphNode node, Graph graph)
     {
         this.node = node;
-        if (node != null)
+        if (node == null) return;
+
+        neighbours = graph.Neighbours(node);
+
+        if (node.IsOccupied)
         {
-            neighbours = graph.Neighbours(node);
+            AddClass("isOccupied");
+        }
+
+        if (node.IsRealNode)
+        {
+            AddClass("real");
 
             if (neighbours.Count == 0)
+            {
                 Add.Label(node.name);
+            }
             else
             {
                 foreach (GraphNode nb in neighbours)
@@ -25,9 +36,9 @@ public class GraphNodeUI : Panel
                     Add.Label($"{node.name} → {nb.name}");
                 }
             }
-
-            Add.Label($"{node.x}, {node.y}");
         }
+
+        Add.Label($"{node.x}, {node.y}");
     }
 
     public override void OnHotloaded()
@@ -44,7 +55,7 @@ public class GraphNodeUI : Panel
 
     private void Refresh()
     {
-        const int gap = 4;
+        const int gap = 18;
         const float offset = 0f;
 
         var rect = Box.Rect;
