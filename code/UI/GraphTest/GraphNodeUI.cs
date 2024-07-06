@@ -18,10 +18,16 @@ public class GraphNodeUI : Panel
 
         if (node.IsOccupied)
         {
+            Add.Icon("home");
             AddClass("isOccupied");
         }
 
-        if (node.IsRealNode)
+        if (node.IsNeighbour)
+        {
+            AddClass("neighbour");
+        }
+
+        if (node.IsRealNode && !node.IsWall)
         {
             AddClass("real");
 
@@ -29,13 +35,20 @@ public class GraphNodeUI : Panel
             {
                 Add.Label(node.name);
             }
-            else
-            {
-                foreach (GraphNode nb in neighbours)
-                {
-                    Add.Label($"{node.name} → {nb.name}");
-                }
-            }
+            // else
+            // {
+            //     foreach (GraphNode nb in neighbours)
+            //     {
+            //         if (nb.IsRealNode)
+            //             Add.Label($"{node.name} → {nb.name}");
+            //     }
+            // }
+        }
+
+        if (node.IsWall)
+        {
+            Add.Label("WALL");
+            AddClass("wall");
         }
 
         Add.Label($"{node.x}, {node.y}");

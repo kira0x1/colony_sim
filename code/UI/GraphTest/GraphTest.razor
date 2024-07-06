@@ -1,12 +1,25 @@
-@using Sandbox.UI
 @namespace Kira.UI
+@using System
+@using System.Threading.Tasks
 @using Kira.Util
+@using Sandbox.UI
 @inherits PanelComponent
 
 <root>
     <div class="container">
         <div class="grid"></div>
     </div>
+
+    @{
+        var c = "startbtn";
+        var text = "";
+        if (graph != null)
+        {
+            c += graph.IsSearching ? " searching" : "";
+            text = graph.IsSearching ? "searching..." : "Start";
+        }
+    }
+    <div class="@c" onclick="@(() => OnStartSearch())">@text</div>
 </root>
 
 @code
@@ -44,5 +57,16 @@
             nodeUI.AddClass("node");
             GridDiv.AddChild(nodeUI);
         }
+    }
+
+    private async Task OnStartSearch()
+    {
+        if (graph.IsSearching) return;
+        await graph.DoSearch();
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine(graph?.IsSearching, Time.Now);
     }
 }

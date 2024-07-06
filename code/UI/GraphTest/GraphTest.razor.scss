@@ -58,8 +58,42 @@ GraphTest {
     }
 
     &.isOccupied {
-      border: 1px #cf5a7f;
+      border: 3px #cf5a7f;
       background-color: #555;
+    }
+
+    &.neighbour {
+      background-color: #50c0aa;
+    }
+
+
+    &.wall {
+      background-color: #7c4141;
+    }
+  }
+
+  .startbtn {
+    color: #fff;
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 600;
+    background: #56dfd3;
+    width: 180px;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    position: absolute;
+    bottom: 8vh;
+    transition: background-color 250ms;
+
+    &:hover:not(.searching) {
+      background: #2d716d;
+    }
+
+
+    &.searching {
+      background-color: #4e4e4e;
     }
   }
 }

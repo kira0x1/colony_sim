@@ -1,12 +1,15 @@
 ﻿namespace Kira.Util;
 
 using System;
+using System.Threading.Tasks;
 
 public class Graph
 {
     public List<GraphNode> AllNodes { get; set; }
     public List<GraphNode> RealNodes { get; set; }
     private readonly char[] Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+
+    public bool IsSearching { get; private set; }
 
     public Graph()
     {
@@ -40,6 +43,13 @@ public class Graph
                 i++;
             }
         }
+
+        AllNodes[(ylength - 2) / 2 + xlength].IsWall = true;
+        AllNodes[(ylength - 1) / 2 + xlength].IsWall = true;
+        AllNodes[(ylength + 1) / 2 + xlength].IsWall = true;
+        AllNodes[ylength - 1 + xlength + 1].IsWall = true;
+        AllNodes[ylength].IsWall = true;
+
 
         // Set the center slot as occupied
         AllNodes[ylength * xlength / 2].IsOccupied = true;
@@ -98,7 +108,7 @@ public class Graph
             // neighbour node
             var nb = AllNodes.Find(x => x.Equals(npos));
 
-            if (nb != null && nb.IsRealNode)
+            if (nb != null)
             {
                 neighbors.Add(nb);
             }
@@ -111,6 +121,53 @@ public class Graph
     {
         GraphNode node = AllNodes.Find(n => n.Equals(pos));
         return node;
+    }
+
+    public GraphNode FindNode(int x, int y)
+    {
+        GraphNode node = AllNodes.Find(n => n.Equals(new Vector2Int(x, y)));
+        return node;
+    }
+
+    public async Task DoSearch()
+    {
+        IsSearching = true;
+
+        var start = AllNodes.Find(x => x.IsOccupied);
+        var reached = new List<GraphNode>();
+        var frontier = new Queue<GraphNode>();
+
+        frontier.Enqueue(start);
+        reached.Add(start);
+
+        RealTimeSince timeSinceStart = 0;
+
+        while (frontier.Count > 0)
+        {
+            if (timeSinceStart >= 10)
+            {
+                Log.Info($"exiting loop");
+                break;
+            }
+
+            var current = frontier.Dequeue();
+            var neighbours = Neighbours(current);
+
+            foreach (GraphNode nb in neighbours)
+            {
+                nb.IsNeighbour = true;
+
+                if (!reached.Contains(nb))
+                {
+                    frontier.Enqueue(nb);
+                    reached.Add(nb);
+                }
+
+                await Task.Delay(50);
+            }
+        }
+
+        IsSearching = false;
     }
 }
 
@@ -125,12 +182,20 @@ public class GraphNode : IEquatable<Vector2Int>
     // Is not just apart of the grid / for aesthetic purposes
     public bool IsRealNode { get; set; }
 
-    public GraphNode(int x, int y, string name = "", bool isRealNode = false)
+    // Just for displaying a neighbour during a search
+    public bool IsNeighbour { get; set; }
+
+    public bool IsReached { get; set; }
+
+    public bool IsWall { get; set; }
+
+    public GraphNode(int x, int y, string name = "", bool isRealNode = false, bool isWall = false)
     {
         this.x = x;
         this.y = y;
         this.name = name;
         this.IsRealNode = isRealNode;
+        this.IsWall = isWall;
     }
 
     public bool Equals(Vector2Int other)
