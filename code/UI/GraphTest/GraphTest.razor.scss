@@ -53,7 +53,7 @@ GraphTest {
     }
 
     &.real {
-      background: #333;
+      //background: #333;
 
     }
 
@@ -62,13 +62,20 @@ GraphTest {
       background-color: #555;
     }
 
-    &.neighbour {
-      background-color: #50c0aa;
+    &.reached {
+      background-color: #5A738B;
     }
 
+    &.neighbour {
+      background-color: #e484d6;
+    }
 
     &.wall {
       background-color: #7c4141;
+    }
+
+    &.current {
+      background-color: #50c0aa;
     }
   }
 

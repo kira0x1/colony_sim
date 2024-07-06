@@ -27,6 +27,16 @@ public class GraphNodeUI : Panel
             AddClass("neighbour");
         }
 
+        if (node.IsReached)
+        {
+            AddClass("reached");
+        }
+
+        if (node.IsCurrent)
+        {
+            AddClass("current");
+        }
+
         if (node.IsRealNode && !node.IsWall)
         {
             AddClass("real");

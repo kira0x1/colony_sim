@@ -44,48 +44,15 @@ public class Graph
             }
         }
 
-        AllNodes[(ylength - 2) / 2 + xlength].IsWall = true;
-        AllNodes[(ylength - 1) / 2 + xlength].IsWall = true;
-        AllNodes[(ylength + 1) / 2 + xlength].IsWall = true;
-        AllNodes[ylength - 1 + xlength + 1].IsWall = true;
-        AllNodes[ylength].IsWall = true;
+        // AllNodes[(ylength - 2) / 2 + xlength].IsWall = true;
+        // AllNodes[(ylength - 1) / 2 + xlength].IsWall = true;
+        // AllNodes[(ylength + 1) / 2 + xlength].IsWall = true;
+        // AllNodes[ylength - 1 + xlength + 1].IsWall = true;
+        // AllNodes[ylength].IsWall = true;
 
 
         // Set the center slot as occupied
         AllNodes[ylength * xlength / 2].IsOccupied = true;
-    }
-
-    private void CreateGraphWithGaps()
-    {
-        AllNodes = new List<GraphNode>();
-
-        const int ylength = 6;
-        const int xlength = 5;
-        int i = 0;
-        for (int x = 0; x < xlength; x += 2)
-        {
-            for (int y = 0; y < ylength; y += 2)
-            {
-                Vector2Int pos = new Vector2Int(x, y);
-
-                if (i == 1)
-                {
-                    // just making sure a -> b are always neighbours for testing purposes
-                    pos.y--;
-                }
-                else if (i > 1)
-                {
-                    int xRand = Random.Shared.Int(0, 1);
-                    int yRand = Random.Shared.Int(0, 1);
-
-                    pos.x += xRand;
-                    pos.y += yRand;
-                }
-
-                AllNodes.Add(new GraphNode(pos.x, pos.y, Letters[i].ToString()));
-                i++;
-            }
-        }
     }
 
     public List<GraphNode> Neighbours(GraphNode node)
@@ -142,32 +109,85 @@ public class Graph
 
         RealTimeSince timeSinceStart = 0;
 
+        GraphNode previousCurrent = null;
+        List<GraphNode> prevNeighbours = new List<GraphNode>();
+
         while (frontier.Count > 0)
         {
-            if (timeSinceStart >= 10)
+            if (timeSinceStart >= 60)
             {
                 Log.Info($"exiting loop");
                 break;
             }
 
             var current = frontier.Dequeue();
+            current.IsCurrent = true;
+
+            if (previousCurrent != null)
+            {
+                previousCurrent.IsCurrent = false;
+            }
+
+            await Task.Delay(150);
+            foreach (GraphNode prevNeighbour in prevNeighbours)
+            {
+                prevNeighbour.IsNeighbour = false;
+            }
+
+            previousCurrent = current;
+
             var neighbours = Neighbours(current);
 
             foreach (GraphNode nb in neighbours)
             {
                 nb.IsNeighbour = true;
+                await Task.Delay(15);
 
                 if (!reached.Contains(nb))
                 {
                     frontier.Enqueue(nb);
+                    nb.IsReached = true;
                     reached.Add(nb);
                 }
-
-                await Task.Delay(50);
             }
+
+            prevNeighbours = neighbours;
         }
 
         IsSearching = false;
+    }
+
+    private void CreateGraphWithGaps()
+    {
+        AllNodes = new List<GraphNode>();
+
+        const int ylength = 6;
+        const int xlength = 5;
+        int i = 0;
+        for (int x = 0; x < xlength; x += 2)
+        {
+            for (int y = 0; y < ylength; y += 2)
+            {
+                Vector2Int pos = new Vector2Int(x, y);
+
+                if (i == 1)
+                {
+                    // just making sure a -> b are always neighbours for testing purposes
+                    pos.y--;
+                }
+                else if (i > 1)
+                {
+                    int xRand = Random.Shared.Int(0, 1);
+                    int yRand = Random.Shared.Int(0, 1);
+
+                    pos.x += xRand;
+                    pos.y += yRand;
+                }
+
+                AllNodes.Add(new GraphNode(pos.x, pos.y, Letters[i].ToString()));
+                i++;
+            }
+        }
     }
 }
 
@@ -188,6 +208,9 @@ public class GraphNode : IEquatable<Vector2Int>
     public bool IsReached { get; set; }
 
     public bool IsWall { get; set; }
+
+    // is the node currently selected for searching
+    public bool IsCurrent { get; set; }
 
     public GraphNode(int x, int y, string name = "", bool isRealNode = false, bool isWall = false)
     {
