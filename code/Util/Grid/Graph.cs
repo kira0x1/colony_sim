@@ -101,25 +101,18 @@ public class Graph
         IsSearching = true;
 
         var start = AllNodes.Find(x => x.IsOccupied);
-        var reached = new List<GraphNode>();
+        var cameFrom = new Dictionary<GraphNode, GraphNode>();
         var frontier = new Queue<GraphNode>();
 
         frontier.Enqueue(start);
-        reached.Add(start);
+        cameFrom.Add(start, null);
 
-        RealTimeSince timeSinceStart = 0;
 
         GraphNode previousCurrent = null;
         List<GraphNode> prevNeighbours = new List<GraphNode>();
 
         while (frontier.Count > 0)
         {
-            if (timeSinceStart >= 60)
-            {
-                Log.Info($"exiting loop");
-                break;
-            }
-
             var current = frontier.Dequeue();
             current.IsCurrent = true;
 
@@ -128,7 +121,6 @@ public class Graph
                 previousCurrent.IsCurrent = false;
             }
 
-            await Task.Delay(150);
             foreach (GraphNode prevNeighbour in prevNeighbours)
             {
                 prevNeighbour.IsNeighbour = false;
@@ -141,18 +133,20 @@ public class Graph
             foreach (GraphNode nb in neighbours)
             {
                 nb.IsNeighbour = true;
-                await Task.Delay(15);
 
-                if (!reached.Contains(nb))
+                if (!cameFrom.ContainsKey(nb))
                 {
-                    frontier.Enqueue(nb);
                     nb.IsReached = true;
-                    reached.Add(nb);
+                    nb.CameFrom = current;
+                    frontier.Enqueue(nb);
+                    cameFrom.Add(nb, current);
                 }
             }
 
             prevNeighbours = neighbours;
+            await Task.Delay(250);
         }
+
 
         IsSearching = false;
     }
@@ -197,6 +191,8 @@ public class GraphNode : IEquatable<Vector2Int>
     public int x;
     public int y;
 
+    public Vector2Int Position { get; private set; }
+
     public bool IsOccupied { get; set; }
 
     // Is not just apart of the grid / for aesthetic purposes
@@ -212,10 +208,13 @@ public class GraphNode : IEquatable<Vector2Int>
     // is the node currently selected for searching
     public bool IsCurrent { get; set; }
 
+    public GraphNode CameFrom { get; set; }
+
     public GraphNode(int x, int y, string name = "", bool isRealNode = false, bool isWall = false)
     {
         this.x = x;
         this.y = y;
+        this.Position = new Vector2Int(x, y);
         this.name = name;
         this.IsRealNode = isRealNode;
         this.IsWall = isWall;

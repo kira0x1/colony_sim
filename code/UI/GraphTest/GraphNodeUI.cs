@@ -37,6 +37,27 @@ public class GraphNodeUI : Panel
             AddClass("current");
         }
 
+        if (node.CameFrom != null)
+        {
+            var dir = node.CameFrom.Position - node.Position;
+            var arrow = $"←";
+
+            if (dir == Vector2Int.Up)
+            {
+                arrow = "↑";
+            }
+            else if (dir == Vector2Int.Down)
+            {
+                arrow = "↓";
+            }
+            else if (dir == Vector2Int.Left)
+            {
+                arrow = "→";
+            }
+
+            Add.Label(arrow);
+        }
+
         if (node.IsRealNode && !node.IsWall)
         {
             AddClass("real");
@@ -45,6 +66,7 @@ public class GraphNodeUI : Panel
             {
                 Add.Label(node.name);
             }
+
             // else
             // {
             //     foreach (GraphNode nb in neighbours)
