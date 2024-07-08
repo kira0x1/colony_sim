@@ -1,6 +1,6 @@
 @using System
 @using Sandbox.UI;
-@inherits Panel
+@inherits PanelComponent
 @attribute [StyleSheet]
 @namespace Kira.UI
 
@@ -11,12 +11,12 @@
     public Panel WindowContainer { get; set; }
     public static int ActiveSlotId { get; set; } = -1;
 
-    protected override void OnAfterTreeRender(bool firstTime)
+    protected override void OnTreeFirstBuilt()
     {
-        if (!firstTime) return;
+        Log.Info("on navbar tree built");
         ActiveSlotId = -1;
-        NavContainer = new Panel(this, "nav");
-        WindowContainer = new Panel(this, "window-container");
+        NavContainer = new Panel(Panel, "nav");
+        WindowContainer = new Panel(Panel, "window-container");
         Setup();
     }
 
@@ -52,5 +52,4 @@
     }
 
     protected override int BuildHash() => HashCode.Combine(Slots.Select(x => x.GetHashCode()));
-
 }

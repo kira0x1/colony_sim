@@ -102,7 +102,7 @@ public class GraphNodeUI : Panel
             AddClass("current");
         }
 
-        if (node.CameFrom != null)
+        if (node.DisplayCameFromDirection)
         {
             AddArrowLabel();
         }
@@ -115,7 +115,7 @@ public class GraphNodeUI : Panel
         if (node.IsGoal)
         {
             AddClass("goal");
-            Add.Icon("star", "goal_icon");
+            Add.Icon("flag", "goal_icon");
         }
 
         if (node.IsRealNode && !node.IsWall)
@@ -155,6 +155,6 @@ public class GraphNodeUI : Panel
             arrow = "→";
         }
 
-        Add.Label(arrow);
+        Add.Label(arrow, "direction_text");
     }
 }

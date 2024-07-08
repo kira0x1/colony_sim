@@ -8,13 +8,16 @@ GraphTest {
   align-items: center;
   font-weight: bold;
   pointer-events: all;
+  //background-color: #2c2c2c;
 
   .container {
     position: absolute;
     background-color: #444;
     border-radius: 6px;
-    width: 60vw;
-    height: 70vh;
+    width: 40vw;
+    min-width: 980px;
+    min-height: 680px;
+    height: 60px;
     gap: 5px;
     flex-direction: row;
     flex-wrap: wrap;
@@ -24,14 +27,13 @@ GraphTest {
 
   .grid {
     position: absolute;
-    top: 1em;
-    left: 1em;
-    right: 1em;
-    bottom: 1em;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    pointer-events: all;
+    cursor: crosshair;
   }
 
   .node {
@@ -59,11 +61,12 @@ GraphTest {
 
     &.isOccupied {
       border: 3px #cf5a7f;
-      background-color: #555;
+      //background-color: #555;
     }
 
     &.reached {
-      background-color: #5A738B;
+      background-color: #8bb1aa;
+
     }
 
     &.neighbour {
@@ -71,7 +74,7 @@ GraphTest {
     }
 
     &.wall {
-      background-color: #7c4141;
+      background-color: #bab292;
     }
 
     &.frontier {
@@ -83,20 +86,26 @@ GraphTest {
     }
 
     .goal_icon {
-      color: #ff72db;
+      color: #ffffff;
       font-weight: 800;
       font-size: 30px;
     }
 
     &.goal {
     }
+
+    .direction_text {
+      color: #333;
+      font-size: 36px;
+      font-weight: 500;
+      text-align: center;
+    }
   }
 
   .button-container {
-    width: 18vw;
-    height: 8vh;
+    width: 40vw;
     position: absolute;
-    gap: 10px;
+    gap: 0px;
     justify-content: center;
     align-items: center;
     bottom: 6.5vh;
@@ -108,31 +117,53 @@ GraphTest {
     font-family: Poppins;
     font-size: 20px;
     font-weight: 600;
-    //background: #aaa;
 
-    width: 180px;
-    height: 60px;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    width: 170px;
+    height: 65px;
+
+    max-height: 65px;
+    min-height: 65px;
+
     align-items: center;
     justify-content: center;
-    border-radius: 2px;
+    border-radius: 0px;
     background-color: #4e4e4e;
-
-    transition: background-color 250ms;
+    transition: background-color 230ms;
 
     &:hover:not(.searching) {
-      background: #2d716d;
+      background: #aaa;
     }
 
     &.start {
-      background: #56dfd3;
+      background: #39a190;
+
+      &:hover {
+        background: #2d716d;
+      }
     }
 
     &.stop {
-      background: #f8356b;
+      background: #d5446b;
+
+      &:hover {
+        background: #953f58;
+      }
+    }
+
+    &.clear {
+      background-color: #4e4e4e;
+      //background: #ac4e8e;
     }
 
     &.searching {
       background-color: #4e4e4e;
+
+      &:hover {
+        background: #5e5a5a;
+      }
     }
   }
 }

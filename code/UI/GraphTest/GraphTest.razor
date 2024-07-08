@@ -1,6 +1,5 @@
 @namespace Kira.UI
 @using System
-@using System.Threading.Tasks
 @using Kira.Util
 @using Sandbox.UI
 @inherits PanelComponent
@@ -26,13 +25,25 @@
         @* ReSharper disable once CSharpWarnings::CS8974 *@
         <div class="@c" onclick=@OnStartSearch>@text</div>
 
-        @* <div class="button stop" onclick="@(() => OnStartSearch())">Stop</div> *@
+        @if (IsSearching)
+        {
+            <div class="button stop" onclick="@(() => OnStopSearch())">Stop</div>
+        }
+
+        @if (!IsSearching && HasSearched)
+        {
+            <div class="button clear" onclick="@(() => OnClearNodes())">Clear</div>
+        }
     </div>
 </root>
 
 @code
 {
     private bool IsSearching { get; set; }
+
+    // Has searched atleast once
+    private bool HasSearched { get; set; }
+
     private Graph graph;
     private Panel GridDiv;
 
@@ -42,7 +53,7 @@
 
         graph = new Graph();
         GridDiv = Panel.Descendants.ElementAt(1);
-        Init();
+        GenerateGraphNodes();
     }
 
     protected override void OnTreeBuilt()
@@ -55,10 +66,10 @@
     {
         GridDiv = Panel.Descendants.ElementAt(1);
         GridDiv.DeleteChildren(true);
-        Init();
+        GenerateGraphNodes();
     }
 
-    private void Init()
+    private void GenerateGraphNodes()
     {
         foreach (GraphNode node in graph.AllNodes)
         {
@@ -68,14 +79,28 @@
         }
     }
 
-    private async Task OnStartSearch()
+    private async void OnStartSearch()
     {
         if (graph.IsSearching) return;
-        await graph.DoSearch();
+
+        HasSearched = true;
+        await graph.StartSearch();
+    }
+
+    private void OnStopSearch()
+    {
+        graph.CancelSearch();
+    }
+
+    private void OnClearNodes()
+    {
+        graph.ResetNodes();
+        HasSearched = false;
     }
 
     protected override int BuildHash()
     {
+        // ReSharper disable once ConvertIfStatementToReturnStatement
         if (graph != null)
         {
             return HashCode.Combine(graph.IsSearching ? Time.Now : 0f);

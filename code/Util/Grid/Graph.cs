@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 public class Graph
 {
-    public int GridRows { get; set; } = 5;
-    public int GridCols { get; set; } = 5;
+    public int GridRows { get; set; }
+    public int GridCols { get; set; }
 
     public List<GraphNode> AllNodes { get; set; }
     public List<GraphNode> RealNodes { get; set; }
@@ -47,16 +47,100 @@ public class Graph
             }
         }
 
-        // AllNodes[(ylength - 2) / 2 + xlength].IsWall = true;
-        // AllNodes[(ylength - 1) / 2 + xlength].IsWall = true;
-        // AllNodes[(ylength + 1) / 2 + xlength].IsWall = true; 
-        // AllNodes[ylength - 1 + xlength + 1].IsWall = true;
-        // AllNodes[ylength].IsWall = true;
+        AllNodes[(GridRows - 2) / 2 + GridCols].IsWall = true;
+        AllNodes[(GridRows - 1) / 2 + GridCols].IsWall = true;
+        AllNodes[(GridRows + 1) / 2 + GridCols].IsWall = true;
+        AllNodes[GridRows - 1 + GridCols + 1].IsWall = true;
+        AllNodes[GridRows].IsWall = true;
 
         AllNodes[0].IsGoal = true;
 
         // Set the center slot as occupied
         AllNodes[cols * rows / 2].IsOccupied = true;
+    }
+
+
+    public void CancelSearch()
+    {
+        IsSearching = false;
+    }
+
+    public void ResetNodes()
+    {
+        foreach (GraphNode node in AllNodes)
+        {
+            node.IsCurrent = false;
+            node.isFrontier = false;
+            node.IsNeighbour = false;
+            node.IsReached = false;
+            node.DisplayCameFromDirection = false;
+        }
+    }
+
+
+    public async Task StartSearch()
+    {
+        IsSearching = true;
+        var start = AllNodes.Find(x => x.IsOccupied);
+        var cameFrom = new Dictionary<GraphNode, GraphNode>();
+        var frontier = new Queue<GraphNode>();
+
+        frontier.Enqueue(start);
+        cameFrom.Add(start, null);
+
+        GraphNode previousCurrent = null;
+        List<GraphNode> prevNeighbours = new List<GraphNode>();
+
+        do
+        {
+            var current = frontier.Dequeue();
+            current.IsCurrent = true;
+
+            if (previousCurrent != null)
+            {
+                previousCurrent.IsCurrent = false;
+                previousCurrent.isFrontier = false;
+                previousCurrent.IsReached = true;
+            }
+
+            foreach (GraphNode prevNeighbour in prevNeighbours)
+            {
+                prevNeighbour.IsReached = true;
+                prevNeighbour.IsNeighbour = false;
+                prevNeighbour.isFrontier = false;
+            }
+
+            previousCurrent = current;
+
+            var neighbours = Neighbours(current);
+
+            foreach (GraphNode nb in neighbours)
+            {
+                if (nb.IsWall) continue;
+                nb.IsNeighbour = true;
+
+                if (!cameFrom.ContainsKey(nb))
+                {
+                    // nb.IsReached = true;
+                    nb.isFrontier = true;
+                    nb.CameFrom = current;
+                    nb.DisplayCameFromDirection = true;
+                    frontier.Enqueue(nb);
+                    cameFrom.Add(nb, current);
+                }
+            }
+
+            prevNeighbours = neighbours;
+            await Task.Delay(180);
+        } while (frontier.Count > 0 && IsSearching);
+
+        foreach (GraphNode prevNeighbour in prevNeighbours)
+        {
+            prevNeighbour.IsNeighbour = false;
+            prevNeighbour.isFrontier = false;
+        }
+
+        IsSearching = false;
     }
 
     public List<GraphNode> Neighbours(GraphNode node)
@@ -100,70 +184,6 @@ public class Graph
         return node;
     }
 
-    public async Task DoSearch()
-    {
-        IsSearching = true;
-
-        var start = AllNodes.Find(x => x.IsOccupied);
-        var cameFrom = new Dictionary<GraphNode, GraphNode>();
-        var frontier = new Queue<GraphNode>();
-
-        frontier.Enqueue(start);
-        cameFrom.Add(start, null);
-
-        GraphNode previousCurrent = null;
-        List<GraphNode> prevNeighbours = new List<GraphNode>();
-
-        while (frontier.Count > 0)
-        {
-            var current = frontier.Dequeue();
-            current.IsCurrent = true;
-
-            if (previousCurrent != null)
-            {
-                previousCurrent.IsCurrent = false;
-                previousCurrent.isFrontier = false;
-                previousCurrent.IsReached = true;
-            }
-
-            foreach (GraphNode prevNeighbour in prevNeighbours)
-            {
-                prevNeighbour.IsReached = true;
-                prevNeighbour.IsNeighbour = false;
-                prevNeighbour.isFrontier = false;
-            }
-
-            previousCurrent = current;
-
-            var neighbours = Neighbours(current);
-
-            foreach (GraphNode nb in neighbours)
-            {
-                nb.IsNeighbour = true;
-
-                if (!cameFrom.ContainsKey(nb))
-                {
-                    // nb.IsReached = true;
-                    nb.isFrontier = true;
-                    nb.CameFrom = current;
-                    frontier.Enqueue(nb);
-                    cameFrom.Add(nb, current);
-                }
-            }
-
-            prevNeighbours = neighbours;
-            await Task.Delay(300);
-        }
-
-        foreach (GraphNode prevNeighbour in prevNeighbours)
-        {
-            prevNeighbour.IsNeighbour = false;
-            prevNeighbour.isFrontier = false;
-        }
-
-        IsSearching = false;
-    }
-
     private void CreateGraphWithGaps()
     {
         AllNodes = new List<GraphNode>();
@@ -203,6 +223,8 @@ public class GraphNode : IEquatable<Vector2Int>
     public string name;
     public int x;
     public int y;
+
+    public bool DisplayCameFromDirection { get; set; }
 
     public Vector2Int Position { get; private set; }
 
