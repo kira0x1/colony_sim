@@ -67,37 +67,69 @@ GraphTest {
     }
 
     &.neighbour {
-      background-color: #e484d6;
+      background-color: #c8bf6e;
     }
 
     &.wall {
       background-color: #7c4141;
     }
 
+    &.frontier {
+      background-color: #32a4b3;
+    }
+
     &.current {
-      background-color: #50c0aa;
+      background-color: #ef7f7f;
+    }
+
+    .goal_icon {
+      color: #ff72db;
+      font-weight: 800;
+      font-size: 30px;
+    }
+
+    &.goal {
     }
   }
 
-  .startbtn {
+  .button-container {
+    width: 18vw;
+    height: 8vh;
+    position: absolute;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    bottom: 6.5vh;
+    //background-color: #777;
+  }
+
+  .button {
     color: #fff;
     font-family: Poppins;
     font-size: 20px;
     font-weight: 600;
-    background: #56dfd3;
+    //background: #aaa;
+
     width: 180px;
     height: 60px;
     align-items: center;
     justify-content: center;
     border-radius: 2px;
-    position: absolute;
-    bottom: 8vh;
+    background-color: #4e4e4e;
+
     transition: background-color 250ms;
 
     &:hover:not(.searching) {
       background: #2d716d;
     }
 
+    &.start {
+      background: #56dfd3;
+    }
+
+    &.stop {
+      background: #f8356b;
+    }
 
     &.searching {
       background-color: #4e4e4e;

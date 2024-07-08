@@ -11,19 +11,28 @@
     </div>
 
     @{
-        var c = "startbtn";
+        var c = "button";
         var text = "";
+
         if (graph != null)
         {
-            c += graph.IsSearching ? " searching" : "";
-            text = graph.IsSearching ? "searching..." : "Start";
+            IsSearching = graph.IsSearching;
+            c += IsSearching ? " start searching" : " start";
+            text = IsSearching ? "searching..." : "Start";
         }
     }
-    <div class="@c" onclick="@(() => OnStartSearch())">@text</div>
+
+    <div class="button-container">
+        @* ReSharper disable once CSharpWarnings::CS8974 *@
+        <div class="@c" onclick=@OnStartSearch>@text</div>
+
+        @* <div class="button stop" onclick="@(() => OnStartSearch())">Stop</div> *@
+    </div>
 </root>
 
 @code
 {
+    private bool IsSearching { get; set; }
     private Graph graph;
     private Panel GridDiv;
 

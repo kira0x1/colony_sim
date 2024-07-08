@@ -5,25 +5,28 @@ using System.Threading.Tasks;
 
 public class Graph
 {
+    public int GridRows { get; set; } = 5;
+    public int GridCols { get; set; } = 5;
+
     public List<GraphNode> AllNodes { get; set; }
     public List<GraphNode> RealNodes { get; set; }
     private readonly char[] Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
 
     public bool IsSearching { get; private set; }
 
-    public Graph()
+    public Graph(int rows = 5, int cols = 5)
     {
         AllNodes = new List<GraphNode>();
 
-        const int ylength = 5;
-        const int xlength = 5;
+        GridRows = rows;
+        GridCols = cols;
 
         int i = 0;
         int j = 0;
 
-        for (int x = 0; x < xlength; x++)
+        for (int x = 0; x < rows; x++)
         {
-            for (int y = 0; y < ylength; y++)
+            for (int y = 0; y < cols; y++)
             {
                 Vector2Int pos = new Vector2Int(x, y);
 
@@ -46,13 +49,14 @@ public class Graph
 
         // AllNodes[(ylength - 2) / 2 + xlength].IsWall = true;
         // AllNodes[(ylength - 1) / 2 + xlength].IsWall = true;
-        // AllNodes[(ylength + 1) / 2 + xlength].IsWall = true;
+        // AllNodes[(ylength + 1) / 2 + xlength].IsWall = true; 
         // AllNodes[ylength - 1 + xlength + 1].IsWall = true;
         // AllNodes[ylength].IsWall = true;
 
+        AllNodes[0].IsGoal = true;
 
         // Set the center slot as occupied
-        AllNodes[ylength * xlength / 2].IsOccupied = true;
+        AllNodes[cols * rows / 2].IsOccupied = true;
     }
 
     public List<GraphNode> Neighbours(GraphNode node)
@@ -107,7 +111,6 @@ public class Graph
         frontier.Enqueue(start);
         cameFrom.Add(start, null);
 
-
         GraphNode previousCurrent = null;
         List<GraphNode> prevNeighbours = new List<GraphNode>();
 
@@ -119,11 +122,15 @@ public class Graph
             if (previousCurrent != null)
             {
                 previousCurrent.IsCurrent = false;
+                previousCurrent.isFrontier = false;
+                previousCurrent.IsReached = true;
             }
 
             foreach (GraphNode prevNeighbour in prevNeighbours)
             {
+                prevNeighbour.IsReached = true;
                 prevNeighbour.IsNeighbour = false;
+                prevNeighbour.isFrontier = false;
             }
 
             previousCurrent = current;
@@ -136,7 +143,8 @@ public class Graph
 
                 if (!cameFrom.ContainsKey(nb))
                 {
-                    nb.IsReached = true;
+                    // nb.IsReached = true;
+                    nb.isFrontier = true;
                     nb.CameFrom = current;
                     frontier.Enqueue(nb);
                     cameFrom.Add(nb, current);
@@ -144,9 +152,14 @@ public class Graph
             }
 
             prevNeighbours = neighbours;
-            await Task.Delay(250);
+            await Task.Delay(300);
         }
 
+        foreach (GraphNode prevNeighbour in prevNeighbours)
+        {
+            prevNeighbour.IsNeighbour = false;
+            prevNeighbour.isFrontier = false;
+        }
 
         IsSearching = false;
     }
@@ -205,8 +218,12 @@ public class GraphNode : IEquatable<Vector2Int>
 
     public bool IsWall { get; set; }
 
+    public bool isFrontier { get; set; }
+
     // is the node currently selected for searching
     public bool IsCurrent { get; set; }
+
+    public bool IsGoal { get; set; }
 
     public GraphNode CameFrom { get; set; }
 

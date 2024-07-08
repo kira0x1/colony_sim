@@ -9,13 +9,78 @@ public class GraphNodeUI : Panel
     private GraphNode node;
     private readonly List<GraphNode> neighbours;
 
+    private int gridRows;
+    private int gridCols;
+
     public GraphNodeUI(GraphNode node, Graph graph)
     {
         this.node = node;
+        gridRows = graph.GridRows;
+        gridCols = graph.GridCols;
+
         if (node == null) return;
 
         neighbours = graph.Neighbours(node);
+        AddNodeLabels();
+    }
 
+
+    public override void OnHotloaded()
+    {
+        base.OnHotloaded();
+        LayoutNode();
+    }
+
+    public override void FinalLayout(Vector2 offset)
+    {
+        base.FinalLayout(offset);
+        LayoutNode();
+    }
+
+    /// <summary>
+    /// set graph node positions in screen space
+    /// </summary>
+    private void LayoutNode()
+    {
+        const int gap = 18;
+        const float offset = 0f;
+
+        var rect = Box.Rect;
+        var parent = Parent.Box;
+
+        var height = rect.Height + gap;
+        var width = rect.Width + gap;
+
+        var posx = node.x * width;
+        var posy = node.y * height;
+
+        // for 0,0 positioning of the grid i.e top left corner:
+        // use parent.Rect.Position.x instead
+        var centerX = parent.Rect.Center.x;
+        var centerY = parent.Rect.Center.y;
+
+        const float halfGap = gap / 2f;
+        centerX -= gridRows * (width / 2f) - (offset + halfGap);
+        centerY -= gridCols * (height / 2f) - (offset + halfGap);
+
+        posx += centerX;
+        posy += centerY;
+
+        rect.Position = new Vector2(posx, posy);
+
+        Box.Rect = rect;
+
+        FinalLayoutChildren(Box.Rect.Position);
+    }
+
+    public override void OnLayout(ref Rect layoutRect)
+    {
+        base.OnLayout(ref layoutRect);
+        LayoutNode();
+    }
+
+    private void AddNodeLabels()
+    {
         if (node.IsOccupied)
         {
             Add.Icon("home");
@@ -39,23 +104,18 @@ public class GraphNodeUI : Panel
 
         if (node.CameFrom != null)
         {
-            var dir = node.CameFrom.Position - node.Position;
-            var arrow = $"←";
+            AddArrowLabel();
+        }
 
-            if (dir == Vector2Int.Up)
-            {
-                arrow = "↑";
-            }
-            else if (dir == Vector2Int.Down)
-            {
-                arrow = "↓";
-            }
-            else if (dir == Vector2Int.Left)
-            {
-                arrow = "→";
-            }
+        if (node.isFrontier)
+        {
+            AddClass("frontier");
+        }
 
-            Add.Label(arrow);
+        if (node.IsGoal)
+        {
+            AddClass("goal");
+            Add.Icon("star", "goal_icon");
         }
 
         if (node.IsRealNode && !node.IsWall)
@@ -66,15 +126,6 @@ public class GraphNodeUI : Panel
             {
                 Add.Label(node.name);
             }
-
-            // else
-            // {
-            //     foreach (GraphNode nb in neighbours)
-            //     {
-            //         if (nb.IsRealNode)
-            //             Add.Label($"{node.name} → {nb.name}");
-            //     }
-            // }
         }
 
         if (node.IsWall)
@@ -86,45 +137,24 @@ public class GraphNodeUI : Panel
         Add.Label($"{node.x}, {node.y}");
     }
 
-    public override void OnHotloaded()
+    private void AddArrowLabel()
     {
-        base.OnHotloaded();
-        Refresh();
-    }
+        var dir = node.CameFrom.Position - node.Position;
+        var arrow = $"←";
 
-    public override void FinalLayout(Vector2 offset)
-    {
-        base.FinalLayout(offset);
-        Refresh();
-    }
+        if (dir == Vector2Int.Up)
+        {
+            arrow = "↑";
+        }
+        else if (dir == Vector2Int.Down)
+        {
+            arrow = "↓";
+        }
+        else if (dir == Vector2Int.Left)
+        {
+            arrow = "→";
+        }
 
-    private void Refresh()
-    {
-        const int gap = 18;
-        const float offset = 0f;
-
-        var rect = Box.Rect;
-        var parent = Parent.Box;
-
-        var height = rect.Height + gap;
-        var width = rect.Width + gap;
-
-        var posx = node.x * width;
-        var posy = node.y * height;
-
-        posx += parent.Rect.Position.x + offset;
-        posy += parent.Rect.Position.y + offset;
-
-        rect.Position = new Vector2(posx, posy);
-
-        Box.Rect = rect;
-
-        FinalLayoutChildren(Box.Rect.Position);
-    }
-
-    public override void OnLayout(ref Rect layoutRect)
-    {
-        base.OnLayout(ref layoutRect);
-        Refresh();
+        Add.Label(arrow);
     }
 }
