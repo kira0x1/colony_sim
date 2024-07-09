@@ -29,7 +29,6 @@
       "Name": "2D Skybox",
       "Rotation": "0,0,-0.7071067,0.7071068",
       "Tags": "skybox",
-      "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
       "Components": [
@@ -172,9 +171,7 @@
       "__guid": "8e2edcf2-1012-46e0-aab4-197a8b2ab84a",
       "Flags": 0,
       "Name": "Plane",
-      "Position": "0,0,938.907",
       "Scale": "7,7,7",
-      "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
       "Components": [

@@ -85,6 +85,8 @@
 
         HasSearched = true;
         await graph.StartSearch();
+        await Task.Delay(200);
+        graph.FindPathFromGoal();
     }
 
     private void OnStopSearch()

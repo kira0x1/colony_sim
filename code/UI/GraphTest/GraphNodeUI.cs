@@ -1,16 +1,17 @@
 ﻿namespace Kira.UI;
 
+using System;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 using Util;
 
 public class GraphNodeUI : Panel
 {
-    private GraphNode node;
+    private readonly GraphNode node;
     private readonly List<GraphNode> neighbours;
 
-    private int gridRows;
-    private int gridCols;
+    private readonly int gridRows;
+    private readonly int gridCols;
 
     public GraphNodeUI(GraphNode node, Graph graph)
     {
@@ -24,6 +25,10 @@ public class GraphNodeUI : Panel
         AddNodeLabels();
     }
 
+    protected override int BuildHash()
+    {
+        return HashCode.Combine(node.IsHighlightedPath);
+    }
 
     public override void OnHotloaded()
     {
@@ -102,7 +107,7 @@ public class GraphNodeUI : Panel
             AddClass("current");
         }
 
-        if (node.DisplayCameFromDirection)
+        if (node.DisplayCameFromDirection && !node.IsGoal)
         {
             AddArrowLabel();
         }
@@ -126,6 +131,11 @@ public class GraphNodeUI : Panel
             {
                 Add.Label(node.name);
             }
+        }
+
+        if (node.IsHighlightedPath)
+        {
+            AddClass("highlighted");
         }
 
         if (node.IsWall)
@@ -155,6 +165,10 @@ public class GraphNodeUI : Panel
             arrow = "→";
         }
 
-        Add.Label(arrow, "direction_text");
+        var label = Add.Label(arrow, "direction_text");
+        if (node.IsHighlightedPath)
+        {
+            label.AddClass("highlighted");
+        }
     }
 }
