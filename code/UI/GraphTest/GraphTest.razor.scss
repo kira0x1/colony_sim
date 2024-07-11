@@ -180,7 +180,17 @@ GraphTest {
     gap: 0px;
     justify-content: center;
     align-items: center;
-    bottom: 6.5vh;
+    bottom: 12vh;
+    //background-color: #777;
+  }
+
+  .button-container-2 {
+    width: 40vw;
+    position: absolute;
+    gap: 0px;
+    justify-content: center;
+    align-items: center;
+    bottom: 4vh;
     //background-color: #777;
   }
 

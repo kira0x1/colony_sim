@@ -42,7 +42,7 @@
     }
 
     <div class="button-container">
-        @* ReSharper disable once CSharpWarnings::CS8974 *@
+        @* ReSharper disable CSharpWarnings::CS8974 *@
         <div class="@c" onclick=@OnStartSearch>@text</div>
 
         @if (IsSearching)
@@ -55,11 +55,21 @@
             <div class="button clear" onclick="@(() => OnClearNodes())">Clear</div>
         }
     </div>
+
+    <div class="button-container-2">
+        @if (!IsSearching)
+        {
+            <div class="@c" onclick=@OnStartDjirkstra>Search with Djirkstra's</div>
+        }
+    </div>
 </root>
 
 @code
 {
     private bool IsSearching { get; set; }
+
+    // If the stop button has been clicked
+    private bool HasStopped { get; set; }
 
     // Has searched atleast once
     private bool HasSearched { get; set; }
@@ -104,13 +114,54 @@
         if (graph.IsSearching) return;
 
         HasSearched = true;
+
         await graph.StartSearch();
+
+        if (HasStopped)
+        {
+            HasStopped = false;
+            return;
+        }
+
         await Task.Delay(200);
+
+        if (HasStopped)
+        {
+            HasStopped = false;
+            return;
+        }
+
+
+        graph.FindPathFromGoal();
+    }
+
+    private async void OnStartDjirkstra()
+    {
+        if (graph.IsSearching) return;
+
+        HasSearched = true;
+        await graph.StartSearchWithDistance();
+
+        if (HasStopped)
+        {
+            HasStopped = false;
+            return;
+        }
+
+        await Task.Delay(200);
+
+        if (HasStopped)
+        {
+            HasStopped = false;
+            return;
+        }
+
         graph.FindPathFromGoal();
     }
 
     private void OnStopSearch()
     {
+        HasStopped = true;
         graph.CancelSearch();
     }
 

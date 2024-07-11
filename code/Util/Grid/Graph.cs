@@ -1,6 +1,7 @@
 ﻿namespace Kira.Util;
 
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 public class Graph
@@ -14,6 +15,8 @@ public class Graph
 
     // Node Dictionary key = Node, value = the previous node in the path
     private Dictionary<GraphNode, GraphNode> CameFrom { get; set; }
+    private Dictionary<GraphNode, int> Weights { get; set; }
+
     public bool IsSearching { get; private set; }
     public GraphNode StartNode { get; }
     public GraphNode GoalNode { get; }
@@ -22,6 +25,7 @@ public class Graph
     public Graph(int rows = 5, int cols = 5)
     {
         AllNodes = new List<GraphNode>();
+        Weights = new Dictionary<GraphNode, int>();
 
         GridRows = rows;
         GridCols = cols;
@@ -47,7 +51,9 @@ public class Graph
                 var yRand = Random.Shared.Int(1, 3);
 
                 var isRealNode = x % xRand == 0 && y % yRand == 0;
-                AllNodes.Add(new GraphNode(pos.x, pos.y, letter, isRealNode));
+                var node = new GraphNode(pos.x, pos.y, letter, isRealNode, weight: 1);
+                AllNodes.Add(node);
+                Weights[node] = node.Weight;
                 i++;
             }
         }
@@ -96,15 +102,21 @@ public class Graph
         }
     }
 
-    public async Task StartSearch()
+    /// <summary>
+    /// Takes into account distance costs
+    /// </summary>
+    public async Task StartSearchWithDistance()
     {
+        if (IsSearching) return;
         IsSearching = true;
 
         var start = AllNodes.Find(x => x.IsOccupied);
+        var frontier = new PriorityQueue<GraphNode, int>();
+        var costSoFar = new Dictionary<GraphNode, int>();
         CameFrom = new Dictionary<GraphNode, GraphNode>();
-        var frontier = new Queue<GraphNode>();
 
-        frontier.Enqueue(start);
+        frontier.Enqueue(start, 0);
+        costSoFar[start] = 0;
         CameFrom.Add(start, null);
 
         GraphNode previousCurrent = null;
@@ -112,14 +124,11 @@ public class Graph
 
         while (frontier.Count > 0 && IsSearching)
         {
+            if (!IsSearching) break;
+
             // Set new current node
             var current = frontier.Dequeue();
             current.IsCurrent = true;
-
-            if (current == GoalNode)
-            {
-                break;
-            }
 
             // Reset Previous Current
             if (previousCurrent != null)
@@ -139,8 +148,106 @@ public class Graph
 
             previousCurrent = current;
 
+            // Early Exit
+            if (current == GoalNode)
+            {
+                break;
+            }
+
             var neighbours = Neighbours(current);
 
+            // Where the main path's actually set
+            foreach (GraphNode nb in neighbours)
+            {
+                if (nb.IsWall) continue;
+                nb.IsNeighbour = true;
+
+                var newCost = costSoFar[current] + Cost(current, nb);
+
+                if (!costSoFar.ContainsKey(nb) || newCost < costSoFar[nb])
+                {
+                    nb.isFrontier = true;
+                    nb.CameFrom = current;
+                    nb.DisplayCameFromDirection = true;
+
+                    costSoFar[nb] = newCost;
+                    frontier.Enqueue(nb, newCost);
+                    CameFrom.Add(nb, current);
+                }
+            }
+
+            prevNeighbours = neighbours;
+            await Task.Delay(SearchDelay);
+        }
+
+        // Reset previous neighbours so our ui knows not to display them as neighbours
+        foreach (GraphNode prevNeighbour in prevNeighbours)
+        {
+            prevNeighbour.IsNeighbour = false;
+            prevNeighbour.isFrontier = false;
+        }
+
+
+        // Reset last "current" for our ui 
+        if (previousCurrent != null)
+        {
+            previousCurrent.IsCurrent = false;
+        }
+
+        IsSearching = false;
+    }
+
+    public async Task StartSearch()
+    {
+        if (IsSearching) return;
+
+        IsSearching = true;
+
+        var start = AllNodes.Find(x => x.IsOccupied);
+        var frontier = new Queue<GraphNode>();
+        CameFrom = new Dictionary<GraphNode, GraphNode>();
+
+        frontier.Enqueue(start);
+        CameFrom.Add(start, null);
+
+        GraphNode previousCurrent = null;
+        List<GraphNode> prevNeighbours = new List<GraphNode>();
+
+        while (frontier.Count > 0 && IsSearching)
+        {
+            if (!IsSearching) break;
+
+            // Set new current node
+            var current = frontier.Dequeue();
+            current.IsCurrent = true;
+
+            // Reset Previous Current
+            if (previousCurrent != null)
+            {
+                previousCurrent.IsCurrent = false;
+                previousCurrent.isFrontier = false;
+                previousCurrent.IsReached = true;
+            }
+
+            // Reset Previous Neighbours
+            foreach (GraphNode prevNeighbour in prevNeighbours)
+            {
+                prevNeighbour.IsReached = true;
+                prevNeighbour.IsNeighbour = false;
+                prevNeighbour.isFrontier = false;
+            }
+
+            previousCurrent = current;
+
+            // Early Exit
+            if (current == GoalNode)
+            {
+                break;
+            }
+
+            var neighbours = Neighbours(current);
+
+            // Where the main path's actually set
             foreach (GraphNode nb in neighbours)
             {
                 if (nb.IsWall) continue;
@@ -161,6 +268,7 @@ public class Graph
             await Task.Delay(SearchDelay);
         }
 
+        // Reset previous neighbours so our ui knows not to display them as neighbours
         foreach (GraphNode prevNeighbour in prevNeighbours)
         {
             prevNeighbour.IsNeighbour = false;
@@ -168,12 +276,18 @@ public class Graph
         }
 
 
+        // Reset last "current" for our ui 
         if (previousCurrent != null)
         {
             previousCurrent.IsCurrent = false;
         }
 
         IsSearching = false;
+    }
+
+    private int Cost(GraphNode current, GraphNode next)
+    {
+        return Weights[next];
     }
 
     public async void FindPathFromGoal()

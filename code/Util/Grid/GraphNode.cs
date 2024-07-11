@@ -35,7 +35,10 @@ public class GraphNode : IEquatable<Vector2Int>
 
     public bool IsHighlightedPath { get; set; }
 
-    public GraphNode(int x, int y, string name = "", bool isRealNode = false, bool isWall = false)
+    // The movement cost
+    public int Weight { get; set; }
+
+    public GraphNode(int x, int y, string name = "", bool isRealNode = false, bool isWall = false, int weight = 1)
     {
         this.x = x;
         this.y = y;
@@ -43,6 +46,7 @@ public class GraphNode : IEquatable<Vector2Int>
         this.name = name;
         this.IsRealNode = isRealNode;
         this.IsWall = isWall;
+        this.Weight = weight;
     }
 
     public bool Equals(Vector2Int other)
