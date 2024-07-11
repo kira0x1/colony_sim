@@ -12,4 +12,4 @@
     - [x] Legend UI
     - [x] Fix current being displayed at the end
     - [ ] Adjustable speed
-    - [ ] Early Exit
+    - [x] Early Exit

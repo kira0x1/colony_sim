@@ -53,18 +53,27 @@ public class Graph
         }
 
         // Set Wall's
+        // Left Side
         AllNodes[(GridRows - 2) / 2 + GridCols].IsWall = true;
         AllNodes[(GridRows - 1) / 2 + GridCols].IsWall = true;
         AllNodes[(GridRows + 1) / 2 + GridCols].IsWall = true;
         AllNodes[GridRows - 1 + GridCols + 1].IsWall = true;
+        AllNodes[GridRows + GridCols * 2].IsWall = true;
         AllNodes[GridRows].IsWall = true;
 
+        // Right Side
+        var wallIndexRight = GridRows * 2 + GridCols * 2;
+        // AllNodes[wallIndexRight + GridRows + 2].IsWall = true;
+        AllNodes[wallIndexRight + GridRows + 3].IsWall = true;
+        AllNodes[wallIndexRight + 1].IsWall = true;
+
         // Set Goal node
-        AllNodes[0].IsGoal = true;
-        GoalNode = AllNodes[0];
+        var goalIndex = cols * rows / 2 + 3;
+        AllNodes[goalIndex].IsGoal = true;
+        GoalNode = AllNodes[goalIndex];
 
         // Set the center slot as occupied
-        AllNodes[(cols * rows) / 2].IsOccupied = true;
+        AllNodes[cols * rows / 2].IsOccupied = true;
         StartNode = AllNodes[cols * rows / 2];
     }
 
@@ -105,6 +114,11 @@ public class Graph
             // Set new current node
             var current = frontier.Dequeue();
             current.IsCurrent = true;
+
+            if (current == GoalNode)
+            {
+                break;
+            }
 
             // Reset Previous Current
             if (previousCurrent != null)
