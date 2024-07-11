@@ -41,6 +41,13 @@
         tabContainer.Id = "tabs";
         tabContainer.ActiveTab = Tabs[1].TabName;
         this.AddChild(tabContainer);
+
+        ColonyManager.Instance.OnWorldTick += UpdateChildren;
+    }
+
+    private void UpdateChildren()
+    {
+        navUI.UpdatePanel();
     }
 
     /// <summary>

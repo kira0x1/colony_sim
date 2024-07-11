@@ -9,8 +9,6 @@
       "Rotation": "-0.3281769,0.8639209,0.13566,0.3571231",
       "Tags": "light_directional,light",
       "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
       "Components": [
         {
           "__type": "Sandbox.DirectionalLight",
@@ -29,8 +27,6 @@
       "Name": "2D Skybox",
       "Rotation": "0,0,-0.7071067,0.7071068",
       "Tags": "skybox",
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
       "Components": [
         {
           "__type": "Sandbox.SkyBox2D",
@@ -66,8 +62,6 @@
       "Position": "782.1684,0.00001371071,416",
       "Rotation": "-0.2456983,-0.00000001073982,0.9693463,-0.00000004237148",
       "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
       "Components": [
         {
           "__type": "Sandbox.CameraComponent",
@@ -141,8 +135,6 @@
       "Name": "Screen",
       "Position": "-947.3094,0,0",
       "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
       "Components": [
         {
           "__type": "Sandbox.ScreenPanel",
@@ -164,6 +156,11 @@
         {
           "__type": "Kira.UI.GraphTest",
           "__guid": "2ff02393-c415-434a-8d41-c876aa51412d"
+        },
+        {
+          "__type": "Kira.UI.Navbar",
+          "__guid": "e85423b6-1e7c-45bf-a13c-b6171c8c7fff",
+          "__enabled": false
         }
       ]
     },
@@ -172,8 +169,6 @@
       "Flags": 0,
       "Name": "Plane",
       "Scale": "7,7,7",
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
       "Components": [
         {
           "__type": "Sandbox.ModelRenderer",
@@ -199,8 +194,6 @@
       "Flags": 0,
       "Name": "Player",
       "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
       "Components": [
         {
           "__type": "Kira.ColonyManager",
