@@ -7,6 +7,26 @@
 <root>
     <div class="container">
         <div class="grid"></div>
+        <div class="legend">
+            <div class="title">Legend</div>
+            <div class="legend-list">
+                <div class="legend-item" id="current">
+                    current <i>circle</i>
+                </div>
+
+                <div class="legend-item" id="frontier">
+                    frontier <i>circle</i>
+                </div>
+
+                <div class="legend-item" id="reached">
+                    reached <i>circle</i>
+                </div>
+
+                <div class="legend-item" id="neighbour">
+                    neighbour <i>circle</i>
+                </div>
+            </div>
+        </div>
     </div>
 
     @{
@@ -51,7 +71,7 @@
     {
         base.OnTreeFirstBuilt();
 
-        graph = new Graph();
+        graph = new Graph(7, 7);
         GridDiv = Panel.Descendants.ElementAt(1);
         GenerateGraphNodes();
     }

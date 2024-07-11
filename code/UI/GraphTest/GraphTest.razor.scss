@@ -14,15 +14,77 @@ GraphTest {
     position: absolute;
     background-color: #444;
     border-radius: 6px;
-    width: 40vw;
-    min-width: 980px;
-    min-height: 680px;
-    height: 60px;
+    top: 8vh;
+    width: 55vw;
+    //min-width: 1060px;
+    //min-height: 780px;
+    flex-grow: 0;
+    height: 760px;
     gap: 5px;
     flex-direction: row;
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
+  }
+
+  .legend {
+    position: absolute;
+    border-radius: 6px;
+    width: 220px;
+    height: 50%;
+    top: 0vh;
+    left: 55.5vw;
+    background-color: #444;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .title {
+      position: absolute;
+      color: white;
+      top: 10px;
+      font-family: Poppins;
+      font-weight: 600;
+      font-size: 22px;
+    }
+
+    .legend-list {
+      margin-top: 30px;
+      height: 75%;
+      width: 80%;
+      gap: 15px;
+      justify-content: flex-start;
+      flex-direction: column;
+
+      #current {
+        color: #ef7f7f;
+      }
+
+      #frontier {
+        color: #32a4b3;
+      }
+
+      #reached {
+        color: #8bb1aa;
+      }
+
+      #neighbour {
+        color: #c8bf6e;
+      }
+    }
+
+    .legend-item {
+      width: 100%;
+      font-size: 20px;
+      color: white;
+      align-items: center;
+      gap: 10px;
+
+      i {
+        position: absolute;
+        right: 30px;
+      }
+    }
   }
 
   .grid {
@@ -38,8 +100,8 @@ GraphTest {
 
   .node {
     padding: 4px;
-    width: 160px;
-    height: 100px;
+    width: 120px;
+    height: 80px;
     border-radius: 2px;
     flex-direction: column;
     align-items: center;
@@ -95,6 +157,7 @@ GraphTest {
     }
 
     &.goal {
+      background-color: #65c58b;
     }
 
     .direction_text {

@@ -9,7 +9,7 @@
 
 
 - [ ] Path finding
-    - [ ] Legend UI
-    - [ ] Fix current being displayed at the end
+    - [x] Legend UI
+    - [x] Fix current being displayed at the end
     - [ ] Adjustable speed
     - [ ] Early Exit

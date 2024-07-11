@@ -64,7 +64,7 @@ public class Graph
         GoalNode = AllNodes[0];
 
         // Set the center slot as occupied
-        AllNodes[cols * rows / 2].IsOccupied = true;
+        AllNodes[(cols * rows) / 2].IsOccupied = true;
         StartNode = AllNodes[cols * rows / 2];
     }
 
@@ -152,6 +152,8 @@ public class Graph
             prevNeighbour.isFrontier = false;
         }
 
+
+        previousCurrent.IsCurrent = false;
         IsSearching = false;
     }
 
