@@ -68,13 +68,14 @@ public class Graph
         AllNodes[wallIndexRight + 1].IsWall = true;
 
         // Set Goal node
-        var goalIndex = cols * rows / 2 + 3;
+        var goalIndex = (cols) * (rows + 1) / 4;
         AllNodes[goalIndex].IsGoal = true;
         GoalNode = AllNodes[goalIndex];
 
         // Set the center slot as occupied
-        AllNodes[cols * rows / 2].IsOccupied = true;
-        StartNode = AllNodes[cols * rows / 2];
+        int startIndex = (cols + 2) * (rows + 1) / 2;
+        AllNodes[startIndex].IsOccupied = true;
+        StartNode = AllNodes[startIndex];
     }
 
     public void CancelSearch()
@@ -109,7 +110,7 @@ public class Graph
         GraphNode previousCurrent = null;
         List<GraphNode> prevNeighbours = new List<GraphNode>();
 
-        do
+        while (frontier.Count > 0 && IsSearching)
         {
             // Set new current node
             var current = frontier.Dequeue();
@@ -158,7 +159,7 @@ public class Graph
 
             prevNeighbours = neighbours;
             await Task.Delay(SearchDelay);
-        } while (frontier.Count > 0 && IsSearching);
+        }
 
         foreach (GraphNode prevNeighbour in prevNeighbours)
         {
@@ -167,7 +168,11 @@ public class Graph
         }
 
 
-        previousCurrent.IsCurrent = false;
+        if (previousCurrent != null)
+        {
+            previousCurrent.IsCurrent = false;
+        }
+
         IsSearching = false;
     }
 

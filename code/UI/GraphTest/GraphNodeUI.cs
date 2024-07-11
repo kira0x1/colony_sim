@@ -47,7 +47,7 @@ public class GraphNodeUI : Panel
     /// </summary>
     private void LayoutNode()
     {
-        const int gap = 18;
+        const int gap = 6;
         const float offset = 0f;
 
         var rect = Box.Rect;
