@@ -176,7 +176,7 @@
         // ReSharper disable once ConvertIfStatementToReturnStatement
         if (graph != null)
         {
-            return HashCode.Combine(graph.IsSearching ? Time.Now : 0f);
+            return HashCode.Combine(graph.IsSearching, graph.AllNodes.Select(x => x.GetHashCode()));
         }
 
         return HashCode.Combine(graph?.IsSearching);
